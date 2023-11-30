@@ -9,14 +9,32 @@
   .link-icons {
     @apply p-3 rounded-full bg-dark-green text-white;
   }
+  .menu-child {
+    @apply h-[4px] mt-[6px] bg-dark-green;
+  }
+  .menu {
+    @apply w-[2.5rem] h-[2rem] cursor-pointer lg:hidden;
+  }
+  .dropdown-link {
+    @apply block text-xl px-[1rem] py-[5px]  rounded-md my-[2px] text-dark-green;
+  }
+  .side-link {
+    @apply font-dancing text-2xl font-[900] my-[1.5rem] text-dark-green hover:text-yellowish-orange;
+  }
+  .nav-link {
+    @apply text-xl text-dark-green hover:text-dark-gold;
+  }
+  .contactUs {
+    @apply block py-4 w-full bg-transparent border-b-[2px] border-white border-t-0 mt-[2rem] lg:mt-[5rem] outline-none border-x-0 placeholder:text-white placeholder:text-xl text-white text-xl;
+  }
+  .account-links {
+    @apply flex bg-white items-center gap-5 py-3 px-4 border-b-[1px];
+  }
+  .account-icon {
+    @apply text-[19px];
+  }
 }
-
-.menu {
-  width: 2.5rem;
-  height: 2rem;
-  /* border: 1px solid #000; */
-}
-.menu-child {
-  height: 4px;
-  margin-top: 5px;
+.table-grid {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr 1fr;
 }

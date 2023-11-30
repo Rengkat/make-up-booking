@@ -1,7 +1,7 @@
 import React from "react";
 
-const PrivateRoutLayout = () => {
-  return <div>PrivateRoutLayout</div>;
+const PrivateRoutLayout = ({ children }: { children: React.ReactNode }) => {
+  return <div>{children}</div>;
 };
 
 export default PrivateRoutLayout;

@@ -13,7 +13,7 @@ const config: Config = {
         "yellowish-orange": "#dd6f1d",
         "dark-green": "#074456",
         "lighter-gold": "#fffbf1",
-        "darker-gold": "#f2c6a5",
+        "dark-gold": "#c86011",
         white: "#fff",
         // Add more custom colors here
       },
@@ -21,6 +21,7 @@ const config: Config = {
         roboto: ["var(--roboto)"],
         montserrat: ["var(--montserrat)"],
         bubblegum: ["var(--bubblegum)"],
+        dancing: ["var(--dancing)"],
         // Add more custom fonts here
       },
     },

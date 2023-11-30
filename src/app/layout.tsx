@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Providers from "../../redux/Provider";
 import dynamic from "next/dynamic";
-import { bubblegum, montserrat, roboto } from "../../utilities/extras";
+import { bubblegum, dancingScript, montserrat, roboto } from "../../utilities/extras";
 
 export const metadata: Metadata = {
   title: "Fullbeauty",
@@ -13,7 +13,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <Providers>
       <html lang="en" suppressHydrationWarning={true}>
-        <body className={(roboto.variable, montserrat.variable, bubblegum.variable)}>
+        <body
+          className={
+            (roboto.variable, montserrat.variable, bubblegum.variable, dancingScript.variable)
+          }>
           <main>{children}</main>
         </body>
         <footer>

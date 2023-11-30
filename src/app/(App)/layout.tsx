@@ -9,7 +9,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
 
       <main>{children}</main>
 
-      <div className="absolute right-5 bottom-5 flex flex-col items-center cursor-pointer z-10">
+      <div className="fixed right-5 bottom-5 flex flex-col items-center cursor-pointer z-[3]">
         <Image
           src={"/back-to-top.png"}
           alt="back to top"
