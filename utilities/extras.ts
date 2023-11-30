@@ -60,3 +60,33 @@ export function convertDateFormat(inputDate: Date | string) {
 
   return formattedDate;
 }
+export function convertDate(inputDate: Date | string) {
+  // Convert input string to Date object
+  const date = new Date(inputDate);
+
+  // Define months array
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
+  // Get day, month, and year
+  const day = date.getDate();
+  const month = months[date.getMonth()];
+  const year = date.getFullYear();
+
+  // Create the final formatted date string
+  const formattedDate = `${day} ${month} ${year}`;
+
+  return formattedDate;
+}

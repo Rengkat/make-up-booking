@@ -46,6 +46,16 @@ const EditDetail = () => {
           className="w-full lg:border-b-[1px] border-0 lg:px-0"
         />
       </div>
+      <div className="mb-[1rem] lg:mb-[2rem]">
+        <label className="font-bold block mb-2" htmlFor="password">
+          Confirm Password:
+        </label>
+        <input
+          type="password"
+          placeholder="Enter password"
+          className="w-full lg:border-b-[1px] border-0 lg:px-0"
+        />
+      </div>
       <div>
         <button className="text-white bg-dark-green hover:bg-dark-gold py-3 px-8 lg:my-[1rem]">
           Edit Details

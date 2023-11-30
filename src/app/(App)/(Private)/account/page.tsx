@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 const Profile = () => {
@@ -29,7 +30,7 @@ const Profile = () => {
       </div>
       <div>
         <button className="text-white bg-dark-green hover:bg-dark-gold py-3 px-8 lg:my-5">
-          Edit Details
+          <Link href={"/account/edit-detail"}>Edit Details</Link>
         </button>
       </div>
     </div>

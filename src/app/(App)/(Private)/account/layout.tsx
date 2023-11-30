@@ -50,7 +50,7 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
             </aside>
           </div>
         </aside>
-        <main className="lg:w-[75%]">{children}</main>
+        <main className="lg:w-[75%] mb-[5rem] lg:mb-[10rem]">{children}</main>
       </div>
     </div>
   );

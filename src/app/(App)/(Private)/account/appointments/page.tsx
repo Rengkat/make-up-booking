@@ -25,13 +25,13 @@ const appointments = [
 ];
 const Appointments = () => {
   return (
-    <div className="bg-white p-2 lg:py-3  lg:px-[2rem] text-xl text-slate-600 mb-[5rem]">
+    <div className="bg-white p-2 lg:py-3  lg:px-[2rem] text-xl text-slate-600 mb-[5rem] shadow">
       <div className={`table-grid bg-dark-gold text-white capitalize p-2`}>
         {title.map((head) => (
           <div key={head}>{head}</div>
         ))}
       </div>
-      <div className="text-sm mt-[1rem] capitalize">
+      <div className="text-sm lg:text-base mt-[1rem] capitalize">
         {appointments.map((app) => {
           return (
             <Fragment key={app.id}>
@@ -40,7 +40,9 @@ const Appointments = () => {
                 <div>{app.service}</div>
                 <div>{app.type}</div>
                 <div>
-                  <button className="py-2 px-5 bg-dark-gold text-white">{app.action}</button>
+                  <button className="py-2 px-5 bg-dark-green hover:bg-dark-gold text-white">
+                    {app.action}
+                  </button>
                 </div>
               </div>
             </Fragment>
