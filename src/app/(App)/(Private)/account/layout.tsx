@@ -44,7 +44,7 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
               text="Addresses"
               icon={<HiOutlineHomeModern className="account-icon" />}
             />
-            <aside className="account-links ">
+            <aside className="account-links cursor-pointer">
               <TbLogout className="account-icon" />
               <span>Logout</span>
             </aside>

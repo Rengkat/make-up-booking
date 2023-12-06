@@ -1,8 +1,8 @@
 import React from "react";
 import HeroComp from "../../components/HeroComp";
-import DateCalendarValue from "./DateTime";
 import Image from "next/image";
 import ContactUs from "./contactUs";
+import Date from "./DateTime";
 
 const Appointment = () => {
   return (
@@ -10,7 +10,7 @@ const Appointment = () => {
       <HeroComp title="Appointment" />
       <div className="flex justify-center flex-col-reverse lg:flex-row p-[1rem] mb-[5rem] lg:px-[4rem] lg:py-[7rem]">
         <div className="w-full lg:w-[50%] flex flex-col ">
-          {/* <DateCalendarValue /> */}
+          {/* date */}
           <div className="bottom-0 pt-[1rem] text-slate-500">
             <div className="">
               <h2>Available Appointment On December 2, 2023</h2>

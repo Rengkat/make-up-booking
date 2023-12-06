@@ -1,5 +1,3 @@
-import React from "react";
-
 const HeroComp = ({ title }: { title: string }) => {
   return (
     <div className="h-[30vh] lg:h-[45vh] bg-white flex items-center justify-center">
