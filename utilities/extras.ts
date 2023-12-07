@@ -66,18 +66,18 @@ export function convertDate(inputDate: Date | string) {
 
   // Define months array
   const months = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
+    "Jan.",
+    "Feb.",
+    "Mar.",
+    "Apr.",
     "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
+    "Jun.",
+    "Jul.",
+    "Aug.",
+    "Sep.",
+    "Oct.",
+    "Nov.",
+    "Dec.",
   ];
 
   // Get day, month, and year
@@ -86,7 +86,7 @@ export function convertDate(inputDate: Date | string) {
   const year = date.getFullYear();
 
   // Create the final formatted date string
-  const formattedDate = `${day} ${month} ${year}`;
+  const formattedDate = `${day} ${month}, ${year}`;
 
   return formattedDate;
 }

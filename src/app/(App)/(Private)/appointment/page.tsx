@@ -3,25 +3,17 @@ import HeroComp from "../../components/HeroComp";
 import Image from "next/image";
 import ContactUs from "./contactUs";
 import Date from "./DateTime";
+import AppointmentDate from "./DateTime";
 
 const Appointment = () => {
   return (
     <div className="mb-[10rem]">
       <HeroComp title="Appointment" />
-      <div className="flex justify-center flex-col-reverse lg:flex-row p-[1rem] mb-[5rem] lg:px-[4rem] lg:py-[7rem]">
-        <div className="w-full lg:w-[50%] flex flex-col ">
-          {/* date */}
-          <div className="bottom-0 pt-[1rem] text-slate-500">
-            <div className="">
-              <h2>Available Appointment On December 2, 2023</h2>
-              <p> 11:00 am – 12:00 p</p>
-            </div>
-            <div>
-              <button className="text-white py-3 px-5 bg-dark-gold mt-2">Book Appointment</button>
-            </div>
-          </div>
+      <div className="flex justify-center flex-col-reverse lg:gap-[1rem] lg:flex-row p-[1rem] mb-[5rem] lg:px-[4rem] lg:py-[7rem]">
+        <div className="w-full lg:w-[50%] flex flex-col lg:ml-[3rem]">
+          <AppointmentDate />
         </div>
-        <aside className="w-full lg:w-[50%] py-5 ">
+        <aside className="w-full lg:w-[50%] pb-5 ">
           <div className="relative">
             <div className="text-3xl lg:text-6xl font-normal font-bubblegum text-dark-green xl:pr-[10rem]">
               <span>Fullbeauty </span>
