@@ -32,9 +32,9 @@ const Nav = () => {
           <li className="nav-link">
             <ActiveLink href="/shop" text="Shop" />
           </li>
-          <li className="nav-link">
+          {/* <li className="nav-link">
             <ActiveLink href="/services" text="Services" />
-          </li>
+          </li> */}
           <li className="nav-link">
             <ActiveLink href="/price-plan" text="Price Plan" />
           </li>

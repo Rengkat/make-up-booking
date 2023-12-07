@@ -1,7 +1,8 @@
 "use client";
 import { Datepicker } from "flowbite-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { convertDate } from "../../../../../utilities/extras";
+import BookingModal from "./BookingModal";
 export default function AppointmentDate() {
   const [date, setDate] = useState("");
   const converted = (inputDate: Date | string) => {
@@ -15,7 +16,7 @@ export default function AppointmentDate() {
   const displayDate = convertDate(new Date(date));
   return (
     <>
-      <div className=" lg:w-[100%]">
+      <div className=" lg:w-[100%] mt-[1rem]">
         <input
           onChange={(e) => setDate(converted(e.target.value))}
           value={date}
@@ -25,7 +26,7 @@ export default function AppointmentDate() {
           className="w-full lg:w-[70%] lg:py-4 px-2 placeholder:text-xl mt-[3rem] lg:mt-0"
         />
       </div>
-      {date && (
+      {date ? (
         <div className="bottom-0 pt-[1rem] text-slate-500">
           <div className="">
             <h2>Available Appointment On {displayDate} </h2>
@@ -35,7 +36,16 @@ export default function AppointmentDate() {
             <button className="text-white py-3 px-5 bg-dark-gold mt-2">Book Appointment</button>
           </div>
         </div>
+      ) : (
+        <>
+          <p className="my-2 text-xl text-dark-green">
+            Chose a flexible date for us to serve you better
+          </p>
+        </>
       )}
+      <div className=" fixed z-20 bg-[#00000094] inset-0 w-full h-screen">
+        <BookingModal />
+      </div>
     </>
   );
 }

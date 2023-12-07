@@ -36,7 +36,7 @@ const Appointment = () => {
           </p>
           <div className="text-[17px] text-slate-500 lg:w-[80%]">
             <div className="flex justify-between">
-              <aside>Monday TO Friday</aside>
+              <aside>Monday to Friday</aside>
               <aside>10:00 am to 3:00 pm</aside>
             </div>
             <div className="flex justify-between">
