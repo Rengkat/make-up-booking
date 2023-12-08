@@ -5,7 +5,6 @@ interface Props {
   displayDate: string;
 }
 const BookingModal = ({ closeModal, displayDate }: Props) => {
-  console.log(displayDate);
   return (
     <div className="w-full h-screen flex justify-center items-center">
       <div className="w-full md:w-[70%] lg:w-[40%] h-[50vh] bg-white">
