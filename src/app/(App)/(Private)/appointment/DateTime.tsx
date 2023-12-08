@@ -1,10 +1,11 @@
 "use client";
-import { Datepicker } from "flowbite-react";
 import { useState } from "react";
 import { convertDate } from "../../../../../utilities/extras";
 import BookingModal from "./BookingModal";
 export default function AppointmentDate() {
   const [date, setDate] = useState("");
+  const [isModelOpen, setIsModelOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const converted = (inputDate: Date | string) => {
     const parsedDate = new Date(inputDate);
     const formattedDate = `${parsedDate.getFullYear()}-${(parsedDate.getMonth() + 1)
@@ -13,7 +14,16 @@ export default function AppointmentDate() {
 
     return formattedDate;
   };
+  // format date
   const displayDate = convertDate(new Date(date));
+  // delay when clicked
+  const handleOpenModal = () => {
+    setIsLoading(true);
+    setIsModelOpen((prev) => !prev);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  };
   return (
     <>
       <div className=" lg:w-[100%] mt-[1rem]">
@@ -33,7 +43,9 @@ export default function AppointmentDate() {
             <p> 11:00 am – 12:00 pm</p>
           </div>
           <div>
-            <button className="text-white py-3 px-5 bg-dark-gold mt-2">Book Appointment</button>
+            <button onClick={handleOpenModal} className="text-white py-3 px-5 bg-dark-gold mt-2">
+              Book Appointment
+            </button>
           </div>
         </div>
       ) : (
@@ -43,8 +55,20 @@ export default function AppointmentDate() {
           </p>
         </>
       )}
-      <div className=" fixed z-20 bg-[#00000094] inset-0 w-full h-screen">
-        <BookingModal />
+      <div>
+        {isModelOpen && (
+          <>
+            <div className="fixed z-20 bg-[#00000094] inset-0 w-full h-screen">
+              {isLoading ? (
+                <div className="w-full h-screen text-white font-bold flex items-center justify-center text-xl">
+                  <p>Loading...</p>
+                </div>
+              ) : (
+                <BookingModal closeModal={handleOpenModal} displayDate={displayDate} />
+              )}
+            </div>
+          </>
+        )}
       </div>
     </>
   );
