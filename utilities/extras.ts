@@ -1,5 +1,5 @@
 import { Roboto, Montserrat_Alternates, Bubblegum_Sans, Dancing_Script } from "next/font/google";
-
+import { MdOutlineStarOutline, MdStarRate } from "react-icons/md";
 export const roboto = Roboto({
   subsets: ["cyrillic", "cyrillic-ext", "greek", "greek-ext", "latin", "latin-ext", "vietnamese"],
   variable: "--roboto",
@@ -20,7 +20,30 @@ export const dancingScript = Dancing_Script({
   variable: "--dancing",
   weight: ["400", "500", "700"],
 });
-
+// const rating = [
+//   {
+//     noRating: [
+//       <MdOutlineStarOutline />,
+//       <MdOutlineStarOutline />,
+//       <MdOutlineStarOutline />,
+//       <MdOutlineStarOutline />,
+//       <MdOutlineStarOutline />,
+//     ],
+//   },
+//   {
+//     one: [],
+//   },
+//   {
+//     two: [],
+//   },
+//   {
+//     three: [],
+//   },
+//   {
+//     four: [],
+//   },
+//   { five: [] },
+// ];
 export function convertDateFormat(inputDate: Date | string) {
   // Convert input string to Date object
   const date = new Date(inputDate);
