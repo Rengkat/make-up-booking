@@ -34,7 +34,7 @@ const Wishlist = () => {
           return (
             <Fragment key={app.id}>
               <div className="wishlist-grid py-2">
-                <div>{i + 1}</div>
+                <div className="pl-5">{i + 1}</div>
                 <div>{app.image}</div>
                 <div>{app.product}</div>
                 <div>{app.price}</div>
