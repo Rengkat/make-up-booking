@@ -13,20 +13,6 @@ const About = () => {
         <div className=" flex flex-col lg:flex-row lg:gap-5 px-[1rem]">
           <aside className=" w-full lg:w-1/2 lg:px-[3rem]">
             <CircledWords begin="We" main="Welcome" after="The Best In You." />
-            {/* <h1 className="w-full lg:w-[90%] text-dark-green text-3xl lg:text-6xl font-bold ">
-              We
-              <span className="relative p-2 ">
-                Welcome
-                <Image
-                  src={"/circle.svg"}
-                  alt="circle.svg"
-                  width={500}
-                  height={500}
-                  className="w-[10rem] lg:w-[20rem] xl:w-[20rem] absolute top-1 lg:-top-1 -left-[0rem]"
-                />
-              </span>{" "}
-              The Best In You.
-            </h1> */}
           </aside>
           <p className="w-full lg:w-1/2 text-slate-500 my-5 text-base lg:text-xl font-light">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur repudiandae
@@ -59,20 +45,7 @@ const About = () => {
             <div className="w-full lg:w-[70%] text-center">
               <CircledWords begin="Get In" main="Touch" after="With Us" />
             </div>
-            {/* <h1 className="w-full lg:w-[60%] text-dark-green text-3xl lg:text-6xl font-bold text-center">
-              Get In
-              <span className="relative p-2 ">
-                Touch
-                <Image
-                  src={"/circle.svg"}
-                  alt="circle.svg"
-                  width={500}
-                  height={500}
-                  className="w-[10rem] lg:w-[20rem] xl:w-[25rem] absolute top-1 lg:top-4 -left-[0rem]"
-                />
-              </span>
-              With Us
-            </h1> */}
+
             <div className="px-[1rem] lg:px-[3rem]">
               <aside className="flex gap-5 mt-5 ">
                 <IoLocation className=" bg-dark-gold text-4xl rounded-full text-white p-2" />

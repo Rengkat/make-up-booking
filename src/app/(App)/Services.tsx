@@ -20,7 +20,7 @@ const Services = () => {
       </div>
       <div className="h-[100vh] px-5 lg:px-[5rem]">
         <div className="flex flex-col lg:flex-row h-[80%]">
-          <aside className="w-full lg:w-[30%] border-2 border-green-800">
+          <aside className="w-full lg:w-[30%]">
             <div>
               <Service
                 image="/Icon-6.webp"
@@ -38,7 +38,7 @@ const Services = () => {
               />
             </div>
           </aside>
-          <aside className="w-full lg:w-[40%] h-[180vh] lg:h-base flex items-center justify-start lg:justify-center border-2 border-red-800">
+          <aside className="w-full lg:w-[40%] h-[80vh] lg:h-base flex items-center justify-start lg:justify-center">
             <div className="relative w-full lg:w-[80%] mx-auto border-[3px] h-[70%] border-dark-gold">
               <Image
                 src={"/left-1.png"}
@@ -56,7 +56,7 @@ const Services = () => {
               />
             </div>
           </aside>
-          <aside className="w-full lg:w-[30%] border-2 border-purple-800">
+          <aside className="w-full lg:w-[30%] ">
             <div>
               <Service
                 image="/Icon-1-1.webp"
