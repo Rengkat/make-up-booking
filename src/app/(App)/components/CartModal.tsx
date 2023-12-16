@@ -6,7 +6,7 @@ import SideBarCartList from "../(Private)/cart/SideBarCartList";
 const cartItems = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
 const CartModal = () => {
   return (
-    <div className=" fixed inset-0 z-[5] bg-transparent flex justify-end">
+    <div className="hidden fixed inset-0 z-[5] bg-transparent flex justify-end">
       <div className="w-[30rem] bg-white h-full text-black shadow-md">
         <div className="flex items-center justify-between text-2xl p-7 font-montserrat text-dark-green border-b-2 font-normal">
           <div> Shopping Cart (0)</div>

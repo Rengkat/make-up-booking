@@ -49,6 +49,11 @@
   display: grid;
   grid-template-columns: 1fr 2fr 2fr 1fr 1fr;
 }
+.cart-grid {
+  display: grid;
+  grid-template-columns: 3fr 2fr 2fr 2fr 1fr;
+  gap: 1rem;
+}
 .contact {
   background-image: url("/paralax.png");
   background-position: center;
