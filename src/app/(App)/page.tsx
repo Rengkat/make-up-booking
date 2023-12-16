@@ -4,6 +4,7 @@ import Product from "./shop/Product";
 import LookGood from "./lookGood";
 import Services from "./Services";
 import BestSelling from "./BestSelling";
+import NewsLetter from "./NewsLetter";
 const products = [1, 2, 3, 4, 5, 6, 8, 4, 3, 5, 7];
 const Home = () => {
   return (
@@ -21,6 +22,7 @@ const Home = () => {
       <LookGood />
       <Services />
       <BestSelling />
+      <NewsLetter />
     </div>
   );
 };

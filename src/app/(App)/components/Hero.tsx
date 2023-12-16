@@ -23,7 +23,7 @@ const Hero = () => {
               className="absolute -top-[8rem] z-[5]"
             />
           </div>
-          <div className="text-7xl mt-[1rem] lg:text-[8rem] font-dancing text-dark-green">
+          <div className="text-7xl mt-[1rem] lg:text-[8rem] font-montserrat text-dark-green">
             <h1 className=" p-0">Be </h1>
             <div className="relative lg:w-[40rem]">
               <h1 className="my-5">Gorgeous!</h1>
