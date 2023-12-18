@@ -1,11 +1,18 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { IoMdClose } from "react-icons/io";
+import { useSelector } from "react-redux";
 
 const SideBar = () => {
+  const { isOpenSideBar } = useSelector((store: any) => store);
+
   return (
-    <div className="hidden w-full bg-transparent fixed inset-0 z-[5] flex justify-end">
+    <div
+      className={`${
+        isOpenSideBar ? "translate-x-full" : "translate-x-0"
+      }  w-full bg-transparent fixed inset-0 z-[5] flex justify-end transition-all duration-500 ease-linear`}>
       <div className="bg-white w-[25rem] h-full">
         <div className="flex items-center justify-between p-10">
           <Link href={"/"}>

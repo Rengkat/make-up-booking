@@ -6,6 +6,8 @@ import HoveredNav from "./HoveredNav";
 import CartModal from "./CartModal";
 import SideBar from "./SideBar";
 import ActiveLink from "./ActiveLink";
+import NavMenu from "./NavMenu";
+import CartMenu from "./CartMenu";
 
 const Nav = () => {
   return (
@@ -44,18 +46,12 @@ const Nav = () => {
         </ul>
         <div className="flex gap-5 lg:gap-6">
           <aside className="link-icons">
-            <FaShoppingCart className="text-base cursor-pointer" />
-            <CartModal />
+            <CartMenu />
           </aside>
           <HoveredNav />
         </div>
         {/* menu */}
-        <div className="menu group">
-          <div className="menu-child"></div>
-          <div className="menu-child w-[70%] group-hover:w-full transition-all duration-150"></div>
-          <div className="menu-child"></div>
-          <SideBar />
-        </div>
+        <NavMenu />
         <Link
           className="hidden lg:block bg-dark-green py-5 px-8 text-white hover:bg-dark-gold"
           href={"/appointment"}>

@@ -1,5 +1,5 @@
 "use client";
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import { store } from "./store/store";
 import React, { ReactNode } from "react";
 interface Props {

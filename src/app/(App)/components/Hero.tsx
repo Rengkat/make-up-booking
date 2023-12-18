@@ -4,7 +4,7 @@ import React from "react";
 const Hero = () => {
   return (
     <>
-      <div className=" flex justify-center px-[2rem] py-[5rem] ">
+      <div id="top" className=" flex justify-center px-[2rem] py-[5rem] ">
         <div className="w-full lg:w-[80%] lg:mt-[2rem] flex flex-col-reverse lg:flex-row justify-center gap-[6rem]">
           <div className="relative">
             <div className="w-[90%] lg:w-[25rem] mx-auto lg:mx-0 relative z-[2] h-[20rem] lg:h-[25rem] bg-dark-green"></div>

@@ -1,11 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {};
+const initialState = {
+  isOpenSideBar: false,
+  isOpenSideCart: false,
+};
 const AppSlice = createSlice({
-  name: "App",
+  name: "AppState",
   initialState,
-  reducers: {},
+  reducers: {
+    openSideBar(state) {
+      state.isOpenSideBar = !state.isOpenSideBar;
+    },
+    openSideCart(state) {
+      state.isOpenSideCart = !state.isOpenSideCart;
+    },
+  },
   extraReducers: {},
 });
 
 export default AppSlice.reducer;
+export const { openSideBar, openSideCart } = AppSlice.actions;

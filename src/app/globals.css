@@ -37,6 +37,9 @@
     @apply w-full h-[90dvh] lg:h-[130vh];
   }
 }
+html {
+  scroll-behavior: smooth;
+}
 .table-grid {
   display: grid;
   grid-template-columns: 2fr 2fr 1fr 1fr;
