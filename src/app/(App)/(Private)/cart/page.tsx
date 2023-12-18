@@ -28,9 +28,9 @@ const Cart = () => {
   return (
     <>
       <HeroComp title="Cart" />
-      <div className="p-[5rem]">
-        <div className="flex gap-[2rem]">
-          <aside className="w-[70%]">
+      <div className="p-[1rem] lg:p-[5rem]">
+        <div className="flex flex-col lg:flex-row gap-[2rem]">
+          <aside className="w-full lg:w-[70%]">
             <div className={`cart-grid bg-dark-gold text-white capitalize p-4`}>
               {title.map((head) => (
                 <div key={head} className=" capitalize lg:text-xl">
@@ -71,7 +71,7 @@ const Cart = () => {
               })}
             </div>
           </aside>
-          <aside className="w-[30%]">
+          <aside className="w-full  lg:w-[30%]">
             <div className="bg-white">
               <div className={` bg-dark-gold text-white text-xl capitalize p-4`}>Cart totals</div>
               <div className="flex flex-col gap-y-5 p-5 text-xl">
