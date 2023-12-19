@@ -1,16 +1,29 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import React, { Fragment } from "react";
 import { IoMdClose } from "react-icons/io";
 import SideBarCartList from "../(Private)/cart/SideBarCartList";
+import { useSelector, useDispatch } from "react-redux";
+import { openSideCart } from "../../../../redux/services/AppSlice";
 const cartItems = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
 const CartModal = () => {
+  const { isOpenSideCart } = useSelector((store: any) => store);
+  const dispatch = useDispatch();
+  const handleOpenSideCart = () => {
+    dispatch(openSideCart());
+  };
   return (
-    <div className=" fixed inset-0 z-[5] bg-transparent flex justify-end">
+    <div
+      className={`${
+        isOpenSideCart ? "translate-x-0" : "translate-x-full"
+      } transition-all duration-500 ease-linear fixed inset-0 z-[5] bg-transparent flex justify-end`}>
       <div className="w-[30rem] bg-white h-full text-black shadow-md">
         <div className="flex items-center justify-between text-2xl p-7 font-montserrat text-dark-green border-b-2 font-normal">
           <div> Shopping Cart (0)</div>
-          <IoMdClose />
+          <div onClick={handleOpenSideCart}>
+            <IoMdClose className="cursor-pointer" />
+          </div>
         </div>
 
         <div>
@@ -54,10 +67,10 @@ const CartModal = () => {
                 </aside>
                 <div className="flex justify-center gap-5 my-[2rem]">
                   <button className="py-4 px-10 bg-dark-green text-white hover:bg-dark-gold">
-                    <Link href={"/shop"}>Shop Now</Link>
+                    <Link href={"/cart"}>Open cart</Link>
                   </button>
                   <button className="py-4 px-10 bg-dark-gold text-white hover:bg-dark-green">
-                    <Link href={"/shop"}>Shop Now</Link>
+                    <Link href={"/checkout"}>Proceed to checkout</Link>
                   </button>
                 </div>
               </div>
