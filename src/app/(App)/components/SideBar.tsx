@@ -12,7 +12,7 @@ const SideBar = () => {
     <div
       className={`${
         isOpenSideBar ? "translate-x-full" : "translate-x-0"
-      }  w-full bg-transparent fixed inset-0 z-[5] flex justify-end transition-all duration-500 ease-linear`}>
+      }  w-full bg-transparent fixed inset-0 z-[10] flex justify-end transition-all duration-500 ease-linear`}>
       <div className="bg-white w-[25rem] h-full">
         <div className="flex items-center justify-between p-10">
           <Link href={"/"}>

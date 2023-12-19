@@ -32,7 +32,7 @@ const Hero = () => {
                 width={500}
                 height={500}
                 alt="leaf"
-                className="absolute -top-[1rem] lg:-top-[2rem] -left-[5px] lg:-left-[1rem] z-[5] w-[100%] md:w-[45%] lg:w-[100%] "
+                className="absolute -top-[1rem] lg:-top-[2rem] -left-[5px] lg:-left-[1rem] z-[2] w-[100%] md:w-[45%] lg:w-[100%] "
               />
             </div>
           </div>
