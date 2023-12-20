@@ -57,6 +57,7 @@ html {
   grid-template-columns: 3fr 2fr 2fr 2fr 1fr;
   gap: 1rem;
 }
+
 .contact {
   background-image: url("/paralax.png");
   background-position: center;
