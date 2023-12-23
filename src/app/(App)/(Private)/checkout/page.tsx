@@ -3,6 +3,7 @@ import HeroComp from "../../components/HeroComp";
 import Image from "next/image";
 import { FaRegTrashCan } from "react-icons/fa6";
 import SelectPaymentType from "./SelectPaymentType";
+import Details from "./Details";
 const items = [
   {
     id: 5,
@@ -27,9 +28,10 @@ const Checkout = () => {
   return (
     <div>
       <HeroComp title="Checkout" />
-      <section className="flex flex-col lg:flex-row px-[1rem] lg:px-[5rem] py-[5rem] lg:py-[8rem]">
-        <aside className="w-full lg:w-[70%]">
+      <section className="flex flex-col lg:flex-row px-[1rem] gap-10 lg:px-[5rem] py-[5rem] lg:py-[8rem]">
+        <aside className="w-full lg:w-[65%]">
           <h1 className="text-dark-green font-normal text-xl lg:text-2xl py-5">Billing Details</h1>
+          <Details />
         </aside>
         <aside className="w-full lg:w-[30%] bg-white p-5">
           <h1 className="text-dark-green font-normal text-xl lg:text-2xl py-5">Products</h1>
