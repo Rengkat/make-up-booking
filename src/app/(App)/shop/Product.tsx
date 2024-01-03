@@ -7,7 +7,7 @@ const Product = () => {
     <div className="mt-[1rem]">
       <div className=" bg-[#e2d7bb]">
         <Image src={"/image.png"} alt="product" height={500} width={500} />
-        <div className="hidden flex justify-between -mt-[2rem] bg-white py-2">
+        <div className="hidden flex justify-between -mt-[2rem] bg-white py-2 px-2">
           <aside className="link-icons">
             <FaShoppingCart className="text-xl cursor-pointer" />
           </aside>

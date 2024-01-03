@@ -1,10 +1,10 @@
 import React from "react";
-import HeroComp from "../components/HeroComp";
+import HeroComp from "../../../components/HeroComp";
 import Image from "next/image";
 import Form from "../(Private)/appointment/form";
 import { IoLocation } from "react-icons/io5";
 import { FaPhone } from "react-icons/fa6";
-import CircledWords from "../components/CircledWords";
+import CircledWords from "../../../components/CircledWords";
 const About = () => {
   return (
     <div>

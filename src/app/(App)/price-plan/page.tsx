@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { services, therapies } from "../../../../utilities/extras";
-import CircledWords from "../components/CircledWords";
+import CircledWords from "../../../components/CircledWords";
 import PricingComp from "./pricingComp";
 import ExecutiveComp from "./executiveComp";
 

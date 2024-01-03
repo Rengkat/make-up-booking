@@ -3,9 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { Fragment } from "react";
 import { IoMdClose } from "react-icons/io";
-import SideBarCartList from "../(Private)/cart/SideBarCartList";
+import SideBarCartList from "../app/(App)/(Private)/cart/SideBarCartList";
 import { useSelector, useDispatch } from "react-redux";
-import { openSideCart } from "../../../../redux/services/AppSlice";
+import { openSideCart } from "../../redux/services/AppSlice";
 const cartItems = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
 const CartModal = () => {
   const { isOpenSideCart } = useSelector((store: any) => store);

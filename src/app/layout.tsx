@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: "Fullbeauty",
   description: "Your good looking is our concern",
 };
-const Footer = dynamic(() => import("./(App)/components/Footer"), { ssr: false });
+const Footer = dynamic(() => import("../components/Footer"), { ssr: false });
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <Providers>

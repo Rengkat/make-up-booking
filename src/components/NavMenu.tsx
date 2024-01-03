@@ -1,7 +1,7 @@
 "use client";
 import { useSelector, useDispatch } from "react-redux";
 import SideBar from "./SideBar";
-import { openSideBar } from "../../../../redux/services/AppSlice";
+import { openSideBar } from "../../redux/services/AppSlice";
 
 const NavMenu = () => {
   const dispatch = useDispatch();

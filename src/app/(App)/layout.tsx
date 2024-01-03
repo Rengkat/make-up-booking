@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import Nav from "./components/Nav";
+import Nav from "../../components/Nav";
 import Link from "next/link";
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {

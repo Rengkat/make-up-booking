@@ -2,7 +2,7 @@
 import { FaShoppingCart } from "react-icons/fa";
 import CartModal from "./CartModal";
 import { useDispatch, useSelector } from "react-redux";
-import { openSideCart } from "../../../../redux/services/AppSlice";
+import { openSideCart } from "../../redux/services/AppSlice";
 
 const CartMenu = () => {
   const { isOpenSideCart } = useSelector((store: any) => store);

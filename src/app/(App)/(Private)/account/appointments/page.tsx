@@ -1,4 +1,4 @@
-import HeroComp from "@/app/(App)/components/HeroComp";
+import HeroComp from "@/components/HeroComp";
 import { Metadata } from "next";
 import React, { Fragment } from "react";
 import { convertDateFormat } from "../../../../../../utilities/extras";

@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import HeroComp from "../../components/HeroComp";
+import HeroComp from "../../../../components/HeroComp";
 import Image from "next/image";
 import { FaRegTrashCan } from "react-icons/fa6";
 import SelectPaymentType from "./SelectPaymentType";

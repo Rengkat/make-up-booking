@@ -1,12 +1,13 @@
 import React, { Fragment } from "react";
-import HeroComp from "../components/HeroComp";
+import HeroComp from "../../../components/HeroComp";
 import { CiSearch } from "react-icons/ci";
 import { FaFilter, FaList } from "react-icons/fa";
 import { IoGridSharp } from "react-icons/io5";
 import { TfiLayoutGrid3Alt } from "react-icons/tfi";
 import { TfiLayoutGrid4Alt } from "react-icons/tfi";
-import Product from "./Product";
-const products = [1, 2, 3, 4, 5, 6, 8, 4, 3, 5, 7];
+import Products from "./Products";
+import ShopGrid from "./ShopGrid";
+
 const Shop = () => {
   return (
     <div>
@@ -68,12 +69,7 @@ const Shop = () => {
               Showing 1–6 of 9 results
             </p>
             <div className="flex gap-5 items-center ">
-              <div className="hidden xl:flex gap-5">
-                <FaList className="text-xl cursor-pointer" />
-                <IoGridSharp className="text-xl cursor-pointer" />
-                <TfiLayoutGrid3Alt className="text-xl cursor-pointer" />
-                <TfiLayoutGrid4Alt className="text-xl cursor-pointer" />
-              </div>
+              <ShopGrid />
               <div className="flex ">
                 <aside className="flex items-center justify-center py-[2px] px-5 bg-dark-green text-white xl:hidden">
                   <FaFilter className="text-xl cursor-pointer" />
@@ -91,15 +87,7 @@ const Shop = () => {
               </div>
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-[3rem]">
-            {products.map((product) => {
-              return (
-                <Fragment key={product}>
-                  <Product />
-                </Fragment>
-              );
-            })}
-          </div>
+          <Products />
         </aside>
       </main>
     </div>

@@ -1,6 +1,6 @@
 import React from "react";
-import HeroComp from "../components/HeroComp";
-import CircledWords from "../components/CircledWords";
+import HeroComp from "../../../components/HeroComp";
+import CircledWords from "../../../components/CircledWords";
 import Link from "next/link";
 import ActiveLink from "./activeLink";
 

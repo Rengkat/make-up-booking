@@ -1,5 +1,5 @@
 import React from "react";
-import HeroComp from "../../components/HeroComp";
+import HeroComp from "../../../../components/HeroComp";
 import Link from "next/link";
 import { VscAccount } from "react-icons/vsc";
 import { GrSchedule } from "react-icons/gr";

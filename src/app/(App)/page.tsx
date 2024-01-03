@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import Hero from "./components/Hero";
+import Hero from "../../components/Hero";
 import Product from "./shop/Product";
 import LookGood from "./lookGood";
 import Services from "./Services";

@@ -1,5 +1,8 @@
 import { Roboto, Montserrat_Alternates, Bubblegum_Sans, Dancing_Script } from "next/font/google";
 import { MdOutlineStarOutline, MdStarRate } from "react-icons/md";
+import { FaList } from "react-icons/fa";
+import { IoGridSharp } from "react-icons/io5";
+import { TfiLayoutGrid3Alt, TfiLayoutGrid4Alt } from "react-icons/tfi";
 export const roboto = Roboto({
   subsets: ["cyrillic", "cyrillic-ext", "greek", "greek-ext", "latin", "latin-ext", "vietnamese"],
   variable: "--roboto",
@@ -215,4 +218,10 @@ export const therapies = [
       "Signature Body Scrub",
     ],
   },
+];
+export const headings = [
+  { icon: FaList, num: 1 },
+  { icon: IoGridSharp, num: 2 },
+  { icon: TfiLayoutGrid3Alt, num: 3 },
+  { icon: TfiLayoutGrid4Alt, num: 4 },
 ];

@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import CircledWords from "../../components/CircledWords";
+import CircledWords from "../../../../components/CircledWords";
 import { executiveMassage, makeups } from "../../../../../utilities/extras";
 import PricingComp from "../pricingComp";
 import ExecutiveComp from "../executiveComp";
