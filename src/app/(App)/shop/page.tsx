@@ -1,14 +1,24 @@
 import React, { Fragment } from "react";
 import HeroComp from "../../../components/HeroComp";
 import { CiSearch } from "react-icons/ci";
-import { FaFilter, FaList } from "react-icons/fa";
-import { IoGridSharp } from "react-icons/io5";
-import { TfiLayoutGrid3Alt } from "react-icons/tfi";
-import { TfiLayoutGrid4Alt } from "react-icons/tfi";
+import { FaFilter } from "react-icons/fa";
 import Products from "./Products";
 import ShopGrid from "./ShopGrid";
+const productCategories = ["cream", "hair masks", "makeup", "moisturisers"];
+<option value="default">Default Sorting</option>;
 
+const sorting = [
+  {
+    value: "popularity",
+    name: "Sort by popularity",
+  },
+  { value: "highToLow", name: "Sort by Price: High to low" },
+  { value: "average", name: "Sort by averaging" },
+  { value: "latest", name: "Sort by latest" },
+  { value: "lowToHigh", name: "Sort by Price: Low to high" },
+];
 const Shop = () => {
+  // const handleSelect = () => {};
   return (
     <div>
       <HeroComp title="Shop" />
@@ -31,35 +41,29 @@ const Shop = () => {
           <div className="my-[2rem] bg-white px-[2rem] py-[2.5rem]">
             <h1 className="text-2xl text-dark-green mb-4">Product Categories</h1>
             <ul>
-              <li className="mt-3 text-[18px] text-dark-green hover:text-dark-gold cursor-pointer">
-                Creams(1)
-              </li>
-              <li className="mt-3 text-[18px] text-dark-green hover:text-dark-gold cursor-pointer">
-                Hair Masks(3)
-              </li>
-              <li className="mt-3 text-[18px] text-dark-green hover:text-dark-gold cursor-pointer">
-                Makeup(1)
-              </li>
-              <li className="mt-3 text-[18px] text-dark-green hover:text-dark-gold cursor-pointer">
-                Moisturisers(2)
-              </li>
+              {productCategories.map((cat) => {
+                return (
+                  <Fragment key={cat}>
+                    <li className="mt-3 text-[18px] text-dark-green hover:text-dark-gold cursor-pointer">
+                      {cat}(1)
+                    </li>
+                  </Fragment>
+                );
+              })}
             </ul>
           </div>
           <div className="my-[2rem] bg-white px-[2rem] py-[2.5rem]">
             <h1 className="text-2xl text-dark-green mb-4">Product Tags</h1>
             <ul>
-              <li className="mt-3 text-[18px] text-dark-green hover:text-dark-gold cursor-pointer">
-                Creams(1)
-              </li>
-              <li className="mt-3 text-[18px] text-dark-green hover:text-dark-gold cursor-pointer">
-                Hair Masks(3)
-              </li>
-              <li className="mt-3 text-[18px] text-dark-green hover:text-dark-gold cursor-pointer">
-                Makeup(1)
-              </li>
-              <li className="mt-3 text-[18px] text-dark-green hover:text-dark-gold cursor-pointer">
-                Moisturisers(2)
-              </li>
+              {productCategories.map((cat) => {
+                return (
+                  <Fragment key={cat}>
+                    <li className="mt-3 text-[18px] text-dark-green hover:text-dark-gold cursor-pointer">
+                      {cat}(1)
+                    </li>
+                  </Fragment>
+                );
+              })}
             </ul>
           </div>
         </aside>
@@ -75,14 +79,18 @@ const Shop = () => {
                   <FaFilter className="text-xl cursor-pointer" />
                 </aside>
 
-                <select name="sort" className="border-0 border-b-2 border-slate-400 bg-transparent">
+                <select
+                  // onChange={handleSelect}
+                  name="sort"
+                  className="border-0 border-b-2 border-slate-400 bg-transparent">
                   <option disabled>Sort by</option>
-                  <option value="default">Default Sorting</option>
-                  <option value="popularity">Sort by popularity</option>
-                  <option value="average">Sort by averaging</option>
-                  <option value="latest">Sort by latest</option>
-                  <option value="lowToHigh">Sort by Price: Low to high</option>
-                  <option value="highToLow">Sort by Price: High to low</option>
+                  {sorting.map((sort) => {
+                    return (
+                      <Fragment key={sort.value}>
+                        <option value={sort.value}>{sort.name}</option>
+                      </Fragment>
+                    );
+                  })}
                 </select>
               </div>
             </div>
