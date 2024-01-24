@@ -1,15 +1,58 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
-export const metadata = {
-  title: "Register",
-};
+import React, { FormEvent, useState } from "react";
+// export const metadata = {
+//   title: "Register",
+// };
 const Register = () => {
+  const [isCheck, setIsCheck] = useState(false);
+
+  const [userDetails, setUserDetails] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
+  const handleCheck = () => {
+    setIsCheck((prev) => !prev);
+  };
+  const handleChange = (e: FormEvent) => {
+    const { name, value } = e.target;
+    setUserDetails((prevDetails) => ({ ...prevDetails, [name]: value }));
+  };
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!isCheck) {
+      console.log("Please agree with terms and conditions");
+    }
+    try {
+      const res = await fetch("http://localhost:5000/api/v1/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userDetails),
+      });
+
+      if (res.ok) {
+        // Request was successful, handle the response here
+        const data = await res.json();
+      } else {
+        // Request failed, handle the error here
+        const errorData = await res.json();
+        console.error("Registration failed:", errorData);
+      }
+    } catch (error) {
+      console.error("An error occurred during registration:", error);
+    }
+  };
+
   return (
     <>
       <div className="p-5 md:p-[5rem]">
         <div className="flex flex-col lg:flex-row space-x-[2rem] lg:items-start mt-[6rem]">
-          <form className="lg:w-[50%] xl:w-[40%]">
+          <form onSubmit={handleSubmit} className="lg:w-[50%] xl:w-[40%]">
             {/* top title */}
             <div className="relative mb-5">
               <h1 className="text-4xl lg:text-5xl xl:text-6xl font-montserrat text-dark-green capitalize ml-5">
@@ -25,6 +68,7 @@ const Register = () => {
             </div>
             {/* end of title */}
             <input
+              onChange={handleChange}
               type="text"
               name="firstName"
               id="firstName"
@@ -32,6 +76,7 @@ const Register = () => {
               className="signup-input"
             />
             <input
+              onChange={handleChange}
               type="text"
               name="lastName"
               id="lastName"
@@ -39,6 +84,7 @@ const Register = () => {
               className="signup-input"
             />
             <input
+              onChange={handleChange}
               type="email"
               name="email"
               id="email"
@@ -46,6 +92,7 @@ const Register = () => {
               className="signup-input"
             />
             <input
+              onChange={handleChange}
               type="password"
               name="password"
               id="password"
@@ -56,6 +103,7 @@ const Register = () => {
               <div className="flex items-start gap-3">
                 <input
                   type="checkbox"
+                  onChange={handleCheck}
                   name="agreement"
                   id="agreement"
                   className="w-[1rem] mt-[5px] form-checkbox"
@@ -71,7 +119,9 @@ const Register = () => {
                 to manage access to your account, and for other purposes described in our privacy
                 policy.
               </p>
-              <button className="text-[#fff] bg-dark-green py-4 px-8 my-5">Register</button>
+              <button type="submit" className="text-[#fff] bg-dark-green py-4 px-8 my-5">
+                Register
+              </button>
               <p className="mb-[2rem]">
                 already have an account? <Link href={"/login"}> Login </Link>{" "}
               </p>
