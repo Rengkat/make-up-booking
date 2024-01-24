@@ -23,29 +23,39 @@ const Register = () => {
   };
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!isCheck) {
-      console.log("Please agree with terms and conditions");
-    }
-    try {
-      const res = await fetch("http://localhost:5000/api/v1/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userDetails),
-      });
-
-      if (res.ok) {
-        // Request was successful, handle the response here
-        const data = await res.json();
-      } else {
-        // Request failed, handle the error here
-        const errorData = await res.json();
-        console.error("Registration failed:", errorData);
+    if (
+      userDetails.email !== "" ||
+      userDetails.firstName !== "" ||
+      userDetails.lastName !== "" ||
+      userDetails.password !== ""
+    ) {
+      if (!isCheck) {
+        console.log("Please agree with terms and conditions");
       }
-    } catch (error) {
-      console.error("An error occurred during registration:", error);
+      try {
+        const res = await fetch("http://localhost:5000/api/v1/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userDetails),
+        });
+
+        if (res.ok) {
+          // Request was successful, handle the response here
+          const data = await res.json();
+        } else {
+          // Request failed, handle the error here
+          const errorData = await res.json();
+          console.error("Registration failed:", errorData);
+        }
+      } catch (error) {
+        console.error("An error occurred during registration:", error);
+      }
+    } else {
+      console.log("Please enter all details");
     }
+    setUserDetails({ firstName: "", lastName: "", email: "", password: "" });
   };
 
   return (
