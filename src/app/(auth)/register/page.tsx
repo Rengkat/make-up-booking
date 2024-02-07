@@ -29,33 +29,37 @@ const Register = () => {
       userDetails.lastName !== "" ||
       userDetails.password !== ""
     ) {
-      if (!isCheck) {
-        console.log("Please agree with terms and conditions");
-      }
-      try {
-        const res = await fetch("http://localhost:5000/api/v1/register", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(userDetails),
-        });
+      //check box
 
-        if (res.ok) {
-          // Request was successful, handle the response here
-          const data = await res.json();
-        } else {
-          // Request failed, handle the error here
-          const errorData = await res.json();
-          console.error("Registration failed:", errorData);
+      if (isCheck) {
+        try {
+          const res = await fetch("http://localhost:5000/api/v1/register", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(userDetails),
+          });
+          if (res.ok) {
+            // Request was successful, handle the response here
+            const data = await res.json();
+            console.log(data);
+          } else {
+            // Request failed, handle the error here
+            const errorData = await res.json();
+            console.error("Registration failed:", errorData);
+          }
+        } catch (error) {
+          console.error("An error occurred during registration:", error);
         }
-      } catch (error) {
-        console.error("An error occurred during registration:", error);
+      } else {
+        console.log("please check the box");
       }
     } else {
-      console.log("Please enter all details");
+      console.log("Please enter all field");
     }
-    setUserDetails({ firstName: "", lastName: "", email: "", password: "" });
+
+    // setUserDetails({ firstName: "", lastName: "", email: "", password: "" });
   };
 
   return (
@@ -113,6 +117,7 @@ const Register = () => {
               <div className="flex items-start gap-3">
                 <input
                   type="checkbox"
+                  defaultChecked={isCheck}
                   onChange={handleCheck}
                   name="agreement"
                   id="agreement"
