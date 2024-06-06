@@ -1,15 +1,49 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
-export const metadata = {
-  title: "Login",
-};
+import React, { FormEvent, useState } from "react";
+// export const metadata = {
+//   title: "Login",
+// };
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!email || !password) {
+      console.log("Please enter credentials");
+    } else {
+      console.log(email, password);
+      try {
+        const res = await fetch("http://localhost:5000/api/users/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        });
+        if (res.ok) {
+          // Request was successful, handle the response here
+          const data = await res.json();
+          console.log(data);
+        } else {
+          // Request failed, handle the error here
+          const errorData = await res.json();
+          console.error("Registration failed:", errorData);
+        }
+      } catch (error) {
+        console.error("An error occurred during registration:", error);
+      }
+    }
+    setEmail("");
+    setPassword("");
+  };
   return (
     <>
       <div className="p-5 md:p-[5rem]">
         <div className="flex flex-col lg:flex-row space-x-[2rem] lg:items-start mt-[6rem]">
-          <form className="lg:w-[50%] xl:w-[40%]">
+          <form className="lg:w-[50%] xl:w-[40%]" onSubmit={handleSubmit}>
             {/* top title */}
             <div className="relative mb-5 lg:mb-[4rem]">
               <h1 className="text-4xl lg:text-4xl xl:text-6xl font-montserrat text-dark-green capitalize ml-3">
@@ -26,6 +60,8 @@ const Login = () => {
             {/* end of title */}
 
             <input
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
               type="email"
               name="email"
               id="email"
@@ -34,6 +70,8 @@ const Login = () => {
             />
             <input
               type="password"
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
               name="password"
               id="password"
               placeholder="Enter password"
@@ -51,7 +89,9 @@ const Login = () => {
                 <p>Remember me</p>
               </div>
 
-              <button className="text-[#fff] bg-dark-green py-4 px-8 my-[2rem]">Login</button>
+              <button type="submit" className="text-[#fff] bg-dark-green py-4 px-8 my-[2rem]">
+                Login
+              </button>
               <p className="mb-[2rem]">
                 Don't have an account yet? <Link href={"/register"}> Sign up </Link>{" "}
               </p>

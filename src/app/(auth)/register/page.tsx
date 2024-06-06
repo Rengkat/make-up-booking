@@ -1,6 +1,9 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import React, { FormEvent, useState } from "react";
 // export const metadata = {
 //   title: "Register",
@@ -10,7 +13,7 @@ const Register = () => {
 
   const [userDetails, setUserDetails] = useState({
     firstName: "",
-    lastName: "",
+    surname: "",
     email: "",
     password: "",
   });
@@ -26,14 +29,14 @@ const Register = () => {
     if (
       userDetails.email !== "" ||
       userDetails.firstName !== "" ||
-      userDetails.lastName !== "" ||
+      userDetails.surname !== "" ||
       userDetails.password !== ""
     ) {
       //check box
 
       if (isCheck) {
         try {
-          const res = await fetch("http://localhost:5000/api/v1/register", {
+          const res = await fetch("http://localhost:5000/api/users/register", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -92,9 +95,9 @@ const Register = () => {
             <input
               onChange={handleChange}
               type="text"
-              name="lastName"
-              id="lastName"
-              placeholder="Enter last name"
+              name="surname"
+              id="surname"
+              placeholder="Enter surname"
               className="signup-input"
             />
             <input
