@@ -14,7 +14,6 @@ const Login = () => {
     if (!email || !password) {
       console.log("Please enter credentials");
     } else {
-      console.log(email, password);
       try {
         const res = await fetch("http://localhost:5000/api/users/login", {
           method: "POST",
@@ -26,7 +25,6 @@ const Login = () => {
         if (res.ok) {
           // Request was successful, handle the response here
           const data = await res.json();
-          console.log(data);
         } else {
           // Request failed, handle the error here
           const errorData = await res.json();

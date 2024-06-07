@@ -4,7 +4,7 @@ import Link from "next/link";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import React, { FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 // export const metadata = {
 //   title: "Register",
 // };
@@ -20,7 +20,7 @@ const Register = () => {
   const handleCheck = () => {
     setIsCheck((prev) => !prev);
   };
-  const handleChange = (e: FormEvent) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setUserDetails((prevDetails) => ({ ...prevDetails, [name]: value }));
   };
