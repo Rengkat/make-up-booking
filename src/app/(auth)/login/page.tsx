@@ -25,6 +25,7 @@ const Login = () => {
         if (res.ok) {
           // Request was successful, handle the response here
           const data = await res.json();
+          console.log(data);
         } else {
           // Request failed, handle the error here
           const errorData = await res.json();

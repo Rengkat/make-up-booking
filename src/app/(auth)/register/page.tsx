@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/navigation";
 
 import React, { ChangeEvent, FormEvent, useState } from "react";
 // export const metadata = {
@@ -10,13 +11,14 @@ import React, { ChangeEvent, FormEvent, useState } from "react";
 // };
 const Register = () => {
   const [isCheck, setIsCheck] = useState(false);
-
+  const router = useRouter();
   const [userDetails, setUserDetails] = useState({
     firstName: "",
     surname: "",
     email: "",
     password: "",
   });
+
   const handleCheck = () => {
     setIsCheck((prev) => !prev);
   };
