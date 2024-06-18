@@ -1,14 +1,14 @@
 "use client";
 export const addUserToLocalStorage = (user: string) => {
-  localStorage.setItem("token", JSON.stringify(user));
+  localStorage.setItem("user", JSON.stringify(user));
 };
 
 export const removeUserFromLocalStorage = () => {
-  localStorage.removeItem("token");
+  localStorage.removeItem("user");
 };
 
 export const getUserFromLocalStorage = () => {
-  const result = localStorage.getItem("token");
+  const result = localStorage.getItem("user");
   const user = result ? JSON.parse(result) : null;
   return user;
 };
