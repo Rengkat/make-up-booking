@@ -5,11 +5,12 @@ import { useSelector } from "react-redux";
 const products = [1, 2, 3, 4, 5, 6, 8, 4, 3, 5, 7];
 
 const Products = () => {
-  const { shopGrid } = useSelector((state: any) => state);
+  const { shopGrid } = useSelector((state: any) => state.app);
+  const xlGrid = `xl:grid-cols-${shopGrid}`;
 
   return (
     <div
-      className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-${shopGrid} gap-x-6 gap-y-[3rem]`}>
+      className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ${xlGrid} gap-x-6 gap-y-[3rem]`}>
       {products.map((product) => {
         return (
           <Fragment key={product}>

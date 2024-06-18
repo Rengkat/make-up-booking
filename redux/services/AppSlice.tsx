@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getShopGrid } from "../localStorage";
 
 const initialState = {
   isOpenSideBar: false,
   isOpenSideCart: false,
-  shopGrid: 4,
+  shopGrid: getShopGrid(),
 };
-const AppSlice = createSlice({
+const appSlice = createSlice({
   name: "AppState",
   initialState,
   reducers: {
@@ -23,5 +24,5 @@ const AppSlice = createSlice({
   extraReducers: {},
 });
 
-export default AppSlice.reducer;
-export const { openSideBar, openSideCart, changeGrid } = AppSlice.actions;
+export default appSlice.reducer;
+export const { openSideBar, openSideCart, changeGrid } = appSlice.actions;

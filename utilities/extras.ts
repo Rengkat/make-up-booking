@@ -220,8 +220,8 @@ export const therapies = [
   },
 ];
 export const headings = [
-  { icon: FaList, num: 1 },
-  { icon: IoGridSharp, num: 2 },
-  { icon: TfiLayoutGrid3Alt, num: 3 },
-  { icon: TfiLayoutGrid4Alt, num: 4 },
+  { icon: FaList, num: 1, id: "12sdsdx" },
+  { icon: IoGridSharp, num: 2, id: "3tuttur" },
+  { icon: TfiLayoutGrid3Alt, num: 3, id: "36u5yedbbk" },
+  { icon: TfiLayoutGrid4Alt, num: 4, id: "efe45he6iedv" },
 ];
