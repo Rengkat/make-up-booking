@@ -1,31 +1,41 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserDetails } from "../../../../redux/services/AuthSlice";
+import { useLoginMutation } from "../../../../redux/services/UserApiSclice";
+import { useRouter } from "next/navigation";
 // export const metadata = {
 //   title: "Login",
 // };
 const Login = () => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const [login, { isLoading, error }] = useLoginMutation();
+  const { user } = useSelector((state: any) => state.auth);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!email || !password) {
       console.log("Please enter credentials");
     } else {
       try {
-        const res = await fetch("http://localhost:5000/api/users/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, password }),
-        });
+        // const res = await fetch("http://localhost:5000/api/users/login", {
+        //   method: "POST",
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
+        //   body: JSON.stringify({ email, password }),
+        // });
+        const res = await login({ email, password }).unwrap();
         if (res.ok) {
           // Request was successful, handle the response here
-          const data = await res.json();
-          console.log(data);
+          // const data = await res.json();
+          dispatch(setUserDetails(res));
+          router.replace("/");
         } else {
           // Request failed, handle the error here
           const errorData = await res.json();
@@ -38,6 +48,11 @@ const Login = () => {
     setEmail("");
     setPassword("");
   };
+  useEffect(() => {
+    if (user) {
+      router.replace("/");
+    }
+  });
   return (
     <>
       <div className="p-5 md:p-[5rem]">

@@ -1,7 +1,25 @@
+// "use client";
 import Link from "next/link";
-import React from "react";
+// import React, { useEffect, useState } from "react";
+// import { useSelector } from "react-redux";
 
 const Profile = () => {
+  // const [fetchedUser, setFetchedUser] = useState({});
+  // const { user } = useSelector((store: any) => store.auth);
+  // const { user: userDetail, token } = user;
+
+  // useEffect(() => {
+  //   const fetchDetailUser = async () => {
+  //     const response = await fetch("http://localhost:5000/api/users/profile", {
+  //       method: "GET",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+  //     const data = response.json();
+  //   };
+  // });
   return (
     <div className="bg-white p-5 lg:py-3  lg:px-[2rem] text-xl text-slate-600 mb-[5rem]">
       <div className="border-b-[1px] my-2 lg:mb-[2rem]">
