@@ -12,8 +12,8 @@ import { useRouter } from "next/navigation";
 const Login = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const [login, { isLoading, error }] = useLoginMutation();
-  const { user } = useSelector((state: any) => state.auth);
+  const [login, { isLoading, error, isSuccess }] = useLoginMutation();
+  const { token } = useSelector((state: any) => state.auth);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,18 +23,13 @@ const Login = () => {
       console.log("Please enter credentials");
     } else {
       try {
-        // const res = await fetch("http://localhost:5000/api/users/login", {
-        //   method: "POST",
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //   },
-        //   body: JSON.stringify({ email, password }),
-        // });
         const res = await login({ email, password }).unwrap();
-        if (res.ok) {
+        const { user, token } = res;
+
+        if (isSuccess) {
           // Request was successful, handle the response here
           // const data = await res.json();
-          dispatch(setUserDetails(res));
+          dispatch(setUserDetails({ user, token }));
           router.replace("/");
         } else {
           // Request failed, handle the error here
@@ -49,7 +44,7 @@ const Login = () => {
     setPassword("");
   };
   useEffect(() => {
-    if (user) {
+    if (token) {
       router.replace("/");
     }
   });
