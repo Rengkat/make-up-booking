@@ -1,4 +1,3 @@
-import React from "react";
 import ActiveLink from "./ActiveLink";
 import { FaShoppingCart } from "react-icons/fa";
 import CartModal from "./CartModal";
