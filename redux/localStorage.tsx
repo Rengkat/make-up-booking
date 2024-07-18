@@ -16,7 +16,7 @@ export const getTokenFromLocalStorage = () => {
     const result = localStorage.getItem("token");
     return result ? JSON.parse(result) : null;
   }
-  return null; // Return null or default value if window is undefined
+  return null;
 };
 
 export const storeGridNum = (num: number) => {
@@ -30,5 +30,5 @@ export const getShopGrid = () => {
     const result = localStorage.getItem("grid");
     return result ? JSON.parse(result) : null;
   }
-  return null; // Return null or default value if window is undefined
+  return null;
 };
