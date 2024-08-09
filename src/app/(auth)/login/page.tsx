@@ -37,8 +37,8 @@ const Login = () => {
       router.replace("/");
     } catch (error) {
       // Handle error
-      if (error && error.data && error.data.message) {
-        setErrorMessage(error.data.message);
+      if (error && error.message) {
+        setErrorMessage(error.message);
       } else {
         setErrorMessage("An error occurred during login");
       }
