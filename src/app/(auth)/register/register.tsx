@@ -1,19 +1,18 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { toast, ToastContainer } from "react-toastify";
+// import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
 
 import React, { ChangeEvent, FormEvent, useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-// export const metadata = {
-//   title: "Register",
-// };
+import { useRegisterMutation } from "../../../../redux/services/AuthApiSlice";
+
 const RegisterComp = () => {
+  const [register, { isLoading, isSuccess }] = useRegisterMutation();
   const [isCheck, setIsCheck] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const router = useRouter();
-  const dispatch = useDispatch();
 
   const [userDetails, setUserDetails] = useState({
     firstName: "",
@@ -25,49 +24,38 @@ const RegisterComp = () => {
   const handleCheck = () => {
     setIsCheck((prev) => !prev);
   };
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setUserDetails((prevDetails) => ({ ...prevDetails, [name]: value }));
   };
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (
-      userDetails.email !== "" ||
-      userDetails.firstName !== "" ||
-      userDetails.surname !== "" ||
-      userDetails.password !== ""
-    ) {
-      //check box
+    const { firstName, surname, email, password } = userDetails;
 
-      if (isCheck) {
-        try {
-          const res = await fetch("http://localhost:5000/api/users/register", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(userDetails),
-          });
-          if (res.ok) {
-            // Request was successful, handle the response here
-            const data = await res.json();
-            console.log(data);
-          } else {
-            // Request failed, handle the error here
-            const errorData = await res.json();
-            console.error("Registration failed:", errorData);
-          }
-        } catch (error) {
-          console.error("An error occurred during registration:", error);
-        }
-      } else {
-        console.log("please check the box");
-      }
-    } else {
-      console.log("Please enter all field");
+    // Check if all fields are filled
+    const allFieldsFilled = [firstName, surname, email, password].every((field) => field !== "");
+
+    if (!allFieldsFilled) {
+      setErrorMessage("Please enter all fields");
+      return;
     }
 
-    // setUserDetails({ firstName: "", lastName: "", email: "", password: "" });
+    if (!isCheck) {
+      setErrorMessage("Agree to terms and conditions");
+      return;
+    }
+
+    try {
+      const res = await register(userDetails).unwrap();
+
+      const message = res.message;
+      console.log(res, message);
+      router.replace("/login");
+    } catch (error) {
+      console.error("An error occurred during registration:", error);
+    }
   };
 
   return (

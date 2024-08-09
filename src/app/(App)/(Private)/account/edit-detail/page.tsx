@@ -2,7 +2,7 @@
 "use client";
 
 import { useDispatch, useSelector } from "react-redux";
-import { useUpdateUserDetailMutation } from "../../../../../../redux/services/UserApiSclice";
+import { useUpdateUserDetailMutation } from "../../../../../../redux/services/AuthApiSlice";
 import { ChangeEvent, FormEvent, useState } from "react";
 
 // export const metadata: Metadata = {

@@ -4,7 +4,7 @@ import Link from "next/link";
 import React, { FormEvent, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserDetails } from "../../../../redux/services/AuthSlice";
-import { useLoginMutation } from "../../../../redux/services/UserApiSclice";
+import { useLoginMutation } from "../../../../redux/services/AuthApiSlice";
 import { useRouter } from "next/navigation";
 // export const metadata = {
 //   title: "Login",
@@ -17,37 +17,42 @@ const Login = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!email || !password) {
-      console.log("Please enter credentials");
-    } else {
-      try {
-        const res = await login({ email, password }).unwrap();
-        const { user, token } = res;
 
-        if (isSuccess) {
-          // Request was successful, handle the response here
-          // const data = await res.json();
-          dispatch(setUserDetails({ user, token }));
-          router.replace("/");
-        } else {
-          // Request failed, handle the error here
-          const errorData = await res.json();
-          console.error("Registration failed:", errorData);
-        }
-      } catch (error) {
-        console.error("An error occurred during registration:", error);
-      }
+    if (!email || !password) {
+      setErrorMessage("Please enter credentials");
+      return; // Early return if fields are missing
     }
-    setEmail("");
-    setPassword("");
+
+    try {
+      const res = await login({ email, password }).unwrap(); // Unwrap directly to get the data or throw
+      const { user, message } = res;
+
+      // Set user details in your Redux state
+      dispatch(setUserDetails({ user }));
+
+      // Navigate to the homepage
+      router.replace("/");
+    } catch (error) {
+      // Handle error
+      if (error && error.data && error.data.message) {
+        setErrorMessage(error.data.message);
+      } else {
+        setErrorMessage("An error occurred during login");
+      }
+    } finally {
+      setEmail("");
+      setPassword("");
+    }
   };
+
   useEffect(() => {
     if (token) {
       router.replace("/");
     }
-  });
+  }, [token]);
   return (
     <>
       <div className="p-5 md:p-[5rem]">

@@ -18,10 +18,10 @@ const HoveredNav = () => {
           Account
         </Link>
         <Link className="dropdown-link" href={"/login"}>
-          Log In
+          Login
         </Link>
         <Link className="dropdown-link" href={"/register"}>
-          Sign Up
+          Register
         </Link>
       </div>
     </aside>

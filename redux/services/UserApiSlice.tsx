@@ -2,17 +2,10 @@ import { getTokenFromLocalStorage } from "../localStorage";
 import { apiSlice } from "./ApiSlice";
 
 const token = getTokenFromLocalStorage();
-const USER_URL = "/users";
+const USER_URL = "/user";
 
 export const userApiSlice = apiSlice.injectEndpoints({
-  endpoints: (build) => ({
-    login: build.mutation({
-      query: (data) => ({
-        url: `${USER_URL}/login`,
-        method: "POST",
-        body: data,
-      }),
-    }),
+  endpoints: (build: any) => ({
     getUserDetails: build.query({
       query: () => ({
         url: `${USER_URL}/profile`,
@@ -22,7 +15,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
       }),
     }),
     updateUserDetail: build.mutation({
-      query: (data) => ({
+      query: (data: any) => ({
         url: `${USER_URL}/profile`,
         method: "PUT",
         body: data,
@@ -34,5 +27,4 @@ export const userApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useLoginMutation, useGetUserDetailsQuery, useUpdateUserDetailMutation } =
-  userApiSlice;
+export const { useGetUserDetailsQuery, useUpdateUserDetailMutation } = userApiSlice;

@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useGetUserDetailsQuery } from "../../../../../redux/services/UserApiSclice";
+import { useGetUserDetailsQuery } from "../../../../../redux/services/AuthApiSlice";
 // import React, { useEffect, useState } from "react";
 // import { useSelector } from "react-redux";
 

@@ -14,7 +14,12 @@ export const removeTokenFromLocalStorage = () => {
 export const getTokenFromLocalStorage = () => {
   if (typeof window !== "undefined") {
     const result = localStorage.getItem("token");
-    return result ? JSON.parse(result) : null;
+    try {
+      return result ? JSON.parse(result) : null;
+    } catch (error) {
+      console.error("Error parsing token:", error);
+      return null;
+    }
   }
   return null;
 };
