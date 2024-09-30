@@ -1,9 +1,11 @@
 "use client";
-export const addTokenToLocalStorage = (token: string) => {
-  if (typeof window !== "undefined") {
-    localStorage.setItem("token", JSON.stringify(token));
-  }
-};
+import Cookies from "js-cookie";
+
+// export const addTokenToLocalStorage = (token: string) => {
+//   if (typeof window !== "undefined") {
+//     localStorage.setItem("token", JSON.stringify(token));
+//   }
+// };
 
 export const removeTokenFromLocalStorage = () => {
   if (typeof window !== "undefined") {

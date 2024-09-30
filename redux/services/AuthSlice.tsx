@@ -1,14 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  addTokenToLocalStorage,
-  getTokenFromLocalStorage,
-  removeTokenFromLocalStorage,
-} from "../localStorage";
+import // addTokenToLocalStorage,
+// getTokenFromLocalStorage,
+// removeTokenFromLocalStorage,
+"../localStorage";
 
 const authSlice = createSlice({
   initialState: {
     user: null,
-    token: getTokenFromLocalStorage(),
     isLogin: false,
   },
   name: "auth",
@@ -16,12 +14,11 @@ const authSlice = createSlice({
     setUserDetails(state, action) {
       const { user } = action.payload;
       state.user = user;
-      // state.token = token;
-      // addTokenToLocalStorage(token);
+      state.isLogin = true;
     },
     logout(state, action) {
       state.user = null;
-      removeTokenFromLocalStorage();
+      state.isLogin = false;
     },
   },
 });

@@ -4,40 +4,40 @@ import { CiSearch } from "react-icons/ci";
 import { FaFilter } from "react-icons/fa";
 import Products from "./Products";
 import ShopGrid from "./ShopGrid";
+import { getProducts } from "@/API/Data";
+import PriceFilter from "./PriceFilter";
 const productCategories = ["cream", "hair masks", "makeup", "moisturisers"];
 <option value="default">Default Sorting</option>;
 
 const sorting = [
   {
     value: "popularity",
-    name: "Sort by popularity",
+    name: "Sort by Popularity",
   },
   { value: "highToLow", name: "Sort by Price: High to low" },
-  { value: "average", name: "Sort by averaging" },
-  { value: "latest", name: "Sort by latest" },
+  { value: "rating", name: "Sort by Rating" },
+  { value: "latest", name: "Sort by Latest" },
   { value: "lowToHigh", name: "Sort by Price: Low to high" },
 ];
-const Shop = () => {
+const Shop = async () => {
   // const handleSelect = () => {};
+  const products = await getProducts();
+
   return (
     <div>
       <HeroComp title="Shop" />
       <main className="flex flex-col lg:flex-row py-[5rem] lg:py-[10rem] xl:px-[5rem]">
         <aside className="w-[23%] hidden xl:block ">
           <div className="bg-white px-[2rem] py-[2.5rem]">
-            <div className="flex items-center  bg-white border-b-2 border-slate-600 pr-2 ">
+            <div className="w-full  bg-white border-b-2 border-slate-600 pr-2 ">
               <input
                 type="text"
                 placeholder="Search products"
-                className="border-none outline-none w-[85%]"
+                className="border-none outline-none w-full"
               />
-              <CiSearch className="text-3xl" />
             </div>
           </div>
-          <div className="my-[2rem] bg-white px-[2rem] py-[2.5rem]">
-            <input type="range" name="" id="" className="w-full" />
-            <p className="my-2 text-xl font-light">Price: $23 - $300</p>
-          </div>
+          <PriceFilter />
           <div className="my-[2rem] bg-white px-[2rem] py-[2.5rem]">
             <h1 className="text-2xl text-dark-green mb-4">Product Categories</h1>
             <ul>

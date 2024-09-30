@@ -16,7 +16,7 @@ const Addresses = () => {
       <h1 className="text-2xl font-light">Address 2</h1>
       <AddressComp />
       <button className="py-3 px-5 my-[1rem] bg-dark-green shadow text-white hover:bg-dark-gold">
-        <Link href={"/account/addresses/edit-address"}>Add or Edit Addresses</Link>
+        <Link href={"/account/addresses/add-address"}>Add Address</Link>
       </button>
     </div>
   );

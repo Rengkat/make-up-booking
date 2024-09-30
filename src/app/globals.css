@@ -4,7 +4,7 @@
 
 @layer components {
   .signup-input {
-    @apply form-input w-full p-4 border-b-2 border-b-yellowish-orange my-5 placeholder:text-xl outline-none border-t-0 border-l-0 border-r-0;
+    @apply form-input w-full p-4 border-b-2 border-b-yellowish-orange mt-8 placeholder:text-xl outline-none border-t-0 border-l-0 border-r-0;
   }
   .link-icons {
     @apply p-3 rounded-full bg-dark-green text-white;

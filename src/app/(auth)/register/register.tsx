@@ -1,16 +1,13 @@
-"use client";
 import Image from "next/image";
 import Link from "next/link";
-// import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
-
 import React, { ChangeEvent, FormEvent, useState, useEffect } from "react";
 import { useRegisterMutation } from "../../../../redux/services/AuthApiSlice";
 
 const RegisterComp = () => {
-  const [register, { isLoading, isSuccess }] = useRegisterMutation();
+  const [register, { isLoading, isError }] = useRegisterMutation();
   const [isCheck, setIsCheck] = useState(false);
+  const [isErrorMessage, setIsErrorMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const router = useRouter();
 
@@ -39,22 +36,33 @@ const RegisterComp = () => {
 
     if (!allFieldsFilled) {
       setErrorMessage("Please enter all fields");
+      setIsErrorMessage(true);
+      setTimeout(() => {
+        setIsErrorMessage(false);
+      }, 2000); // Hide after 2 seconds
       return;
     }
 
     if (!isCheck) {
       setErrorMessage("Agree to terms and conditions");
+      setIsErrorMessage(true);
+      setTimeout(() => {
+        setIsErrorMessage(false);
+      }, 2000); // Hide after 2 seconds
       return;
     }
 
     try {
       const res = await register(userDetails).unwrap();
-
       const message = res.message;
       console.log(res, message);
       router.replace("/login");
-    } catch (error) {
-      console.error("An error occurred during registration:", error);
+    } catch (error: any) {
+      setErrorMessage(error.data.message);
+      setIsErrorMessage(true);
+      setTimeout(() => {
+        setIsErrorMessage(false);
+      }, 2000); // Hide after 2 seconds
     }
   };
 
@@ -109,7 +117,10 @@ const RegisterComp = () => {
               placeholder="Enter password"
               className="signup-input"
             />
-            <div className="mt-5 font-montserrat">
+            <div className="font-montserrat">
+              {isErrorMessage && (
+                <div className="bg-red-700 text-white p-2 mb-2">{errorMessage}</div>
+              )}
               <div className="flex items-start gap-3">
                 <input
                   type="checkbox"
@@ -119,7 +130,6 @@ const RegisterComp = () => {
                   id="agreement"
                   className="w-[1rem] mt-[5px] form-checkbox"
                 />
-
                 <p>
                   By creating an account, you agree to the Terms and Conditions{" "}
                   <span className="text-red-500">*</span>
@@ -131,10 +141,14 @@ const RegisterComp = () => {
                 policy.
               </p>
               <button type="submit" className="text-[#fff] bg-dark-green py-4 px-8 my-5">
-                Register
+                {isLoading ? "Loading..." : "Register"}
               </button>
               <p className="mb-[2rem]">
-                already have an account? <Link href={"/login"}> Login </Link>{" "}
+                Already have an account?{" "}
+                <Link className="text-dark-gold" href={"/login"}>
+                  {" "}
+                  Login{" "}
+                </Link>{" "}
               </p>
             </div>
           </form>

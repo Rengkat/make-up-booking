@@ -9,9 +9,6 @@ export const userApiSlice = apiSlice.injectEndpoints({
     getUserDetails: build.query({
       query: () => ({
         url: `${USER_URL}/profile`,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
       }),
     }),
     updateUserDetail: build.mutation({
@@ -19,9 +16,6 @@ export const userApiSlice = apiSlice.injectEndpoints({
         url: `${USER_URL}/profile`,
         method: "PUT",
         body: data,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
       }),
     }),
   }),

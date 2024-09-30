@@ -6,28 +6,30 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUserDetails } from "../../../../redux/services/AuthSlice";
 import { useLoginMutation } from "../../../../redux/services/AuthApiSlice";
 import { useRouter } from "next/navigation";
-// export const metadata = {
-//   title: "Login",
-// };
 const Login = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const [login, { isLoading, error, isSuccess }] = useLoginMutation();
-  const { token } = useSelector((state: any) => state.auth);
 
+  const [login, { isLoading, error, isSuccess }] = useLoginMutation();
+  const { user } = useSelector((state: any) => state.auth);
+  console.log(user);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [isErrorMessage, setIsErrorMessage] = useState(false);
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     if (!email || !password) {
       setErrorMessage("Please enter credentials");
-      return; // Early return if fields are missing
+      setIsErrorMessage(true);
+      setTimeout(() => setIsErrorMessage(false), 2000); // Hide after 2 seconds
+      return;
     }
 
     try {
-      const res = await login({ email, password }).unwrap(); // Unwrap directly to get the data or throw
+      const res = await login({ email, password }).unwrap();
       const { user, message } = res;
 
       // Set user details in your Redux state
@@ -35,13 +37,10 @@ const Login = () => {
 
       // Navigate to the homepage
       router.replace("/");
-    } catch (error) {
-      // Handle error
-      if (error && error.message) {
-        setErrorMessage(error.message);
-      } else {
-        setErrorMessage("An error occurred during login");
-      }
+    } catch (error: any) {
+      setErrorMessage(error.data?.message || "An error occurred during login");
+      setIsErrorMessage(true);
+      setTimeout(() => setIsErrorMessage(false), 2000); // Hide after 2 seconds
     } finally {
       setEmail("");
       setPassword("");
@@ -49,10 +48,11 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (token) {
+    if (user) {
       router.replace("/");
     }
-  }, [token]);
+  }, [user]);
+
   return (
     <>
       <div className="p-5 md:p-[5rem]">
@@ -91,7 +91,10 @@ const Login = () => {
               placeholder="Enter password"
               className="signup-input"
             />
-            <div className="mt-5 lg:mt-[1rem] font-montserrat">
+            <div className="mt-0 lg:mt-[1rem] font-montserrat">
+              {isErrorMessage && (
+                <div className="bg-red-700 text-white p-2 mb-2">{errorMessage}</div>
+              )}
               <div className="flex items-start gap-3">
                 <input
                   type="checkbox"
@@ -99,15 +102,25 @@ const Login = () => {
                   id="agreement"
                   className="w-[1rem] mt-[5px] form-checkbox"
                 />
-
                 <p>Remember me</p>
               </div>
 
               <button type="submit" className="text-[#fff] bg-dark-green py-4 px-8 my-[2rem]">
-                Login
+                {isLoading ? "Loading..." : "Login"}
               </button>
+              <p className="mb-2">
+                Don't have an account yet?{" "}
+                <Link className="text-dark-gold" href={"/register"}>
+                  {" "}
+                  Sign up{" "}
+                </Link>{" "}
+              </p>
               <p className="mb-[2rem]">
-                Don't have an account yet? <Link href={"/register"}> Sign up </Link>{" "}
+                Forgot Password?{" "}
+                <Link className="text-dark-gold" href={"/reset-password"}>
+                  {" "}
+                  Reset Password{" "}
+                </Link>{" "}
               </p>
             </div>
           </form>
