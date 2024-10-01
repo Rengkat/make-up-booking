@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 const HoveredNav = () => {
   const [isHovered, setIsHovered] = useState(false);
   const { user } = useSelector((state: any) => state.auth);
-  console.log(user);
 
   return (
     <aside className="link-icons relative" onMouseEnter={() => setIsHovered(true)}>

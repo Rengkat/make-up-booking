@@ -4,7 +4,6 @@ import { CiSearch } from "react-icons/ci";
 import { FaFilter } from "react-icons/fa";
 import Products from "./Products";
 import ShopGrid from "./ShopGrid";
-import { getProducts } from "@/API/Data";
 import PriceFilter from "./PriceFilter";
 const productCategories = ["cream", "hair masks", "makeup", "moisturisers"];
 <option value="default">Default Sorting</option>;
@@ -19,10 +18,7 @@ const sorting = [
   { value: "latest", name: "Sort by Latest" },
   { value: "lowToHigh", name: "Sort by Price: Low to high" },
 ];
-const Shop = async () => {
-  // const handleSelect = () => {};
-  const products = await getProducts();
-
+const Shop = () => {
   return (
     <div>
       <HeroComp title="Shop" />

@@ -1,25 +1,24 @@
 "use client";
-import Cookies from "js-cookie";
 
-// export const addTokenToLocalStorage = (token: string) => {
-//   if (typeof window !== "undefined") {
-//     localStorage.setItem("token", JSON.stringify(token));
-//   }
-// };
-
-export const removeTokenFromLocalStorage = () => {
+export const addUserToLocalStorage = (user: object) => {
   if (typeof window !== "undefined") {
-    localStorage.removeItem("token");
+    localStorage.setItem("user", JSON.stringify(user));
   }
 };
 
-export const getTokenFromLocalStorage = () => {
+export const removeUserFromLocalStorage = () => {
   if (typeof window !== "undefined") {
-    const result = localStorage.getItem("token");
+    localStorage.removeItem("user");
+  }
+};
+
+export const getUserFromLocalStorage = () => {
+  if (typeof window !== "undefined") {
+    const result = localStorage.getItem("user");
     try {
       return result ? JSON.parse(result) : null;
     } catch (error) {
-      console.error("Error parsing token:", error);
+      console.error("Error parsing user:", error);
       return null;
     }
   }

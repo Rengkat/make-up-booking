@@ -12,10 +12,10 @@ const Login = () => {
 
   const [login, { isLoading, error, isSuccess }] = useLoginMutation();
   const { user } = useSelector((state: any) => state.auth);
-  console.log(user);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const [isErrorMessage, setIsErrorMessage] = useState(false);
 
   const handleSubmit = async (e: FormEvent) => {
@@ -32,15 +32,15 @@ const Login = () => {
       const res = await login({ email, password }).unwrap();
       const { user, message } = res;
 
-      // Set user details in your Redux state
-      dispatch(setUserDetails({ user }));
+      dispatch(setUserDetails(user));
 
-      // Navigate to the homepage
+      setSuccessMessage(message);
+
       router.replace("/");
     } catch (error: any) {
       setErrorMessage(error.data?.message || "An error occurred during login");
       setIsErrorMessage(true);
-      setTimeout(() => setIsErrorMessage(false), 2000); // Hide after 2 seconds
+      setTimeout(() => setIsErrorMessage(false), 2000);
     } finally {
       setEmail("");
       setPassword("");
@@ -55,7 +55,7 @@ const Login = () => {
 
   return (
     <>
-      <div className="p-5 md:p-[5rem]">
+      <div className="p-5 md:p-[5rem] h-[100vh] lg:h-full">
         <div className="flex flex-col lg:flex-row space-x-[2rem] lg:items-start mt-[6rem]">
           <form className="lg:w-[50%] xl:w-[40%]" onSubmit={handleSubmit}>
             {/* top title */}
@@ -94,6 +94,9 @@ const Login = () => {
             <div className="mt-0 lg:mt-[1rem] font-montserrat">
               {isErrorMessage && (
                 <div className="bg-red-700 text-white p-2 mb-2">{errorMessage}</div>
+              )}
+              {isSuccess && !isErrorMessage && (
+                <div className="bg-dark-gold text-white p-2 mb-2">{successMessage}</div>
               )}
               <div className="flex items-start gap-3">
                 <input

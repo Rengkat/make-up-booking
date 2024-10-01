@@ -5,10 +5,11 @@ import React, { ChangeEvent, FormEvent, useState, useEffect } from "react";
 import { useRegisterMutation } from "../../../../redux/services/AuthApiSlice";
 
 const RegisterComp = () => {
-  const [register, { isLoading, isError }] = useRegisterMutation();
+  const [register, { isLoading, isSuccess, isError }] = useRegisterMutation();
   const [isCheck, setIsCheck] = useState(false);
   const [isErrorMessage, setIsErrorMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const router = useRouter();
 
   const [userDetails, setUserDetails] = useState({
@@ -55,10 +56,11 @@ const RegisterComp = () => {
     try {
       const res = await register(userDetails).unwrap();
       const message = res.message;
-      console.log(res, message);
+
+      setSuccessMessage(message);
       router.replace("/login");
     } catch (error: any) {
-      setErrorMessage(error.data.message);
+      setErrorMessage(error.message);
       setIsErrorMessage(true);
       setTimeout(() => {
         setIsErrorMessage(false);
@@ -120,6 +122,9 @@ const RegisterComp = () => {
             <div className="font-montserrat">
               {isErrorMessage && (
                 <div className="bg-red-700 text-white p-2 mb-2">{errorMessage}</div>
+              )}
+              {isSuccess && !isErrorMessage && (
+                <div className="bg-dark-gold text-white p-2 mb-2">{successMessage}</div>
               )}
               <div className="flex items-start gap-3">
                 <input

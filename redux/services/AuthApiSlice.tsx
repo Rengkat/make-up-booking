@@ -1,4 +1,3 @@
-import { getTokenFromLocalStorage } from "../localStorage";
 import { apiSlice } from "./ApiSlice";
 
 const USER_URL = "/auth";
@@ -19,7 +18,26 @@ export const authApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    verifyEmail: build.mutation({
+      query: (data) => ({
+        url: `${USER_URL}/verify-email`,
+        method: "POST",
+        body: data,
+      }),
+    }),
+    reverifyEmail: build.mutation({
+      query: (data) => ({
+        url: `${USER_URL}/new-verification`,
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useRegisterMutation, useLoginMutation } = authApiSlice;
+export const {
+  useRegisterMutation,
+  useLoginMutation,
+  useVerifyEmailMutation,
+  useReverifyEmailMutation,
+} = authApiSlice;
