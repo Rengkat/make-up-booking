@@ -19,7 +19,7 @@ const authSlice = createSlice({
       state.isLogin = true;
       addUserToLocalStorage(user);
     },
-    logout(state, action) {
+    logout(state) {
       state.user = null;
       state.isLogin = false;
       removeUserFromLocalStorage();

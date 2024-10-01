@@ -6,9 +6,9 @@ import { GrSchedule } from "react-icons/gr";
 import { PiHandbagThin } from "react-icons/pi";
 import { FaListUl } from "react-icons/fa";
 import { HiOutlineHomeModern } from "react-icons/hi2";
-import { TbLogout } from "react-icons/tb";
 import ActiveLink from "./activeLink";
 import { Metadata } from "next";
+import LogoutComp from "./Logout";
 export const metadata: Metadata = {
   title: "My account",
 };
@@ -44,10 +44,7 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
               text="Addresses"
               icon={<HiOutlineHomeModern className="account-icon" />}
             />
-            <aside className="account-links cursor-pointer">
-              <TbLogout className="account-icon" />
-              <span>Logout</span>
-            </aside>
+            <LogoutComp />
           </div>
         </aside>
         <main className="lg:w-[75%] mb-[5rem] lg:mb-[10rem]">{children}</main>

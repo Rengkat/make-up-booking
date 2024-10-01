@@ -9,7 +9,11 @@ const Profile = () => {
   const user = data?.user;
   return (
     <>
-      {isLoading && <div>Loading...</div>}
+      {isLoading && (
+        <div className="flex justify-center text-xl text-dark-green">
+          <p>Loading...</p>
+        </div>
+      )}
       {!isLoading && isSuccess && (
         <div className="bg-white p-5 lg:py-3  lg:px-[2rem] text-xl text-slate-600 mb-[5rem]">
           <div className="border-b-[1px] my-2 lg:mb-[2rem]">
