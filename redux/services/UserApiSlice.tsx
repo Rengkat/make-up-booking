@@ -39,7 +39,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
     }),
     updateAddress: build.mutation({
       query: (address) => ({
-        url: `${USER_URL}/address`,
+        url: `${USER_URL}/updateAddress`,
         method: "PATCH",
         body: address,
         credentials: "include",
@@ -71,4 +71,5 @@ export const {
   useAddAddressMutation,
   useDeleteAddressMutation,
   useGetSingleAddressQuery,
+  useUpdateAddressMutation,
 } = userApiSlice;

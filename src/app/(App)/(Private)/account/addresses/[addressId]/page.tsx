@@ -1,12 +1,16 @@
 "use client";
 import React, { ChangeEvent, FormEvent, ReactNode, useEffect, useState } from "react";
-import { useGetSingleAddressQuery } from "../../../../../../../redux/services/UserApiSlice";
+import {
+  useGetSingleAddressQuery,
+  useUpdateAddressMutation,
+} from "../../../../../../../redux/services/UserApiSlice";
 interface Props {
   params: { addressId: string };
 }
 const EditAddress = ({ params }: Props) => {
   const { addressId } = params;
   const { data, isLoading } = useGetSingleAddressQuery({ addressId });
+  const [updateAddress, { isLoading: isUpdating, isSuccess, isError }] = useUpdateAddressMutation();
   const fetchedAddress = data?.address;
 
   const [successMessage, setSuccessMessage] = useState("");
@@ -36,8 +40,13 @@ const EditAddress = ({ params }: Props) => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-
+    const requestBody = {
+      addressId,
+      updatedAddress: address,
+    };
     try {
+      const res = await updateAddress(requestBody).unwrap();
+      setSuccessMessage(res.message);
       setAddress({
         country: "",
         state: "",
@@ -46,7 +55,9 @@ const EditAddress = ({ params }: Props) => {
         landmark: "",
         homeAddress: "",
       });
-    } catch (err) {}
+    } catch (err) {
+      setErrorMessage(err.data.message);
+    }
   };
   {
     isLoading && <div>Loading...</div>;
@@ -136,19 +147,19 @@ const EditAddress = ({ params }: Props) => {
           </div>
         </aside>
       </div>
-      {/* {!isLoading && isSuccess && (
+      {!isLoading && isSuccess && (
         <div className="bg-orange-300 text-dark-gold font-semibold text-center p-2">
           {successMessage}
         </div>
-      )} */}
+      )}
       {/* Error message */}
-      {/* {!isLoading && isError && (
+      {!isLoading && isError && (
         <div className="bg-red-300 text-red-600 font-semibold text-center p-2">{errorMessage}</div>
-      )} */}
+      )}
       <button
         onClick={handleSubmit}
         className="py-3 px-8 my-[1rem] bg-dark-green shadow text-white hover:bg-dark-gold">
-        {isLoading ? "Saving..." : "Save"}
+        {isUpdating ? "Updating..." : "Update"}
       </button>
     </div>
   );
