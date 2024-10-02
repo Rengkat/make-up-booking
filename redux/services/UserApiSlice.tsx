@@ -9,6 +9,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
         url: `${USER_URL}/profile`,
         credentials: "include",
       }),
+      providesTags: ["User"],
     }),
     updateUserDetail: build.mutation({
       query: (data) => ({
@@ -17,6 +18,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
         body: data,
         credentials: "include",
       }),
+      invalidatesTags: ["User"],
     }),
     changePassword: build.mutation({
       query: (data) => ({
@@ -26,8 +28,21 @@ export const userApiSlice = apiSlice.injectEndpoints({
         credentials: "include",
       }),
     }),
+    addAddress: build.mutation({
+      query: (address) => ({
+        url: `${USER_URL}/address`,
+        method: "PUT",
+        body: address,
+        credentials: "include",
+      }),
+      invalidatesTags: ["User"],
+    }),
   }),
 });
 
-export const { useGetUserDetailsQuery, useUpdateUserDetailMutation, useChangePasswordMutation } =
-  userApiSlice;
+export const {
+  useGetUserDetailsQuery,
+  useUpdateUserDetailMutation,
+  useChangePasswordMutation,
+  useAddAddressMutation,
+} = userApiSlice;

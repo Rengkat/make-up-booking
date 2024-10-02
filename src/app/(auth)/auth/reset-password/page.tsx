@@ -19,8 +19,8 @@ const ResetPassword = () => {
       if (!password) {
         return;
       }
-      const res = await resetPassword({ password, email, resetVerificationToken });
-      console.log(res);
+      await resetPassword({ password, email, resetVerificationToken });
+
       router.push("/login");
     } catch (error: any) {
       setErrorMessage(error.data?.message || "An error occurred while resetting password");
