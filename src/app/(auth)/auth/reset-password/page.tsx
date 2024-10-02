@@ -2,19 +2,35 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { FormEvent, useState, useEffect } from "react";
-
-const ForgotPassword = () => {
-  const [email, setEmail] = useState("");
+import { useResetPasswordMutation } from "../../../../../redux/services/AuthApiSlice";
+import { useSearchParams, useRouter } from "next/navigation";
+const ResetPassword = () => {
+  const search = useSearchParams();
+  const router = useRouter();
+  const email = search.get("email");
+  const resetVerificationToken = search.get("resetToken");
+  const [resetPassword, { isLoading, isError }] = useResetPasswordMutation();
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [isErrorMessage, setIsErrorMessage] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    try {
+      if (!password) {
+        return;
+      }
+      const res = await resetPassword({ password, email, resetVerificationToken });
+      console.log(res);
+      router.push("/login");
+    } catch (error: any) {
+      setErrorMessage(error.data?.message || "An error occurred while resetting password");
+    }
+  };
   return (
     <>
       <div className="p-5 md:p-[5rem] h-[100vh] lg:h-full">
         <div className="flex flex-col lg:flex-row space-x-[2rem] lg:items-start mt-[6rem]">
-          <form className="lg:w-[50%] xl:w-[40%]">
+          <form className="lg:w-[50%] xl:w-[40%]" onSubmit={handleSubmit}>
             {/* top title */}
             <div className="relative mb-5 lg:mb-[4rem]">
               <h1 className="text-2xl lg:text-3xl xl:text-4xl font-montserrat text-dark-green capitalize ml-3">
@@ -24,6 +40,8 @@ const ForgotPassword = () => {
             {/* end of title */}
 
             <input
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
               type="password"
               name="Password"
               id="password"
@@ -32,9 +50,7 @@ const ForgotPassword = () => {
             />
 
             <div className="mt-0 lg:mt-[1rem] font-montserrat">
-              {isErrorMessage && (
-                <div className="bg-red-700 text-white p-2 mb-2">{errorMessage}</div>
-              )}
+              {isError && <div className="bg-red-700 text-white p-2 mb-2">{errorMessage}</div>}
 
               <button type="submit" className="text-[#fff] bg-dark-green py-4 px-8 my-[2rem]">
                 {isLoading ? "Loading..." : "New Password"}
@@ -56,4 +72,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default ResetPassword;
