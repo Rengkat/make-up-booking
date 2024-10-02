@@ -1,33 +1,17 @@
 "use client";
-
-import { ChangeEvent, FormEvent, useState } from "react";
-import { useAddAddressMutation } from "../../../../../../../redux/services/UserApiSlice";
-
-interface Address {
-  country: string;
-  state: string;
-  city: string;
-  town: string;
-  landmark: string;
-  homeAddress: string;
+import React, { ChangeEvent, FormEvent, ReactNode, useEffect, useState } from "react";
+import { useGetSingleAddressQuery } from "../../../../../../../redux/services/UserApiSlice";
+interface Props {
+  params: { addressId: string };
 }
+const EditAddress = ({ params }: Props) => {
+  const { addressId } = params;
+  const { data, isLoading } = useGetSingleAddressQuery({ addressId });
+  const fetchedAddress = data?.address;
 
-interface ApiResponse {
-  data?: {
-    message: string;
-  };
-  error?: {
-    data: {
-      message: string;
-    };
-  };
-}
-
-const AddAddress = () => {
-  const [addAddress, { error, isLoading, isError, isSuccess }] = useAddAddressMutation();
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [address, setAddress] = useState<Address>({
+  const [address, setAddress] = useState({
     country: "",
     state: "",
     city: "",
@@ -35,7 +19,16 @@ const AddAddress = () => {
     landmark: "",
     homeAddress: "",
   });
-
+  useEffect(() => {
+    setAddress({
+      country: fetchedAddress?.country || "",
+      state: fetchedAddress?.state || "",
+      city: fetchedAddress?.city || "",
+      town: fetchedAddress?.town || "",
+      landmark: fetchedAddress?.landmark || "",
+      homeAddress: fetchedAddress?.homeAddress || "",
+    });
+  }, [fetchedAddress]);
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setAddress((prevAddress) => ({ ...prevAddress, [name]: value }));
@@ -45,10 +38,6 @@ const AddAddress = () => {
     e.preventDefault();
 
     try {
-      const res: ApiResponse = await addAddress({ address: { ...address } }).unwrap();
-
-      setSuccessMessage(res?.data?.message || "Address added successfully!");
-
       setAddress({
         country: "",
         state: "",
@@ -57,15 +46,11 @@ const AddAddress = () => {
         landmark: "",
         homeAddress: "",
       });
-    } catch (err) {
-      if (isError && error && (error as any).data) {
-        const errorData = error as { data: { message: string } };
-        setErrorMessage(errorData.data.message);
-      } else {
-        setErrorMessage("An error occurred while adding the address.");
-      }
-    }
+    } catch (err) {}
   };
+  {
+    isLoading && <div>Loading...</div>;
+  }
 
   return (
     <div className="bg-white p-5 shadow">
@@ -151,15 +136,15 @@ const AddAddress = () => {
           </div>
         </aside>
       </div>
-      {!isLoading && isSuccess && (
+      {/* {!isLoading && isSuccess && (
         <div className="bg-orange-300 text-dark-gold font-semibold text-center p-2">
           {successMessage}
         </div>
-      )}
+      )} */}
       {/* Error message */}
-      {!isLoading && isError && (
+      {/* {!isLoading && isError && (
         <div className="bg-red-300 text-red-600 font-semibold text-center p-2">{errorMessage}</div>
-      )}
+      )} */}
       <button
         onClick={handleSubmit}
         className="py-3 px-8 my-[1rem] bg-dark-green shadow text-white hover:bg-dark-gold">
@@ -169,4 +154,4 @@ const AddAddress = () => {
   );
 };
 
-export default AddAddress;
+export default EditAddress;

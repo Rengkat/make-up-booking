@@ -37,6 +37,30 @@ export const userApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["User"],
     }),
+    updateAddress: build.mutation({
+      query: (address) => ({
+        url: `${USER_URL}/address`,
+        method: "PATCH",
+        body: address,
+        credentials: "include",
+      }),
+      invalidatesTags: ["User"],
+    }),
+    deleteAddress: build.mutation({
+      query: (addressId) => ({
+        url: `${USER_URL}/address`,
+        method: "DELETE",
+        body: addressId,
+        credentials: "include",
+      }),
+      invalidatesTags: ["User"],
+    }),
+    getSingleAddress: build.query({
+      query: ({ addressId }) => ({
+        url: `${USER_URL}/addresses/${addressId}`,
+        credentials: "include",
+      }),
+    }),
   }),
 });
 
@@ -45,4 +69,6 @@ export const {
   useUpdateUserDetailMutation,
   useChangePasswordMutation,
   useAddAddressMutation,
+  useDeleteAddressMutation,
+  useGetSingleAddressQuery,
 } = userApiSlice;
