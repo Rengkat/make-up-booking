@@ -120,7 +120,7 @@ const Login = () => {
               </p>
               <p className="mb-[2rem]">
                 Forgot Password?{" "}
-                <Link className="text-dark-gold" href={"/reset-password"}>
+                <Link className="text-dark-gold" href={"/auth/forgot-password"}>
                   {" "}
                   Reset Password{" "}
                 </Link>{" "}
