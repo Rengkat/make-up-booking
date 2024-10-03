@@ -1,7 +1,7 @@
-"use client";
 import { useState } from "react";
 import { servicesOptions } from "../../../../../utilities/extras";
 import { useBookAppointmentMutation } from "../../../../../redux/services/AppointmentApiSlice";
+import { useGetUserDetailsQuery } from "../../../../../redux/services/UserApiSlice";
 
 interface Props {
   closeModal: () => void;
@@ -14,11 +14,15 @@ interface Appointment {
   date: string;
   service: string;
   type: string;
+  address?: string; // Optional address for home service
 }
 
 const BookingModal = ({ closeModal, displayDate, time }: Props) => {
   const [bookAppointment, { isLoading, error }] = useBookAppointmentMutation();
+  const { data } = useGetUserDetailsQuery({});
+  const addresses: any = data?.user?.addresses || [];
   const [selectedService, setSelectedService] = useState("");
+  const [selectedAddress, setSelectedAddress] = useState("");
   const [service, setService] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -28,28 +32,30 @@ const BookingModal = ({ closeModal, displayDate, time }: Props) => {
   };
 
   const handleSubmit = async () => {
-    const newAppointment = {
+    const newAppointment: Appointment = {
       time,
       date: displayDate,
       service,
       type: selectedService,
     };
 
+    if (selectedService === "home service" && selectedAddress) {
+      newAppointment.address = selectedAddress; // Include address if home service is selected
+    }
+
     try {
       const res = await bookAppointment(newAppointment).unwrap();
       setSuccessMessage(res.message);
-      // Reset states if needed
       setSelectedService("");
       setService("");
+      setSelectedAddress("");
 
-      // Hide message and close modal after 5 seconds
       setTimeout(() => {
         setSuccessMessage("");
         closeModal();
       }, 5000);
     } catch (err) {
       setErrorMessage("Failed to book the appointment. Please try again.");
-      // Hide error message and close modal after 5 seconds
       setTimeout(() => {
         setErrorMessage("");
         closeModal();
@@ -59,7 +65,7 @@ const BookingModal = ({ closeModal, displayDate, time }: Props) => {
 
   return (
     <div className="w-full h-screen flex justify-center items-center">
-      <div className="w-full md:w-[70%] lg:w-[40%] h-[60vh] bg-white">
+      <div className="w-full md:w-[70%] lg:w-[40%] bg-white">
         <div className="w-full bg-dark-gold text-white flex justify-between py-3 px-5">
           <h1>REQUEST AN APPOINTMENT</h1>
           <button onClick={closeModal}>X</button>
@@ -117,12 +123,34 @@ const BookingModal = ({ closeModal, displayDate, time }: Props) => {
                   name="service"
                   id="home-service"
                   value="home service"
-                  checked={selectedService === "home service"}
                   onChange={handleChange}
+                  checked={selectedService === "home service"}
                 />
               </div>
             </div>
           </div>
+          {/* Render address selection only if home service is selected */}
+          {selectedService === "home service" && addresses.length > 0 && (
+            <div className="my-4">
+              <label
+                htmlFor="address"
+                className="text-[18px] md:text-[20px] font-semibold text-dark-green">
+                Select Address:
+              </label>
+              <select
+                onChange={(e) => setSelectedAddress(e.target.value)}
+                name="address"
+                id="address"
+                className="w-full border-[1px]">
+                <option value="">-- Select an Address --</option>
+                {addresses.map((address: any, index: number) => (
+                  <option key={index} value={address.homeAddress}>
+                    {address.homeAddress}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
           {successMessage && <div className="text-green-500">{successMessage}</div>}
           {errorMessage && <div className="text-red-500">{errorMessage}</div>}
           <div className="flex gap-5 my-[2rem]">

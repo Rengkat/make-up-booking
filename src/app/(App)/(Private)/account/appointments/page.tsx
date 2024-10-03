@@ -45,7 +45,7 @@ const Appointments = () => {
         ))}
       </div>
       <div className="text-sm lg:text-base mt-[1rem] capitalize">
-        {fetchedAppointments?.map((app) => {
+        {fetchedAppointments?.map((app: any) => {
           return (
             <Fragment key={app._id}>
               <div className="table-grid py-2">
