@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import appSlice from "../services/AppSlice";
 import authSlice from "../services/AuthSlice";
-import { apiSlice } from "../services/ApiSlice";
 import { authApiSlice } from "../services/AuthApiSlice";
+import { appointmentApiSlice } from "../services/AppointmentApiSlice";
 import { userApiSlice } from "../services/UserApiSlice";
 
 export const store = configureStore({
@@ -10,8 +10,14 @@ export const store = configureStore({
     app: appSlice,
     auth: authSlice,
     [authApiSlice.reducerPath]: authApiSlice.reducer,
+    [userApiSlice.reducerPath]: userApiSlice.reducer,
+    [appointmentApiSlice.reducerPath]: appointmentApiSlice.reducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(authApiSlice.middleware),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware()
+      .concat(authApiSlice.middleware)
+      .concat(userApiSlice.middleware)
+      .concat(appointmentApiSlice.middleware),
   devTools: true,
 });
 

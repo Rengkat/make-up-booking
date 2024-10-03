@@ -6,11 +6,15 @@ interface Props {
   displayDate: string;
   time: string;
 }
+interface Appointment {
+  time: string;
+  date: string;
+  service: string;
+  type: string;
+}
 const BookingModal = ({ closeModal, displayDate, time }: Props) => {
   const [selectedService, setSelectedService] = useState("");
   const [service, setService] = useState("");
-
-  const [appointment, setAppointment] = useState(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedService(e.target.value);
@@ -23,7 +27,6 @@ const BookingModal = ({ closeModal, displayDate, time }: Props) => {
       type: selectedService,
     };
 
-    setAppointment(newAppointment);
     console.log(newAppointment);
   };
   return (

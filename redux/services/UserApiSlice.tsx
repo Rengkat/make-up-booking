@@ -1,8 +1,12 @@
-import { apiSlice } from "./ApiSlice";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { baseQuery } from "./ApiSlice";
 
 const USER_URL = "/users";
 
-export const userApiSlice = apiSlice.injectEndpoints({
+export const userApiSlice = createApi({
+  reducerPath: "userApi",
+  baseQuery,
+  tagTypes: ["User", "Address"],
   endpoints: (build) => ({
     getUserDetails: build.query({
       query: () => ({
