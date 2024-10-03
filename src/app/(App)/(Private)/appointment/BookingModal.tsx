@@ -1,24 +1,32 @@
 "use client";
 import { useState } from "react";
 import { servicesOptions } from "../../../../../utilities/extras";
+import { useBookAppointmentMutation } from "../../../../../redux/services/AppointmentApiSlice";
+
 interface Props {
   closeModal: () => void;
   displayDate: string;
   time: string;
 }
+
 interface Appointment {
   time: string;
   date: string;
   service: string;
   type: string;
 }
+
 const BookingModal = ({ closeModal, displayDate, time }: Props) => {
+  const [bookAppointment, { isLoading, error }] = useBookAppointmentMutation();
   const [selectedService, setSelectedService] = useState("");
   const [service, setService] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedService(e.target.value);
   };
+
   const handleSubmit = async () => {
     const newAppointment = {
       time,
@@ -27,16 +35,36 @@ const BookingModal = ({ closeModal, displayDate, time }: Props) => {
       type: selectedService,
     };
 
-    console.log(newAppointment);
+    try {
+      const res = await bookAppointment(newAppointment).unwrap();
+      setSuccessMessage(res.message);
+      // Reset states if needed
+      setSelectedService("");
+      setService("");
+
+      // Hide message and close modal after 5 seconds
+      setTimeout(() => {
+        setSuccessMessage("");
+        closeModal();
+      }, 5000);
+    } catch (err) {
+      setErrorMessage("Failed to book the appointment. Please try again.");
+      // Hide error message and close modal after 5 seconds
+      setTimeout(() => {
+        setErrorMessage("");
+        closeModal();
+      }, 5000);
+    }
   };
+
   return (
     <div className="w-full h-screen flex justify-center items-center">
-      <div className="w-full md:w-[70%] lg:w-[40%] h-[55vh] bg-white">
+      <div className="w-full md:w-[70%] lg:w-[40%] h-[60vh] bg-white">
         <div className="w-full bg-dark-gold text-white flex justify-between py-3 px-5">
           <h1>REQUEST AN APPOINTMENT</h1>
           <button onClick={closeModal}>X</button>
         </div>
-        <section className=" p-5 text-[18px]">
+        <section className="p-5 text-[18px]">
           <p className="text-sm lg:text-base">
             You are about to request an appointment for Rengkat Alexander. Please review and confirm
             that you would like to request the following appointment:
@@ -49,14 +77,16 @@ const BookingModal = ({ closeModal, displayDate, time }: Props) => {
               htmlFor="services"
               className="text-[18px] md:text-[20px] font-semibold text-dark-green">
               Services:
-            </label>{" "}
+            </label>
             <select
               onChange={(e) => setService(e.target.value)}
               name="services"
               id="services"
               className="w-full border-[1px]">
-              {servicesOptions.map((service) => (
-                <option value={service}>{service}</option>
+              {servicesOptions.map((service, index) => (
+                <option key={index} value={service}>
+                  {service}
+                </option>
               ))}
             </select>
           </div>
@@ -65,7 +95,7 @@ const BookingModal = ({ closeModal, displayDate, time }: Props) => {
               htmlFor="services"
               className="text-[18px] md:text-[20px] font-semibold text-dark-green">
               Services Type:
-            </label>{" "}
+            </label>
             <div className="flex gap-5">
               <div className="flex items-center gap-3">
                 <label htmlFor="spa">Spa</label>
@@ -80,19 +110,21 @@ const BookingModal = ({ closeModal, displayDate, time }: Props) => {
                 />
               </div>
               <div className="flex items-center gap-3">
-                <label htmlFor="spa">Home Service</label>
+                <label htmlFor="home-service">Home Service</label>
                 <input
                   className="text-yellowish-orange"
                   type="radio"
                   name="service"
                   id="home-service"
-                  value="home-service"
-                  checked={selectedService === "home-service"}
+                  value="home service"
+                  checked={selectedService === "home service"}
                   onChange={handleChange}
                 />
               </div>
             </div>
           </div>
+          {successMessage && <div className="text-green-500">{successMessage}</div>}
+          {errorMessage && <div className="text-red-500">{errorMessage}</div>}
           <div className="flex gap-5 my-[2rem]">
             <button
               onClick={handleSubmit}

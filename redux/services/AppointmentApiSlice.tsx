@@ -8,17 +8,15 @@ export const appointmentApiSlice = createApi({
   endpoints: (build) => ({
     bookAppointment: build.mutation({
       query: (data) => ({
-        url: `${APPOINTMENT_URL}/register`,
+        url: `${APPOINTMENT_URL}`,
         method: "POST",
         body: data,
-        credentials: "include",
       }),
       invalidatesTags: ["Appointment"],
     }),
     getAllUserAppointments: build.query({
       query: () => ({
-        url: `${APPOINTMENT_URL}`,
-        credentials: "include",
+        url: `${APPOINTMENT_URL}//user-appointments`,
       }),
       providesTags: ["Appointment"],
     }),

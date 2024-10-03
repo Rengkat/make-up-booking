@@ -11,7 +11,6 @@ export const userApiSlice = createApi({
     getUserDetails: build.query({
       query: () => ({
         url: `${USER_URL}/profile`,
-        credentials: "include",
       }),
       providesTags: ["User"],
     }),
@@ -20,7 +19,6 @@ export const userApiSlice = createApi({
         url: `${USER_URL}/profile`,
         method: "PUT",
         body: data,
-        credentials: "include",
       }),
       invalidatesTags: ["User"],
     }),
@@ -29,7 +27,6 @@ export const userApiSlice = createApi({
         url: `${USER_URL}/updatePassword`,
         method: "PATCH",
         body: data,
-        credentials: "include",
       }),
     }),
     addAddress: build.mutation({
@@ -37,7 +34,6 @@ export const userApiSlice = createApi({
         url: `${USER_URL}/address`,
         method: "PUT",
         body: address,
-        credentials: "include",
       }),
       invalidatesTags: ["User"],
     }),
@@ -46,7 +42,6 @@ export const userApiSlice = createApi({
         url: `${USER_URL}/updateAddress`,
         method: "PATCH",
         body: address,
-        credentials: "include",
       }),
       invalidatesTags: ["User"],
     }),
@@ -55,14 +50,12 @@ export const userApiSlice = createApi({
         url: `${USER_URL}/address`,
         method: "DELETE",
         body: addressId,
-        credentials: "include",
       }),
       invalidatesTags: ["User"],
     }),
     getSingleAddress: build.query({
       query: ({ addressId }) => ({
         url: `${USER_URL}/addresses/${addressId}`,
-        credentials: "include",
       }),
     }),
   }),
