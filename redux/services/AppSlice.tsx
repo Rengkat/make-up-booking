@@ -5,6 +5,12 @@ const initialState = {
   isOpenSideBar: false,
   isOpenSideCart: false,
   shopGrid: getShopGrid(),
+  appointment: {
+    date: "",
+    time: "",
+    service: "",
+    type: "",
+  },
 };
 const appSlice = createSlice({
   name: "AppState",

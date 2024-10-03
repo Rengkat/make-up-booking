@@ -2,7 +2,6 @@ import React from "react";
 import HeroComp from "../../../../components/HeroComp";
 import Image from "next/image";
 import ContactUs from "./contactUs";
-import Date from "./DateTime";
 import AppointmentDate from "./DateTime";
 
 const Appointment = () => {

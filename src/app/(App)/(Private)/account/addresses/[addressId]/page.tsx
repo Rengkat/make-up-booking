@@ -55,12 +55,16 @@ const EditAddress = ({ params }: Props) => {
         landmark: "",
         homeAddress: "",
       });
-    } catch (err) {
+    } catch (err: any) {
       setErrorMessage(err.data.message);
     }
   };
   {
-    isLoading && <div>Loading...</div>;
+    isLoading && (
+      <div className="flex justify-center text-xl text-dark-green">
+        <p>Loading...</p>
+      </div>
+    );
   }
 
   return (
