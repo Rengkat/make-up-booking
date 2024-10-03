@@ -2,6 +2,7 @@ import { useState } from "react";
 import { servicesOptions } from "../../../../../utilities/extras";
 import { useBookAppointmentMutation } from "../../../../../redux/services/AppointmentApiSlice";
 import { useGetUserDetailsQuery } from "../../../../../redux/services/UserApiSlice";
+import { useRouter } from "next/navigation";
 
 interface Props {
   closeModal: () => void;
@@ -14,7 +15,12 @@ interface Appointment {
   date: string;
   service: string;
   type: string;
-  address?: string; // Optional address for home service
+  address?: {
+    homeAddress: string;
+    city: string;
+    state: string;
+    country: string;
+  }; // Address for home service
 }
 
 const BookingModal = ({ closeModal, displayDate, time }: Props) => {
@@ -26,6 +32,7 @@ const BookingModal = ({ closeModal, displayDate, time }: Props) => {
   const [service, setService] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedService(e.target.value);
@@ -39,8 +46,22 @@ const BookingModal = ({ closeModal, displayDate, time }: Props) => {
       type: selectedService,
     };
 
-    if (selectedService === "home service" && selectedAddress) {
-      newAppointment.address = selectedAddress; // Include address if home service is selected
+    if (selectedService === "home service") {
+      // Ensure the user has selected a valid address
+      const selectedAddressDetails = addresses.find(
+        (address: any) => address.homeAddress === selectedAddress
+      );
+      if (!selectedAddressDetails) {
+        setErrorMessage("Please select a valid home address.");
+        return;
+      }
+
+      newAppointment.address = {
+        homeAddress: selectedAddressDetails.homeAddress,
+        city: selectedAddressDetails.city,
+        state: selectedAddressDetails.state,
+        country: selectedAddressDetails.country,
+      };
     }
 
     try {
@@ -61,6 +82,10 @@ const BookingModal = ({ closeModal, displayDate, time }: Props) => {
         closeModal();
       }, 5000);
     }
+  };
+
+  const handleAddAddress = () => {
+    router.push("/account/addresses/add-address");
   };
 
   return (
@@ -123,34 +148,48 @@ const BookingModal = ({ closeModal, displayDate, time }: Props) => {
                   name="service"
                   id="home-service"
                   value="home service"
-                  onChange={handleChange}
                   checked={selectedService === "home service"}
+                  onChange={handleChange}
                 />
               </div>
             </div>
           </div>
-          {/* Render address selection only if home service is selected */}
-          {selectedService === "home service" && addresses.length > 0 && (
+
+          {selectedService === "home service" && (
             <div className="my-4">
-              <label
-                htmlFor="address"
-                className="text-[18px] md:text-[20px] font-semibold text-dark-green">
-                Select Address:
-              </label>
-              <select
-                onChange={(e) => setSelectedAddress(e.target.value)}
-                name="address"
-                id="address"
-                className="w-full border-[1px]">
-                <option value="">-- Select an Address --</option>
-                {addresses.map((address: any, index: number) => (
-                  <option key={index} value={address.homeAddress}>
-                    {address.homeAddress}
-                  </option>
-                ))}
-              </select>
+              {addresses.length > 0 ? (
+                <div>
+                  <label
+                    htmlFor="address"
+                    className="text-[18px] md:text-[20px] font-semibold text-dark-green">
+                    Select Address:
+                  </label>
+                  <select
+                    onChange={(e) => setSelectedAddress(e.target.value)}
+                    name="address"
+                    id="address"
+                    className="w-full border-[1px]">
+                    <option value="">-- Select an Address --</option>
+                    {addresses.map((address: any, index: number) => (
+                      <option key={index} value={address.homeAddress}>
+                        {address.homeAddress}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              ) : (
+                <div>
+                  <p className="text-red-500">You have no saved home addresses.</p>
+                  <button
+                    onClick={handleAddAddress}
+                    className="py-2 text-sm lg:text-base bg-dark-green text-white px-4 shadow">
+                    Add Home Address
+                  </button>
+                </div>
+              )}
             </div>
           )}
+
           {successMessage && <div className="text-green-500">{successMessage}</div>}
           {errorMessage && <div className="text-red-500">{errorMessage}</div>}
           <div className="flex gap-5 my-[2rem]">

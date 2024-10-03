@@ -16,10 +16,20 @@ export const appointmentApiSlice = createApi({
     }),
     getAllUserAppointments: build.query({
       query: () => ({
-        url: `${APPOINTMENT_URL}//user-appointments`,
+        url: `${APPOINTMENT_URL}/user-appointments`,
+      }),
+      providesTags: ["Appointment"],
+    }),
+    getSingleUserAppointments: build.query({
+      query: ({ id }) => ({
+        url: `${APPOINTMENT_URL}/${id}`,
       }),
       providesTags: ["Appointment"],
     }),
   }),
 });
-export const { useBookAppointmentMutation, useGetAllUserAppointmentsQuery } = appointmentApiSlice;
+export const {
+  useBookAppointmentMutation,
+  useGetAllUserAppointmentsQuery,
+  useGetSingleUserAppointmentsQuery,
+} = appointmentApiSlice;
