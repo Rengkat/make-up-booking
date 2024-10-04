@@ -2,9 +2,10 @@
 import React, { Fragment } from "react";
 import Product from "./Product";
 import { useSelector } from "react-redux";
+import { fetchProducts } from "@/lib/data";
 const products = [1, 2, 3, 4, 5, 6, 8, 4, 3, 5, 7];
 
-const Products = () => {
+const Products = async () => {
   const { shopGrid } = useSelector((state: any) => state.app);
   const xlGrid = `xl:grid-cols-${shopGrid}`;
 

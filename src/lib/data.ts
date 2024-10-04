@@ -30,24 +30,3 @@ const products = [
     rating: [5, 3, 3],
   },
 ];
-
-export const fetchProducts = async () => {
-  const data = await fetch("");
-  const res = await data.json();
-  return res;
-};
-export const singleProduct = async (id: number) => {
-  const data = await fetch(`/${id}`);
-  const res = await data.json();
-  return res;
-};
-export const fetchAppointments = async (id: number) => {
-  const data = await fetch(`/${id}`);
-  const res = await data.json();
-  return res;
-};
-export const fetchSingleAppointment = async (id: number) => {
-  const data = await fetch(`/${id}`);
-  const res = await data.json();
-  return res;
-};

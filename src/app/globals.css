@@ -47,6 +47,14 @@ html {
   display: grid;
   grid-template-columns: 2fr 2fr 1fr 1fr;
 }
+.table-grid-appointment {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr 1fr 1fr;
+}
+.table-grid-appointment {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr 1fr 1fr;
+}
 .order-grid {
   display: grid;
   grid-template-columns: 1fr 2fr 2fr 2fr 1fr;

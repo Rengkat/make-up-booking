@@ -198,7 +198,7 @@ const EditDetail = () => {
             type="submit"
             className="text-white bg-dark-green hover:bg-dark-gold py-3 px-8 lg:my-[1rem]"
             disabled={isFetching || isPasswordChanging}>
-            {isPasswordChanging ? "Updating..." : "Edit Details"}
+            {isPasswordChanging ? "Saving..." : "Save"}
           </button>
         </div>
       </div>

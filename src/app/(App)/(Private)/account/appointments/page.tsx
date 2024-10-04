@@ -8,7 +8,7 @@ import Link from "next/link";
 // export const metadata: Metadata = {
 //   title: "My appointments",
 // };
-const title = ["date", "service", "type", "action"];
+const title = ["date", "service", "type", "status", "action"];
 
 const appointments = [
   {
@@ -44,7 +44,7 @@ const Appointments = () => {
         <div>You do not have any appointment at the moment</div>
       ) : (
         <div>
-          <div className={`table-grid bg-dark-gold text-white capitalize p-2`}>
+          <div className={`table-grid-appointment bg-dark-gold text-white capitalize p-2`}>
             {title.map((head) => (
               <div key={head}>{head}</div>
             ))}
@@ -53,10 +53,20 @@ const Appointments = () => {
             {fetchedAppointments?.map((app: any) => {
               return (
                 <Fragment key={app._id}>
-                  <div className="table-grid py-2">
+                  <div className="table-grid-appointment py-2">
                     <div>{convertDateFormat(app.date)}</div>
                     <div>{app.service}</div>
                     <div>{app.type}</div>
+                    <div
+                      className={`${
+                        app?.status === "cancelled"
+                          ? "text-red-600"
+                          : app?.status === "pending"
+                          ? "text-dark-gold"
+                          : "text-dark-green"
+                      } font-semibold`}>
+                      {app.status}
+                    </div>
                     <div>
                       <Link
                         href={`/account/appointments/${app._id}`}

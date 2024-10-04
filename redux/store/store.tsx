@@ -4,6 +4,7 @@ import authSlice from "../services/AuthSlice";
 import { authApiSlice } from "../services/AuthApiSlice";
 import { appointmentApiSlice } from "../services/AppointmentApiSlice";
 import { userApiSlice } from "../services/UserApiSlice";
+import { productApiSlice } from "../services/ProductApiSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,12 +13,14 @@ export const store = configureStore({
     [authApiSlice.reducerPath]: authApiSlice.reducer,
     [userApiSlice.reducerPath]: userApiSlice.reducer,
     [appointmentApiSlice.reducerPath]: appointmentApiSlice.reducer,
+    [productApiSlice.reducerPath]: productApiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
       .concat(authApiSlice.middleware)
       .concat(userApiSlice.middleware)
-      .concat(appointmentApiSlice.middleware),
+      .concat(appointmentApiSlice.middleware)
+      .concat(productApiSlice.middleware),
   devTools: true,
 });
 

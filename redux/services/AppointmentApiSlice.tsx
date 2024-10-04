@@ -26,10 +26,19 @@ export const appointmentApiSlice = createApi({
       }),
       providesTags: ["Appointment"],
     }),
+    updateAppointment: build.mutation({
+      query: ({ id, status }) => ({
+        url: `${APPOINTMENT_URL}/${id}`,
+        method: "PATCH",
+        body: { status },
+      }),
+      invalidatesTags: ["Appointment"],
+    }),
   }),
 });
 export const {
   useBookAppointmentMutation,
   useGetAllUserAppointmentsQuery,
   useGetSingleUserAppointmentsQuery,
+  useUpdateAppointmentMutation,
 } = appointmentApiSlice;
