@@ -20,6 +20,7 @@ interface Appointment {
     city: string;
     state: string;
     country: string;
+    town: string;
   }; // Address for home service
 }
 
@@ -60,6 +61,7 @@ const BookingModal = ({ closeModal, displayDate, time }: Props) => {
         homeAddress: selectedAddressDetails.homeAddress,
         city: selectedAddressDetails.city,
         state: selectedAddressDetails.state,
+        town: selectedAddressDetails.town,
         country: selectedAddressDetails.country,
       };
     }
@@ -196,7 +198,7 @@ const BookingModal = ({ closeModal, displayDate, time }: Props) => {
             <button
               onClick={handleSubmit}
               className="py-2 text-sm lg:text-base bg-dark-green text-white px-4 shadow w-full lg:w-[70%]">
-              Request Appointment
+              {isLoading ? "Booking..." : "Book Appointment"}
             </button>
             <button
               onClick={closeModal}
