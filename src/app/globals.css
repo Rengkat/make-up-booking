@@ -77,3 +77,6 @@ html {
   background-size: cover;
   color: #e2d7bb;
 }
+svg.star-svg {
+  display: inline;
+}

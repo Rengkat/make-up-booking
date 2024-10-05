@@ -268,3 +268,29 @@ export const servicesOptions = [
   "Brow and Lash Tinting",
   "Makeup Lesson",
 ];
+export const formatter = new Intl.NumberFormat("en-NG", {
+  style: "currency",
+  currency: "NGN",
+  minimumFractionDigits: 0,
+});
+export interface ProductType {
+  _id: string;
+  name: string;
+  price: number;
+  description: string;
+  image: string;
+  category: {
+    name: string;
+  };
+  brand: string;
+  featured: boolean;
+  tags: string[];
+  inventory: number;
+  averageRating: number;
+  numOfReviews: number;
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
+  reviews: any[];
+  id: string;
+}
