@@ -11,6 +11,11 @@ export const productApiSlice = createApi({
         url: `${PRODUCTS_URL}`,
       }),
     }),
+    getSingleProducts: build.query({
+      query: (id) => ({
+        url: `${PRODUCTS_URL}/${id}`,
+      }),
+    }),
   }),
 });
-export const { useGetAllProductsQuery } = productApiSlice;
+export const { useGetAllProductsQuery, useGetSingleProductsQuery } = productApiSlice;

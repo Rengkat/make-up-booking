@@ -14,6 +14,40 @@ export const cartApiSlice = createApi({
       }),
       invalidatesTags: ["Cart"],
     }),
+    removeFromCart: build.mutation({
+      query: (id) => ({
+        method: "DELETE",
+        url: `${CART_URL}`,
+        body: id,
+      }),
+      invalidatesTags: ["Cart"],
+    }),
+    updateCartProduct: build.mutation({
+      query: ({ id, quantity }) => ({
+        method: "PATCH",
+        url: `${CART_URL}/${id}`,
+        body: { quantity },
+      }),
+      invalidatesTags: ["Cart"],
+    }),
+    getUserCartProducts: build.query({
+      query: () => ({
+        url: `${CART_URL}`,
+      }),
+      providesTags: ["Cart"],
+    }),
+    getSingleUserCartProducts: build.query({
+      query: (id) => ({
+        url: `${CART_URL}/${id}`,
+      }),
+      providesTags: ["Cart"],
+    }),
   }),
 });
-export const { useAddToCartMutation } = cartApiSlice;
+export const {
+  useAddToCartMutation,
+  useGetUserCartProductsQuery,
+  useGetSingleUserCartProductsQuery,
+  useRemoveFromCartMutation,
+  useUpdateCartProductMutation,
+} = cartApiSlice;
