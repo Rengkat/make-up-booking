@@ -9,8 +9,8 @@ export const cartApiSlice = createApi({
     addToCart: build.mutation({
       query: ({ productId, fromDetailPage = false }) => ({
         method: "POST",
-        url: fromDetailPage ? `${CART_URL}/${productId}` : `${CART_URL}`, // Dynamic URL or body
-        body: !fromDetailPage ? { id: productId } : undefined, // If not from the detail page, pass ID in the body
+        url: fromDetailPage ? `${CART_URL}/${productId}` : `${CART_URL}`,
+        body: !fromDetailPage ? { id: productId } : undefined,
       }),
       invalidatesTags: ["Cart"],
     }),

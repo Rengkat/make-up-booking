@@ -1,30 +1,33 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
-import { ProductType } from "../../../../utilities/extras";
 import { useAddToCartMutation } from "../../../../redux/services/CartApiSlice";
+import { handleAddToCart } from "./HandleAddToCart";
+
 interface Props {
-  product: ProductType;
+  product: {
+    _id: string;
+    name: string;
+  };
 }
+
 const AddToCart = ({ product }: Props) => {
   const [addToCart, { isLoading }] = useAddToCartMutation();
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const handleAddToCart = async () => {
-    try {
-      const res = await addToCart({ productId: product._id, fromDetailPage: false }).unwrap();
 
-      if (res?.message) {
-        setSuccessMessage(res.message);
-        setErrorMessage("");
-      }
-    } catch (error: any) {
-      setErrorMessage(error?.data?.message || "An error occurred while adding to cart");
-      setSuccessMessage("");
-    }
+  const handleAddClick = () => {
+    handleAddToCart({
+      productId: product._id,
+      fromDetailPage: false,
+      addToCart,
+      setSuccessMessage,
+      setErrorMessage,
+    });
   };
+
   return (
-    <aside onClick={handleAddToCart} className="link-icons">
+    <aside onClick={handleAddClick} className="link-icons">
       <FaShoppingCart className="text-xl cursor-pointer" />
     </aside>
   );

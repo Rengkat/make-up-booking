@@ -1,14 +1,41 @@
+"use client";
 import { BsCheck2Circle } from "react-icons/bs";
 import { CiHeart } from "react-icons/ci";
+import { useState } from "react";
+import { useGetSingleProductsQuery } from "../../../../../redux/services/ProductApiSlice";
+import { formatter } from "../../../../../utilities/extras";
+import { useAddToCartMutation } from "../../../../../redux/services/CartApiSlice";
+import { handleAddToCart } from "../HandleAddToCart";
 import Image from "next/image";
-import React from "react";
 
-const Product = ({ params }) => {
+interface Props {
+  params: { productId: string };
+}
+
+const Product = ({ params }: Props) => {
+  const { productId } = params;
+
+  const { data } = useGetSingleProductsQuery(productId);
+  const product = data?.product;
+  const [addToCart, { isLoading }] = useAddToCartMutation();
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleAddClick = () => {
+    handleAddToCart({
+      productId,
+      fromDetailPage: true,
+      addToCart,
+      setSuccessMessage,
+      setErrorMessage,
+    });
+  };
+
   return (
     <div className="flex flex-col lg:flex-row gap-10">
       <aside className="w-full lg:w-[45%]">
         <Image
-          src="/vaseline-oil.webp"
+          src={product?.image}
           alt="image"
           height={500}
           width={500}
@@ -16,28 +43,22 @@ const Product = ({ params }) => {
         />
       </aside>
       <aside className="w-full lg:w-[55%] p-5">
-        <h1 className="text-5xl font-thin">Vaseline Vitamin B3 Body Oil 200ml</h1>
-        <h3 className="my-5 font-semibold text-2xl">N11,000</h3>
+        <h1 className="text-5xl font-thin">{product?.name}</h1>
+        <h3 className="my-5 font-semibold text-2xl">{formatter.format(product?.price)}</h3>
         <div className="flex items-center gap-3 my-3">
           <BsCheck2Circle />
-          <span>IN STOCK</span>
+          <span>{product?.inventory > 1 ? "IN STOCK" : "OUT OF STOCK"}</span>
         </div>
-        <p className="text-[1.2rem]">
-          Elevate your skincare routine with Vaseline Vitamin B3 Body Oil, designed to give you
-          moisturized, healthy-looking skin with a natural, radiant glow. Its unique formula
-          improves skin texture, leaving it soft, smooth, and beautifully radiant. This body oil
-          locks in moisture to prevent dryness and maintains your skin’s natural moisture balance.
-          With quick absorption, it hydrates your skin without feeling heavy, making it perfect for
-          daily use post-shower or whenever your skin needs a boost of hydration.
-        </p>
-        <button className="w-full bg-dark-green shadow py-3 px-5 text-white my-5 hover:bg-dark-gold">
+        <p className="text-[1.2rem]">{product?.description}</p>
+        <button
+          onClick={handleAddClick}
+          className="w-full bg-dark-green shadow py-3 px-5 text-white my-5 hover:bg-dark-gold">
           ADD TO CART
         </button>
         <div className="flex items-center gap-1 my-5">
           <CiHeart fontSize={25} />
           <span>ADD TO WISHLIST</span>
         </div>
-
         <div className="flex items-center gap-1 my-1">
           <label>SKU:</label>
           <p>1234213</p>
