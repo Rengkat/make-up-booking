@@ -7,7 +7,7 @@ interface HandleAddToCartProps {
   setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export const handleAddToCart = async ({
+export const handleAddToWishlist = async ({
   productId,
   fromDetailPage,
   addToWishlist,
