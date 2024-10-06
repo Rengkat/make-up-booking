@@ -15,9 +15,9 @@ interface Props {
 const Product = ({ params }: Props) => {
   const { productId } = params;
 
-  const { data } = useGetSingleProductsQuery(productId);
+  const { data, isLoading } = useGetSingleProductsQuery(productId);
   const product = data?.product;
-  const [addToCart, { isLoading }] = useAddToCartMutation();
+  const [addToCart] = useAddToCartMutation();
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -29,46 +29,64 @@ const Product = ({ params }: Props) => {
       setSuccessMessage,
       setErrorMessage,
     });
+    setTimeout(() => {
+      setErrorMessage("");
+    }, 5000);
   };
 
   return (
-    <div className="flex flex-col lg:flex-row gap-10">
-      <aside className="w-full lg:w-[45%]">
-        <Image
-          src={product?.image}
-          alt="image"
-          height={500}
-          width={500}
-          className="w-full object-cover"
-        />
-      </aside>
-      <aside className="w-full lg:w-[55%] p-5">
-        <h1 className="text-5xl font-thin">{product?.name}</h1>
-        <h3 className="my-5 font-semibold text-2xl">{formatter.format(product?.price)}</h3>
-        <div className="flex items-center gap-3 my-3">
-          <BsCheck2Circle />
-          <span>{product?.inventory > 1 ? "IN STOCK" : "OUT OF STOCK"}</span>
+    <>
+      {isLoading ? (
+        <div className="w-full h-screen flex justify-center items-center">
+          <p className="font-bold text-xl">Loading...</p>
         </div>
-        <p className="text-[1.2rem]">{product?.description}</p>
-        <button
-          onClick={handleAddClick}
-          className="w-full bg-dark-green shadow py-3 px-5 text-white my-5 hover:bg-dark-gold">
-          ADD TO CART
-        </button>
-        <div className="flex items-center gap-1 my-5">
-          <CiHeart fontSize={25} />
-          <span>ADD TO WISHLIST</span>
+      ) : (
+        <div className="flex flex-col lg:flex-row gap-10">
+          <aside className="w-full lg:w-[45%]">
+            <Image
+              src={product?.image}
+              alt="image"
+              height={500}
+              width={500}
+              className="w-full object-cover"
+            />
+          </aside>
+          <aside className="w-full lg:w-[55%] p-5">
+            <h1 className="text-5xl font-thin">{product?.name}</h1>
+            <h3 className="my-5 font-semibold text-2xl">{formatter.format(product?.price)}</h3>
+            <div className="flex items-center gap-3 my-3">
+              <BsCheck2Circle />
+              <span>{product?.inventory > 1 ? "IN STOCK" : "OUT OF STOCK"}</span>
+            </div>
+            <p className="text-[1.2rem]">{product?.description}</p>
+            <button
+              onClick={handleAddClick}
+              className="w-full bg-dark-green shadow py-3 px-5 text-white my-5 hover:bg-dark-gold">
+              ADD TO CART
+            </button>
+            <div className="flex items-center gap-1 my-5">
+              <CiHeart fontSize={25} />
+              <span>ADD TO WISHLIST</span>
+            </div>
+            <div className="flex items-center gap-1 my-1">
+              <label>SKU:</label>
+              <p>1234213</p>
+            </div>
+            <div className="flex items-center gap-1">
+              <label>Categories:</label>
+              <p>Skincare</p>
+            </div>
+          </aside>
         </div>
-        <div className="flex items-center gap-1 my-1">
-          <label>SKU:</label>
-          <p>1234213</p>
+      )}
+      {!isLoading && errorMessage && (
+        <div className=" text-xl flex justify-center">
+          <p className="bg-red-400 w-1/2 py-3 px-5 text-center text-red-800 font-semibold">
+            {errorMessage}
+          </p>
         </div>
-        <div className="flex items-center gap-1">
-          <label>Categories:</label>
-          <p>Skincare</p>
-        </div>
-      </aside>
-    </div>
+      )}
+    </>
   );
 };
 
