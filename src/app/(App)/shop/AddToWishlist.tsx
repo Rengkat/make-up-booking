@@ -5,6 +5,7 @@ interface Props {
   product: ProductType;
 }
 const AddToWishlist = ({ product }: Props) => {
+  // const
   return (
     <aside className="link-icons">
       <FaRegHeart className="text-xl cursor-pointer" />

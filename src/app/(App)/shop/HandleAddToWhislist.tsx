@@ -2,7 +2,7 @@
 interface HandleAddToCartProps {
   productId: string;
   fromDetailPage: boolean;
-  addToCart: any; // RTK mutation function
+  addToWishlist: any; // RTK mutation function
   setSuccessMessage: React.Dispatch<React.SetStateAction<string>>;
   setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
 }
@@ -10,12 +10,12 @@ interface HandleAddToCartProps {
 export const handleAddToCart = async ({
   productId,
   fromDetailPage,
-  addToCart,
+  addToWishlist,
   setSuccessMessage,
   setErrorMessage,
 }: HandleAddToCartProps) => {
   try {
-    const res = await addToCart({ productId, fromDetailPage }).unwrap();
+    const res = await addToWishlist({ productId, fromDetailPage }).unwrap();
 
     if (res?.message) {
       setSuccessMessage(res.data?.message);
