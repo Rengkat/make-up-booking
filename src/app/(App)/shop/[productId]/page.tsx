@@ -7,6 +7,8 @@ import { formatter } from "../../../../../utilities/extras";
 import { useAddToCartMutation } from "../../../../../redux/services/CartApiSlice";
 import { handleAddToCart } from "../HandleAddToCart";
 import Image from "next/image";
+import { handleAddToWishlist } from "../HandleAddToWhislist";
+import { useAddToWishlistMutation } from "../../../../../redux/services/WishlistApiSlice";
 
 interface Props {
   params: { productId: string };
@@ -16,6 +18,8 @@ const Product = ({ params }: Props) => {
   const { productId } = params;
 
   const { data, isLoading } = useGetSingleProductsQuery(productId);
+  const [addToWishlist, { isLoading: adding }] = useAddToWishlistMutation();
+
   const product = data?.product;
   const [addToCart] = useAddToCartMutation();
   const [successMessage, setSuccessMessage] = useState("");
@@ -26,6 +30,18 @@ const Product = ({ params }: Props) => {
       productId,
       fromDetailPage: true,
       addToCart,
+      setSuccessMessage,
+      setErrorMessage,
+    });
+    setTimeout(() => {
+      setErrorMessage("");
+    }, 5000);
+  };
+  const handleAddToWishlistClick = () => {
+    handleAddToWishlist({
+      productId,
+      fromDetailPage: true,
+      addToWishlist,
       setSuccessMessage,
       setErrorMessage,
     });
@@ -64,7 +80,7 @@ const Product = ({ params }: Props) => {
               className="w-full bg-dark-green shadow py-3 px-5 text-white my-5 hover:bg-dark-gold">
               ADD TO CART
             </button>
-            <div className="flex items-center gap-1 my-5">
+            <div onClick={handleAddToWishlistClick} className="flex items-center gap-1 my-5">
               <CiHeart fontSize={25} />
               <span>ADD TO WISHLIST</span>
             </div>
