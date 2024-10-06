@@ -1,30 +1,22 @@
+"use client";
 import React, { Fragment } from "react";
 import HeroComp from "../../../../components/HeroComp";
 import Image from "next/image";
 import { FaRegTrashCan } from "react-icons/fa6";
+import {
+  useGetUserCartProductsQuery,
+  useRemoveFromCartMutation,
+} from "../../../../../redux/services/CartApiSlice";
+import { formatter } from "../../../../../utilities/extras";
 const title = ["product", "price", "quantity", "subtotal", ""];
 
-const items = [
-  {
-    id: 5,
-    image: "2023-11-30T18:42:59.000Z",
-    product: "makeup Kit",
-    price: "$45",
-    action: "View",
-    subtotal: 234,
-    quantity: 2,
-  },
-  {
-    id: 5,
-    image: "2023-11-30T18:42:59.000Z",
-    product: "Lib glue",
-    price: "$75",
-    action: "View",
-    subtotal: 234,
-    quantity: 2,
-  },
-];
 const Cart = () => {
+  const { data, isLoading } = useGetUserCartProductsQuery({});
+  const [removeProductFromCart, { isLoading: removing }] = useRemoveFromCartMutation();
+  const handleRemove = async (productId: string) => {
+    const res = await removeProductFromCart(productId);
+    // console.log(res.data.message);
+  };
   return (
     <>
       <HeroComp title="Cart" />
@@ -39,36 +31,44 @@ const Cart = () => {
               ))}
             </div>
             <div>
-              {items.map((item) => {
-                return (
-                  <Fragment>
-                    <div className="cart-grid border-b-2 border-gray-200 py-3">
-                      <div className="flex gap-5">
-                        <Image
-                          src={"/image.png"}
-                          alt="product"
-                          height={500}
-                          width={500}
-                          className="w-[4rem] h-[5rem] object-cover bg-[#e2d7bb]"
-                        />
-                        <p className=" capitalize">{item.product}</p>
-                      </div>
-                      <div>{item.price}</div>
-                      <div>
-                        <div className=" w-[70%] flex justify-between items-center border-[1px] border-dark-gold py-2 px-3">
-                          <button className="text-xl">-</button>
-                          <h1>2</h1>
-                          <button className="text-xl">+</button>
+              {isLoading ? (
+                <div className="flex justify-center text-dark-green font-semibold pt-[2rem]">
+                  <p>Loading...</p>
+                </div>
+              ) : (
+                data?.cart?.map((item: any) => {
+                  return (
+                    <Fragment key={item?._id}>
+                      <div className="cart-grid border-b-2 border-gray-200 py-3">
+                        <div className="flex gap-5">
+                          <Image
+                            src={item?.product?.image}
+                            alt="product"
+                            height={500}
+                            width={500}
+                            className="w-[4rem] h-[5rem] object-cover bg-[#e2d7bb]"
+                          />
+                          <p className=" capitalize">{item?.product?.name}</p>
+                        </div>
+                        <div>{formatter.format(item?.product?.price)}</div>
+                        <div>
+                          <div className=" w-[70%] flex justify-between items-center border-[1px] border-dark-gold py-2 px-3">
+                            <button className="text-xl">-</button>
+                            <h1>{item?.quantity}</h1>
+                            <button className="text-xl">+</button>
+                          </div>
+                        </div>
+                        <div>{formatter.format(item?.totalAmount)}</div>
+                        <div
+                          onClick={() => handleRemove(item?._id)}
+                          className=" text-gray-500 text-xl cursor-pointer">
+                          <FaRegTrashCan />
                         </div>
                       </div>
-                      <div>${item.subtotal}</div>
-                      <div className=" text-gray-500 text-xl">
-                        <FaRegTrashCan />
-                      </div>
-                    </div>
-                  </Fragment>
-                );
-              })}
+                    </Fragment>
+                  );
+                })
+              )}
             </div>
           </aside>
           <aside className="w-full  lg:w-[30%]">

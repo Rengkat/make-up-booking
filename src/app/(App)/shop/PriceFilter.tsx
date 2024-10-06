@@ -10,10 +10,10 @@ const PriceFilter = () => {
     // Fetch the maximum price from the backend
     const fetchMaxPrice = async () => {
       try {
-        const response = await fetch("/api/products/max-price"); // Adjust the endpoint accordingly
-        const data = await response.json();
-        setMaxPrice(data.maxPrice);
-        setSelectedPrice([0, data.maxPrice]);
+        // const response = await fetch("/api/products/max-price");
+        // const data = await response.json();
+        // setMaxPrice(data.maxPrice);
+        // setSelectedPrice([0, data.maxPrice]);
       } catch (error) {
         console.error("Error fetching maximum price:", error);
       }

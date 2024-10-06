@@ -45,9 +45,9 @@ const Nav = () => {
           </li>
         </ul>
         <div className="flex gap-5 lg:gap-6">
-          <aside className="link-icons">
+          <Link href={"/cart"} className="link-icons">
             <CartMenu />
-          </aside>
+          </Link>
           <HoveredNav />
         </div>
         {/* menu */}

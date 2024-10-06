@@ -2,7 +2,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQuery } from "./ApiSlice";
 const PRODUCTS_URL = "products";
 export const productApiSlice = createApi({
-  reducerPath: "produceApi",
+  reducerPath: "productApi",
   baseQuery,
   tagTypes: ["Product"],
   endpoints: (build) => ({
