@@ -21,9 +21,9 @@ const sorting = [
 const Shop = () => {
   const [name, setName] = useState("");
   const [sort, setSort] = useState("default");
-  const [page, setPage] = useState(1); // for pagination
+  const [page, setPage] = useState(1);
   const [debouncedName, setDebouncedName] = useState(name);
-  const [selectedPrice, setSelectedPrice] = useState([0, 300]); // price range
+  const [selectedPrice, setSelectedPrice] = useState([0, 10000]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -48,7 +48,6 @@ const Shop = () => {
     setPage(newPage);
   };
 
-  // Callback to handle price range updates
   const handlePriceFilterChange = (priceRange: number[]) => {
     setSelectedPrice(priceRange);
   };
@@ -118,11 +117,22 @@ const Shop = () => {
           </div>
           <Products products={products} isLoading={isLoading} />
           {/* Pagination Controls */}
-          <div className="pagination">
-            <button onClick={() => handlePageChange(page - 1)} disabled={page === 1}>
+          <div className="flex justify-end items-center gap-4">
+            <button
+              className={`p-2 ${
+                page === 1 ? "bg-dark-gold" : "bg-dark-green"
+              } rounded shadow cursor-pointer text-white`}
+              onClick={() => handlePageChange(page - 1)}
+              disabled={page === 1}>
               Prev
             </button>
-            <button onClick={() => handlePageChange(page + 1)} disabled={page === data?.totalPages}>
+            <p className="text-xl">{data?.page}</p>
+            <button
+              className={`${
+                page === data?.totalPages ? "bg-dark-gold" : "bg-dark-green"
+              } rounded shadow cursor-pointer text-white p-2`}
+              onClick={() => handlePageChange(page + 1)}
+              disabled={page === data?.totalPages}>
               Next
             </button>
           </div>

@@ -2,7 +2,6 @@
 import React, { Fragment } from "react";
 import Product from "./Product";
 import { useSelector } from "react-redux";
-import { useGetAllProductsQuery } from "../../../../redux/services/ProductApiSlice";
 import { ProductType } from "../../../../utilities/extras";
 interface Props {
   products: ProductType[];
@@ -17,7 +16,7 @@ const Products = ({ products, isLoading }: Props) => {
     <div
       className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ${xlGrid} gap-x-6 gap-y-[3rem]`}>
       {isLoading ? (
-        <div className="w-full h-[60vh] flex justify-center items-center text-dark-green font-semibold pt-[2rem]">
+        <div className="w-full text-2xl h-[100vh] text-dark-green font-semibold pt-[2rem]">
           <p>Loading...</p>
         </div>
       ) : (

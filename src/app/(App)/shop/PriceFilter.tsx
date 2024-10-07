@@ -10,7 +10,7 @@ interface Props {
 const PriceFilter = ({ onPriceChange, highestPrice, lowestPrice }: Props) => {
   const [minPrice, setMinPrice] = useState(lowestPrice);
   const [maxPrice, setMaxPrice] = useState(highestPrice);
-  const [selectedPrice, setSelectedPrice] = useState([lowestPrice, highestPrice]);
+  const [selectedPrice, setSelectedPrice] = useState([lowestPrice || 0, highestPrice || 10000]);
 
   useEffect(() => {
     setMinPrice(lowestPrice);
@@ -32,7 +32,7 @@ const PriceFilter = ({ onPriceChange, highestPrice, lowestPrice }: Props) => {
         max={maxPrice}
         value={selectedPrice[1]}
         onChange={handlePriceChange}
-        className="w-full"
+        className="w-full h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer custom-range"
       />
       <p className="my-2 text-xl font-light">
         Price: {formatter.format(selectedPrice[0])} - {formatter.format(selectedPrice[1])}
