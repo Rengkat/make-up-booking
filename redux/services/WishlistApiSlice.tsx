@@ -18,8 +18,8 @@ export const wishlistApiSlice = createApi({
     removeFromWishlist: build.mutation({
       query: (id) => ({
         method: "DELETE",
-        url: `${WISHLIST_URL}`,
-        body: id,
+        url: `${WISHLIST_URL}/${id}`,
+        body: { id },
       }),
       invalidatesTags: ["Wishlist"],
     }),
