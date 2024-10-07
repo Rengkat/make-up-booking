@@ -14,6 +14,7 @@ export const handleAddToWishlist = async ({
   setSuccessMessage,
   setErrorMessage,
 }: HandleAddToCartProps) => {
+  // console.log(productId, fromDetailPage);
   try {
     const res = await addToWishlist({ productId, fromDetailPage }).unwrap();
 

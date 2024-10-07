@@ -1,23 +1,24 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQuery } from "./ApiSlice";
-const CART_URL = "wishlist";
+const WISHLIST_URL = "wishlist";
 export const wishlistApiSlice = createApi({
   reducerPath: "wishlistApi",
   baseQuery,
   tagTypes: ["Wishlist"],
   endpoints: (build) => ({
     addToWishlist: build.mutation({
-      query: (data) => ({
+      query: ({ productId, fromDetailPage = false }) => ({
         method: "POST",
-        url: `${CART_URL}`,
-        body: data,
+        url: fromDetailPage ? `${WISHLIST_URL}/${productId}` : `${WISHLIST_URL}`,
+        body: !fromDetailPage ? { productId } : undefined,
       }),
       invalidatesTags: ["Wishlist"],
     }),
+
     removeFromWishlist: build.mutation({
       query: (id) => ({
         method: "DELETE",
-        url: `${CART_URL}`,
+        url: `${WISHLIST_URL}`,
         body: id,
       }),
       invalidatesTags: ["Wishlist"],
@@ -25,13 +26,13 @@ export const wishlistApiSlice = createApi({
 
     getUserWishlistProducts: build.query({
       query: () => ({
-        url: `${CART_URL}`,
+        url: `${WISHLIST_URL}`,
       }),
       providesTags: ["Wishlist"],
     }),
     getSingleUserWishlistProducts: build.query({
       query: (id) => ({
-        url: `${CART_URL}/${id}`,
+        url: `${WISHLIST_URL}/${id}`,
       }),
       providesTags: ["Wishlist"],
     }),

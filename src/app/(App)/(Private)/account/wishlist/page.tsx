@@ -1,54 +1,65 @@
-import { Metadata } from "next";
+"use client";
 import React, { Fragment } from "react";
-export const metadata: Metadata = {
-  title: "My wishlist",
-};
-const title = ["S/No", "Image", "Name", "price", "action"];
+import { useGetUserWishlistProductsQuery } from "../../../../../../redux/services/WishlistApiSlice";
+import { formatter, ProductType } from "../../../../../../utilities/extras";
+import Image from "next/image";
+import Link from "next/link";
+import { FaRegTrashCan } from "react-icons/fa6";
 
-const appointments = [
-  {
-    id: 5,
-    image: "2023-11-30T18:42:59.000Z",
-    product: "makeup Kit",
-    price: "$45",
-    action: "View",
-  },
-  {
-    id: 5,
-    image: "2023-11-30T18:42:59.000Z",
-    product: "Lib glue",
-    price: "$75",
-    action: "View",
-  },
-];
+const title = ["S/No", "Image", "Name", "price", "action", ""];
+
 const Wishlist = () => {
+  const { data, isLoading } = useGetUserWishlistProductsQuery({});
+  const wishlists = data?.wishlist;
+  c;
   return (
-    <div className="bg-white p-2 lg:py-3  lg:px-[2rem] text-xl text-slate-600 mb-[5rem] shadow">
-      <div className={`wishlist-grid bg-dark-gold text-white capitalize p-2`}>
-        {title.map((head) => (
-          <div key={head}>{head}</div>
-        ))}
-      </div>
-      <div className="text-sm lg:text-base mt-[1rem] capitalize">
-        {appointments.map((app, i) => {
-          return (
-            <Fragment key={app.id}>
-              <div className="wishlist-grid py-2">
-                <div className="pl-5">{i + 1}</div>
-                <div>{app.image}</div>
-                <div>{app.product}</div>
-                <div>{app.price}</div>
-                <div>
-                  <button className="py-2 px-5 bg-dark-green hover:bg-dark-gold text-white">
-                    {app.action}
-                  </button>
-                </div>
-              </div>
-            </Fragment>
-          );
-        })}
-      </div>
-    </div>
+    <>
+      {isLoading ? (
+        <div className="flex h-[60vh] w-full justify-center items-center font-semibold text-dark-green">
+          <p>Loading...</p>
+        </div>
+      ) : (
+        <div className="bg-white p-2 lg:py-3  lg:px-[2rem] text-xl text-slate-600 mb-[5rem] shadow">
+          <div className={`wishlist-grid bg-dark-gold text-white capitalize p-2`}>
+            {title.map((head) => (
+              <div key={head}>{head}</div>
+            ))}
+          </div>
+          <div className="text-sm lg:text-base mt-[1rem] capitalize">
+            {wishlists?.map((product: any, i: number) => {
+              return (
+                <Fragment key={product._id}>
+                  <div className="wishlist-grid py-2">
+                    <div className="pl-5">{i + 1}</div>
+                    <div>
+                      <Image
+                        src={product?.product?.image}
+                        alt={product?.product?.name}
+                        height={500}
+                        width={500}
+                        className=" w-12"
+                      />
+                    </div>
+                    <div>{product?.product?.name}</div>
+                    <div>{formatter.format(product?.product?.price)}</div>
+                    <div>
+                      <Link
+                        href={`/shop/${product?.product?._id}`}
+                        className="py-2 px-5 bg-dark-green hover:bg-dark-gold text-white">
+                        View
+                      </Link>
+                    </div>
+                    <div className=" text-gray-500 text-xl cursor-pointer">
+                      <FaRegTrashCan className="-ml-5" />
+                    </div>
+                  </div>
+                </Fragment>
+              );
+            })}
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

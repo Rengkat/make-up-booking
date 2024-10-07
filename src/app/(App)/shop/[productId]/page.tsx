@@ -80,7 +80,9 @@ const Product = ({ params }: Props) => {
               className="w-full bg-dark-green shadow py-3 px-5 text-white my-5 hover:bg-dark-gold">
               ADD TO CART
             </button>
-            <div onClick={handleAddToWishlistClick} className="flex items-center gap-1 my-5">
+            <div
+              onClick={handleAddToWishlistClick}
+              className="flex items-center cursor-pointer gap-1 my-5">
               <CiHeart fontSize={25} />
               <span>ADD TO WISHLIST</span>
             </div>
