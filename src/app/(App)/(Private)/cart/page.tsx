@@ -6,6 +6,7 @@ import { FaRegTrashCan } from "react-icons/fa6";
 import {
   useGetUserCartProductsQuery,
   useRemoveFromCartMutation,
+  useUpdateCartProductMutation,
 } from "../../../../../redux/services/CartApiSlice";
 import { formatter } from "../../../../../utilities/extras";
 const title = ["product", "price", "quantity", "subtotal", ""];
@@ -13,9 +14,31 @@ const title = ["product", "price", "quantity", "subtotal", ""];
 const Cart = () => {
   const { data, isLoading } = useGetUserCartProductsQuery({});
   const [removeProductFromCart, { isLoading: removing }] = useRemoveFromCartMutation();
+  const [updateQuantity, {}] = useUpdateCartProductMutation();
   const handleRemove = async (productId: string) => {
     const res = await removeProductFromCart(productId);
     // console.log(res.data.message);
+  };
+  const handleUpdateQuantity = async ({
+    id,
+    quantity,
+    action,
+  }: {
+    id: string;
+    quantity: number;
+    action: "increment" | "decrement";
+  }) => {
+    try {
+      const newQuantity = action === "increment" ? quantity + 1 : quantity > 1 ? quantity - 1 : 1;
+
+      const res = await updateQuantity({ id, quantity: newQuantity }).unwrap();
+
+      if (res.success) {
+        console.log("Quantity updated successfully:", res.data.message);
+      }
+    } catch (error: any) {
+      console.error("Error updating quantity:", error.data.message);
+    }
   };
   return (
     <>
@@ -64,9 +87,29 @@ const Cart = () => {
                               <div>{formatter.format(item?.product?.price)}</div>
                               <div>
                                 <div className=" w-[70%] flex justify-between items-center border-[1px] border-dark-gold py-2 px-3">
-                                  <button className="text-xl">-</button>
+                                  <button
+                                    onClick={() =>
+                                      handleUpdateQuantity({
+                                        id: item?._id,
+                                        quantity: item?.quantity,
+                                        action: "decrement",
+                                      })
+                                    }
+                                    className="text-xl">
+                                    -
+                                  </button>
                                   <h1>{item?.quantity}</h1>
-                                  <button className="text-xl">+</button>
+                                  <button
+                                    onClick={() =>
+                                      handleUpdateQuantity({
+                                        id: item?._id,
+                                        quantity: item?.quantity,
+                                        action: "increment",
+                                      })
+                                    }
+                                    className="text-xl">
+                                    +
+                                  </button>
                                 </div>
                               </div>
                               <div>{formatter.format(item?.totalAmount)}</div>
