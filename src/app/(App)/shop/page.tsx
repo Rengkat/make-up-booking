@@ -1,24 +1,58 @@
-import React, { Fragment } from "react";
+"use client";
+import React, { Fragment, useState, useEffect, ChangeEvent } from "react";
 import HeroComp from "../../../components/HeroComp";
 import { CiSearch } from "react-icons/ci";
 import { FaFilter } from "react-icons/fa";
 import Products from "./Products";
 import ShopGrid from "./ShopGrid";
 import PriceFilter from "./PriceFilter";
+import { useGetAllProductsQuery } from "../../../../redux/services/ProductApiSlice";
+
 const productCategories = ["cream", "hair masks", "makeup", "moisturisers"];
-<option value="default">Default Sorting</option>;
 
 const sorting = [
-  {
-    value: "popularity",
-    name: "Sort by Popularity",
-  },
+  { value: "popularity", name: "Sort by Popularity" },
   { value: "highToLow", name: "Sort by Price: High to low" },
   { value: "rating", name: "Sort by Rating" },
   { value: "latest", name: "Sort by Latest" },
   { value: "lowToHigh", name: "Sort by Price: Low to high" },
 ];
+
 const Shop = () => {
+  const [name, setName] = useState("");
+  const [sort, setSort] = useState("default");
+  const [page, setPage] = useState(1); // for pagination
+  const [debouncedName, setDebouncedName] = useState(name);
+  const [selectedPrice, setSelectedPrice] = useState([0, 300]); // price range
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedName(name);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [name]);
+
+  // Fetch products with the debounced name, sort, page, and price range
+  const { data, isLoading } = useGetAllProductsQuery(
+    { name: debouncedName, sort, page, minPrice: selectedPrice[0], maxPrice: selectedPrice[1] },
+    { pollingInterval: 50000 }
+  );
+
+  const products = data?.products || [];
+
+  const handleSortChange = (e: any) => {
+    setSort(e.target.value);
+  };
+
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+  };
+
+  // Callback to handle price range updates
+  const handlePriceFilterChange = (priceRange: number[]) => {
+    setSelectedPrice(priceRange);
+  };
+
   return (
     <div>
       <HeroComp title="Shop" />
@@ -28,45 +62,36 @@ const Shop = () => {
             <div className="w-full  bg-white border-b-2 border-slate-600 pr-2 ">
               <input
                 type="text"
+                onChange={(e) => setName(e.target.value)}
+                value={name}
                 placeholder="Search products"
                 className="border-none outline-none w-full"
               />
             </div>
           </div>
-          <PriceFilter />
+          {/* PriceFilter component with callback */}
+          <PriceFilter
+            onPriceChange={handlePriceFilterChange}
+            lowestPrice={data?.lowestPrice}
+            highestPrice={data?.highestPrice}
+          />
           <div className="my-[2rem] bg-white px-[2rem] py-[2.5rem]">
             <h1 className="text-2xl text-dark-green mb-4">Product Categories</h1>
             <ul>
-              {productCategories.map((cat) => {
-                return (
-                  <Fragment key={cat}>
-                    <li className="mt-3 text-[18px] text-dark-green hover:text-dark-gold cursor-pointer">
-                      {cat}(1)
-                    </li>
-                  </Fragment>
-                );
-              })}
-            </ul>
-          </div>
-          <div className="my-[2rem] bg-white px-[2rem] py-[2.5rem]">
-            <h1 className="text-2xl text-dark-green mb-4">Product Tags</h1>
-            <ul>
-              {productCategories.map((cat) => {
-                return (
-                  <Fragment key={cat}>
-                    <li className="mt-3 text-[18px] text-dark-green hover:text-dark-gold cursor-pointer">
-                      {cat}(1)
-                    </li>
-                  </Fragment>
-                );
-              })}
+              {productCategories.map((cat) => (
+                <Fragment key={cat}>
+                  <li className="mt-3 text-[18px] text-dark-green hover:text-dark-gold cursor-pointer">
+                    {cat}(1)
+                  </li>
+                </Fragment>
+              ))}
             </ul>
           </div>
         </aside>
         <aside className="w-full xl:w-[77%] p-[1rem] xl:pl-10 ">
           <div className="flex flex-col md:flex-row items-center justify-between pt-2 pb-[3rem]">
             <p className="text-[19px] text-dark-green py-[2rem] md:py-0">
-              Showing 1–6 of 9 results
+              Showing {data?.page} of {data?.totalPages} Pages
             </p>
             <div className="flex gap-5 items-center ">
               <ShopGrid />
@@ -76,22 +101,31 @@ const Shop = () => {
                 </aside>
 
                 <select
-                  // onChange={handleSelect}
+                  onChange={handleSortChange}
                   name="sort"
                   className="border-0 border-b-2 border-slate-400 bg-transparent">
-                  <option disabled>Sort by</option>
-                  {sorting.map((sort) => {
-                    return (
-                      <Fragment key={sort.value}>
-                        <option value={sort.value}>{sort.name}</option>
-                      </Fragment>
-                    );
-                  })}
+                  <option value="default" disabled>
+                    Sort by
+                  </option>
+                  {sorting.map((sort) => (
+                    <Fragment key={sort.value}>
+                      <option value={sort.value}>{sort.name}</option>
+                    </Fragment>
+                  ))}
                 </select>
               </div>
             </div>
           </div>
-          <Products />
+          <Products products={products} isLoading={isLoading} />
+          {/* Pagination Controls */}
+          <div className="pagination">
+            <button onClick={() => handlePageChange(page - 1)} disabled={page === 1}>
+              Prev
+            </button>
+            <button onClick={() => handlePageChange(page + 1)} disabled={page === data?.totalPages}>
+              Next
+            </button>
+          </div>
         </aside>
       </main>
     </div>

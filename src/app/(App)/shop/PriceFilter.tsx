@@ -1,30 +1,27 @@
-"use client";
 import { useState, useEffect } from "react";
+import { formatter } from "../../../../utilities/extras";
 
-const PriceFilter = () => {
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(300); // Default max, to be updated
-  const [selectedPrice, setSelectedPrice] = useState([0, 300]);
-  console.log(selectedPrice);
+interface Props {
+  onPriceChange: (priceRange: number[]) => void;
+  highestPrice: number;
+  lowestPrice: number;
+}
+
+const PriceFilter = ({ onPriceChange, highestPrice, lowestPrice }: Props) => {
+  const [minPrice, setMinPrice] = useState(lowestPrice);
+  const [maxPrice, setMaxPrice] = useState(highestPrice);
+  const [selectedPrice, setSelectedPrice] = useState([lowestPrice, highestPrice]);
+
   useEffect(() => {
-    // Fetch the maximum price from the backend
-    const fetchMaxPrice = async () => {
-      try {
-        // const response = await fetch("/api/products/max-price");
-        // const data = await response.json();
-        // setMaxPrice(data.maxPrice);
-        // setSelectedPrice([0, data.maxPrice]);
-      } catch (error) {
-        console.error("Error fetching maximum price:", error);
-      }
-    };
+    setMinPrice(lowestPrice);
+    setMaxPrice(highestPrice);
+    setSelectedPrice([lowestPrice, highestPrice]);
+  }, [lowestPrice, highestPrice]);
 
-    fetchMaxPrice();
-  }, []);
-
-  const handlePriceChange = (e) => {
+  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value, 10);
     setSelectedPrice([minPrice, value]);
+    onPriceChange([minPrice, value]);
   };
 
   return (
@@ -38,7 +35,7 @@ const PriceFilter = () => {
         className="w-full"
       />
       <p className="my-2 text-xl font-light">
-        Price: ${selectedPrice[0]} - ${selectedPrice[1]}
+        Price: {formatter.format(selectedPrice[0])} - {formatter.format(selectedPrice[1])}
       </p>
     </div>
   );

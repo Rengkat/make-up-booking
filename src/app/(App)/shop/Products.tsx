@@ -4,13 +4,13 @@ import Product from "./Product";
 import { useSelector } from "react-redux";
 import { useGetAllProductsQuery } from "../../../../redux/services/ProductApiSlice";
 import { ProductType } from "../../../../utilities/extras";
-
-const Products = () => {
+interface Props {
+  products: ProductType[];
+  isLoading: boolean;
+}
+const Products = ({ products, isLoading }: Props) => {
   const { shopGrid } = useSelector((state: any) => state.app);
-  const { data, isLoading } = useGetAllProductsQuery(undefined, {
-    pollingInterval: 50000,
-  });
-  const products = data?.products;
+
   const xlGrid = `xl:grid-cols-${shopGrid}`;
 
   return (
