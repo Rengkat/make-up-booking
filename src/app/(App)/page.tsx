@@ -21,11 +21,11 @@ const Home = () => {
   return (
     <div>
       <Hero />
-      <div className="px-[1rem] lg:px-[5rem] py-[5rem] lg:py-[10rem] bg-white grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6  gap-y-[3rem]">
+      <div className=" shadow-lg px-[1rem] lg:px-[5rem] py-[5rem] lg:py-[10rem] bg-white grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6  gap-y-[3rem]">
         {products.slice(0, 8).map((product: ProductType) => {
           return (
-            <Fragment key={product}>
-              <Product />
+            <Fragment key={product?._id}>
+              <Product product={product} />
             </Fragment>
           );
         })}

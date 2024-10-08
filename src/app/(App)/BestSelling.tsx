@@ -1,9 +1,18 @@
+"use client";
 import Image from "next/image";
 import React, { Fragment } from "react";
 import Product from "./shop/Product";
-const products = [1, 2, 3, 4, 5, 6, 8, 4, 3, 5, 7];
+import { useGetAllProductsQuery } from "../../../redux/services/ProductApiSlice";
+import { ProductType } from "../../../utilities/extras";
 
 const BestSelling = () => {
+  const { data, isLoading } = useGetAllProductsQuery(
+    {
+      bestSelling: true,
+    },
+    { pollingInterval: 50000 }
+  );
+  const products = data?.products || [];
   return (
     <div className="bg-white">
       <div className="flex w-full justify-start px-5 lg:px-0 lg:justify-center text-2xl md:text-4xl lg:text-6xl font-semibold text-dark-green">
@@ -20,10 +29,10 @@ const BestSelling = () => {
         <span>Selling Products</span>
       </div>
       <div className="px-[1rem] lg:px-[5rem] py-[2rem] lg:py-[5rem] bg-white grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6  gap-y-[3rem]">
-        {products.slice(0, 8).map((product) => {
+        {products.slice(0, 8).map((product: ProductType) => {
           return (
-            <Fragment key={product}>
-              <Product />
+            <Fragment key={product?._id}>
+              <Product product={product} />
             </Fragment>
           );
         })}
