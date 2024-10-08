@@ -14,6 +14,7 @@ export const productApiSlice = createApi({
         maxPrice = 10000,
         sort = "",
         page = 1,
+        featured = false,
       }) => {
         const params = new URLSearchParams({
           name,
@@ -22,6 +23,7 @@ export const productApiSlice = createApi({
           maxPrice,
           sort,
           page,
+          featured: featured ? "true" : "",
         }).toString();
 
         return {
