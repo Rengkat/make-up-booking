@@ -18,6 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             (roboto.variable, montserrat.variable, bubblegum.variable, dancingScript.variable)
           }>
           <main>{children}</main>
+          <Footer />
         </body>
       </html>
     </Providers>
