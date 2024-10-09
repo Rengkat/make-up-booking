@@ -2,12 +2,13 @@ import Image from "next/image";
 import React from "react";
 import Nav from "../../components/Nav";
 import Link from "next/link";
+import SideBar from "@/components/SideBar";
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="relative bg-lighter-gold">
       <Nav />
-
+      {/* <SideBar /> */}
       <main>{children}</main>
 
       <Link href="#top">

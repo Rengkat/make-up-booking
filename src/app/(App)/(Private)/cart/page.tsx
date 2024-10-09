@@ -1,5 +1,5 @@
 "use client";
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import HeroComp from "../../../../components/HeroComp";
 import Image from "next/image";
 import { FaRegTrashCan } from "react-icons/fa6";
@@ -9,14 +9,23 @@ import {
   useUpdateCartProductMutation,
 } from "../../../../../redux/services/CartApiSlice";
 import { formatter } from "../../../../../utilities/extras";
+import { handleRemoveFromToCart } from "./HandleRemoveFromCart";
 const title = ["product", "price", "quantity", "subtotal", ""];
 
 const Cart = () => {
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const { data, isLoading } = useGetUserCartProductsQuery({});
   const [removeProductFromCart, { isLoading: removing }] = useRemoveFromCartMutation();
   const [updateQuantity, {}] = useUpdateCartProductMutation();
   const handleRemove = async (productId: string) => {
-    const res = await removeProductFromCart(productId);
+    // const res = await removeProductFromCart(productId);
+    handleRemoveFromToCart({
+      productId,
+      removeProductFromCart,
+      setErrorMessage,
+      setSuccessMessage,
+    });
     // console.log(res.data.message);
   };
   const handleUpdateQuantity = async ({

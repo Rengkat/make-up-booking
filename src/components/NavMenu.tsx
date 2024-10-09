@@ -5,6 +5,7 @@ import { openSideBar } from "../../redux/services/AppSlice";
 
 const NavMenu = () => {
   const dispatch = useDispatch();
+  const { isOpenSideBar } = useSelector((state: any) => state.app);
 
   const handleOpenSideBar = () => {
     dispatch(openSideBar());

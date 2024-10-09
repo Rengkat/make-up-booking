@@ -6,13 +6,25 @@ import { IoMdClose } from "react-icons/io";
 import SideBarCartList from "../app/(App)/(Private)/cart/SideBarCartList";
 import { useSelector, useDispatch } from "react-redux";
 import { openSideCart } from "../../redux/services/AppSlice";
+import { useGetUserCartProductsQuery } from "../../redux/services/CartApiSlice";
+import { ProductType } from "../../utilities/extras";
 const cartItems = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+interface Product {
+  _id: string;
+  quantity: number;
+  product: ProductType;
+  totalAmount: number;
+  user: string;
+}
 const CartModal = () => {
-  const { isOpenSideCart } = useSelector((store: any) => store);
+  const { data } = useGetUserCartProductsQuery({});
+  // console.log(data?.cart);
+  const { isOpenSideCart } = useSelector((store: any) => store.app);
   const dispatch = useDispatch();
   const handleOpenSideCart = () => {
     dispatch(openSideCart());
   };
+
   return (
     <div
       className={`${
@@ -20,14 +32,14 @@ const CartModal = () => {
       } transition-all duration-500 ease-linear fixed inset-0 z-[5] bg-transparent flex justify-end`}>
       <div className="w-[30rem] bg-white h-full text-black shadow-md">
         <div className="flex items-center justify-between text-2xl p-7 font-montserrat text-dark-green border-b-2 font-normal">
-          <div> Shopping Cart (0)</div>
+          <div> Shopping Cart ({data?.cart?.length})</div>
           <div onClick={handleOpenSideCart}>
             <IoMdClose className="cursor-pointer" />
           </div>
         </div>
 
         <div>
-          {cartItems.length < 1 ? (
+          {data?.cart?.length < 1 ? (
             <>
               <div className="mt-[5rem] mb-5">
                 <Image
@@ -41,7 +53,7 @@ const CartModal = () => {
               <p className="w-[90%] lg:w-[70%] mx-auto text-center px-[5rem] text-[19px]">
                 Your Cart is empty. Add few items.
               </p>
-              <div className="flex justify-center my-[3rem]">
+              <div className="flex justify-center my-[1rem]">
                 <button className="py-4 px-10 bg-dark-green text-white hover:bg-dark-gold">
                   <Link href={"/shop"}>Shop Now</Link>
                 </button>
@@ -51,10 +63,10 @@ const CartModal = () => {
             <>
               <div className="p-5">
                 <div className="h-[55vh] overflow-auto">
-                  {cartItems.map((item) => {
+                  {data?.cart.map((item: Product) => {
                     return (
-                      <Fragment key={item}>
-                        <SideBarCartList />
+                      <Fragment key={item?._id}>
+                        <SideBarCartList product={item} />
                       </Fragment>
                     );
                   })}

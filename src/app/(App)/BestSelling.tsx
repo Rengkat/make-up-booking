@@ -13,7 +13,7 @@ const BestSelling = () => {
     { pollingInterval: 50000 }
   );
   const products = data?.products || [];
-  console.log(products);
+  // console.log(products);
   return (
     <div className="bg-white">
       <div className="flex w-full justify-start px-5 lg:px-0 lg:justify-center text-2xl md:text-4xl lg:text-6xl font-semibold text-dark-green">

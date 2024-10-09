@@ -23,7 +23,6 @@ const Nav = () => {
           className="logo w-[5rem] lg:w-[7rem]"
         />
       </Link>
-
       {/* other links with icons */}
       <div className="flex list-none items-center gap-5 lg:gap-6">
         {/* Nav links only on desktop */}
@@ -34,9 +33,7 @@ const Nav = () => {
           <li className="nav-link">
             <ActiveLink href="/shop" text="Shop" />
           </li>
-          {/* <li className="nav-link">
-            <ActiveLink href="/services" text="Services" />
-          </li> */}
+
           <li className="nav-link">
             <ActiveLink href="/price-plan" text="Price Plan" />
           </li>
@@ -45,9 +42,9 @@ const Nav = () => {
           </li>
         </ul>
         <div className="flex gap-5 lg:gap-6">
-          <Link href={"/cart"} className="link-icons">
+          <div className="link-icons">
             <CartMenu />
-          </Link>
+          </div>
           <HoveredNav />
         </div>
         {/* menu */}
