@@ -28,6 +28,17 @@ const SideBarCartList = ({ product }: Props) => {
       setErrorMessage,
     });
   };
+  const handleUpdateQuantity = async ({
+    id,
+    quantity,
+    action,
+  }: {
+    id: string;
+    quantity: number;
+    action: "increment" | "decrement";
+  }) => {
+    handleUpdateQuantityFun({ id, action, updateQuantity, quantity });
+  };
   return (
     <>
       <div className="flex items-start justify-between font-montserrat pr-3 py-[1rem] border-b-[1px] border-gray-300">
@@ -43,9 +54,29 @@ const SideBarCartList = ({ product }: Props) => {
             <h1>{product?.product?.name}</h1>
             <h3>{formatter.format(product?.product?.price)}</h3>
             <div className="w-[60%] flex justify-between items-center border-[1px] border-dark-gold py-2 px-3">
-              <button className="text-xl">-</button>
-              <h1>2</h1>
-              <button className="text-xl">+</button>
+              <button
+                onClick={() =>
+                  handleUpdateQuantity({
+                    id: product?._id,
+                    quantity: product?.quantity,
+                    action: "decrement",
+                  })
+                }
+                className="text-xl">
+                -
+              </button>
+              <h1>{product?.totalAmount}</h1>
+              <button
+                onClick={() =>
+                  handleUpdateQuantity({
+                    id: product?._id,
+                    quantity: product?.quantity,
+                    action: "increment",
+                  })
+                }
+                className="text-xl">
+                +
+              </button>
             </div>
           </aside>
         </div>

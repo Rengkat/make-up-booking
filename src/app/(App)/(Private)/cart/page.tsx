@@ -10,6 +10,7 @@ import {
 } from "../../../../../redux/services/CartApiSlice";
 import { formatter } from "../../../../../utilities/extras";
 import { handleRemoveFromToCart } from "./HandleRemoveFromCart";
+import { handleUpdateQuantityFun } from "./HandleUpdateQuantity";
 const title = ["product", "price", "quantity", "subtotal", ""];
 
 const Cart = () => {
@@ -37,17 +38,7 @@ const Cart = () => {
     quantity: number;
     action: "increment" | "decrement";
   }) => {
-    try {
-      const newQuantity = action === "increment" ? quantity + 1 : quantity > 1 ? quantity - 1 : 1;
-
-      const res = await updateQuantity({ id, quantity: newQuantity }).unwrap();
-
-      if (res.success) {
-        console.log("Quantity updated successfully:", res.data.message);
-      }
-    } catch (error: any) {
-      console.error("Error updating quantity:", error.data.message);
-    }
+    handleUpdateQuantityFun({ id, action, updateQuantity, quantity });
   };
   return (
     <>
