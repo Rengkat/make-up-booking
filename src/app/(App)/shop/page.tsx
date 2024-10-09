@@ -1,5 +1,5 @@
 "use client";
-import React, { Fragment, useState, useEffect, ChangeEvent } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import HeroComp from "../../../components/HeroComp";
 import { CiSearch } from "react-icons/ci";
 import { FaFilter } from "react-icons/fa";
@@ -9,7 +9,6 @@ import PriceFilter from "./PriceFilter";
 import { useGetAllProductsQuery } from "../../../../redux/services/ProductApiSlice";
 
 const productCategories = ["cream", "hair masks", "makeup", "moisturisers"];
-
 const sorting = [
   { value: "popularity", name: "Sort by Popularity" },
   { value: "highToLow", name: "Sort by Price: High to low" },
@@ -23,7 +22,24 @@ const Shop = () => {
   const [sort, setSort] = useState("default");
   const [page, setPage] = useState(1);
   const [debouncedName, setDebouncedName] = useState(name);
-  const [selectedPrice, setSelectedPrice] = useState([0, 10000]);
+  const [selectedPrice, setSelectedPrice] = useState([0, 23000]);
+  const [maxPrice, setMaxPrice] = useState(23000); // State to hold max price
+
+  // Fetch products to get max price
+  const { data: initialData } = useGetAllProductsQuery({
+    name: debouncedName,
+    sort,
+    page,
+    minPrice: selectedPrice[0],
+    maxPrice: selectedPrice[1],
+  });
+
+  useEffect(() => {
+    if (initialData) {
+      setMaxPrice(initialData.highestPrice);
+      setSelectedPrice([selectedPrice[0], initialData.highestPrice]);
+    }
+  }, [initialData]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -34,7 +50,13 @@ const Shop = () => {
 
   // Fetch products with the debounced name, sort, page, and price range
   const { data, isLoading } = useGetAllProductsQuery(
-    { name: debouncedName, sort, page, minPrice: selectedPrice[0], maxPrice: selectedPrice[1] },
+    {
+      name: debouncedName,
+      sort,
+      page,
+      minPrice: selectedPrice[0],
+      maxPrice: selectedPrice[1] || maxPrice,
+    },
     { pollingInterval: 50000 }
   );
 
@@ -58,7 +80,7 @@ const Shop = () => {
       <main className="flex flex-col lg:flex-row py-[5rem] lg:py-[10rem] xl:px-[5rem]">
         <aside className="w-[23%] hidden xl:block ">
           <div className="bg-white px-[2rem] py-[2.5rem]">
-            <div className="w-full  bg-white border-b-2 border-slate-600 pr-2 ">
+            <div className="w-full bg-white border-b-2 border-slate-600 pr-2 ">
               <input
                 type="text"
                 onChange={(e) => setName(e.target.value)}
@@ -72,7 +94,7 @@ const Shop = () => {
           <PriceFilter
             onPriceChange={handlePriceFilterChange}
             lowestPrice={data?.lowestPrice}
-            highestPrice={data?.highestPrice}
+            highestPrice={maxPrice} // Use the max price from state
           />
           <div className="my-[2rem] bg-white px-[2rem] py-[2.5rem]">
             <h1 className="text-2xl text-dark-green mb-4">Product Categories</h1>

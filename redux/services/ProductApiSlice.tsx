@@ -11,11 +11,11 @@ export const productApiSlice = createApi({
         name = "",
         category = "",
         minPrice = 0,
-        maxPrice = 10000,
+        maxPrice = 1000,
         sort = "",
         page = 1,
-        featured = false,
-        bestSelling = false,
+        featured,
+        bestSelling,
       }) => {
         const params = new URLSearchParams({
           name,
@@ -24,12 +24,50 @@ export const productApiSlice = createApi({
           maxPrice,
           sort,
           page,
-          featured: featured ? "true" : "",
-          bestSelling: bestSelling ? "true" : "",
-        }).toString();
+        });
+
+        if (typeof featured !== "undefined") {
+          params.append("featured", featured ? "true" : "false");
+        }
+
+        if (typeof bestSelling !== "undefined") {
+          params.append("bestSelling", bestSelling ? "true" : "false");
+        }
 
         return {
-          url: `${PRODUCTS_URL}?${params}`,
+          url: `${PRODUCTS_URL}?${params.toString()}`,
+        };
+      },
+    }),
+    getAllFeaturedOrBestSellingProducts: build.query({
+      query: ({
+        name = "",
+        category = "",
+        minPrice = 0,
+
+        sort = "",
+        page = 1,
+        featured,
+        bestSelling,
+      }) => {
+        const params = new URLSearchParams({
+          name,
+          category,
+          minPrice,
+          sort,
+          page,
+        });
+
+        if (typeof featured !== "undefined") {
+          params.append("featured", featured ? "true" : "false");
+        }
+
+        if (typeof bestSelling !== "undefined") {
+          params.append("bestSelling", bestSelling ? "true" : "false");
+        }
+
+        return {
+          url: `${PRODUCTS_URL}?${params.toString()}`,
         };
       },
     }),
@@ -41,4 +79,8 @@ export const productApiSlice = createApi({
     }),
   }),
 });
-export const { useGetAllProductsQuery, useGetSingleProductsQuery } = productApiSlice;
+export const {
+  useGetAllProductsQuery,
+  useGetSingleProductsQuery,
+  useGetAllFeaturedOrBestSellingProductsQuery,
+} = productApiSlice;
