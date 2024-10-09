@@ -3,14 +3,15 @@ import HeroComp from "../../../../components/HeroComp";
 import Image from "next/image";
 import ContactUs from "./contactUs";
 import AppointmentDate from "./DateTime";
+import AppointmentServices from "./Services";
 
 const Appointment = () => {
   return (
     <div className="mb-[10rem]">
       <HeroComp title="Appointment" />
-      <div className="flex justify-center flex-col-reverse lg:gap-[1rem] lg:flex-row p-[1rem] mb-[5rem] lg:px-[4rem] lg:py-[7rem]">
-        <div className="w-full lg:w-[50%] flex flex-col lg:ml-[3rem]">
-          <AppointmentDate />
+      <div className="flex justify-center flex-col-reverse lg:gap-[3rem] lg:flex-row p-[1rem] mb-[5rem] lg:px-[4rem] lg:py-[7rem]">
+        <div className="w-full lg:w-[50%]">
+          <AppointmentServices />
         </div>
         <aside className="w-full lg:w-[50%] pb-5 ">
           <div className="relative">
@@ -18,13 +19,13 @@ const Appointment = () => {
               <span>Fullbeauty </span>
               <span className="relative p-2">
                 <span> Working</span>
-                <Image
+                {/* <Image
                   src={"/circle.svg"}
                   alt="circle.svg"
                   width={500}
                   height={500}
                   className="w-[10rem] lg:w-[18rem] xl:w-[19rem] absolute top-1 right-[0]"
-                />
+                /> */}
               </span>
               <span>Hours</span>
             </div>

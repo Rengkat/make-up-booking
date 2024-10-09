@@ -49,7 +49,6 @@ const Product = ({ params }: Props) => {
       setErrorMessage("");
     }, 5000);
   };
-
   return (
     <>
       {isLoading ? (
@@ -64,7 +63,7 @@ const Product = ({ params }: Props) => {
               alt="image"
               height={500}
               width={500}
-              className="w-full object-cover"
+              className="w-full object-cover ml-0 lg:ml-5"
             />
           </aside>
           <aside className="w-full lg:w-[55%] p-5">
@@ -92,7 +91,7 @@ const Product = ({ params }: Props) => {
             </div>
             <div className="flex items-center gap-1">
               <label>Categories:</label>
-              <p>Skincare</p>
+              <p>{product?.category?.name}</p>
             </div>
           </aside>
         </div>

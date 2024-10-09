@@ -4,7 +4,11 @@ import React, { useState } from "react";
 import { formatter, ProductType } from "../../../../../utilities/extras";
 import { FaRegTrashCan } from "react-icons/fa6";
 import { handleRemoveFromToCart } from "./HandleRemoveFromCart";
-import { useRemoveFromCartMutation } from "../../../../../redux/services/CartApiSlice";
+import {
+  useRemoveFromCartMutation,
+  useUpdateCartProductMutation,
+} from "../../../../../redux/services/CartApiSlice";
+import { handleUpdateQuantityFun } from "./HandleUpdateQuantity";
 interface Product {
   _id: string;
   quantity: number;
@@ -19,7 +23,7 @@ const SideBarCartList = ({ product }: Props) => {
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [removeProductFromCart, { isLoading: removing }] = useRemoveFromCartMutation();
-
+  const [updateQuantity, {}] = useUpdateCartProductMutation();
   const handleRemove = async (productId: string) => {
     handleRemoveFromToCart({
       productId,
@@ -65,7 +69,7 @@ const SideBarCartList = ({ product }: Props) => {
                 className="text-xl">
                 -
               </button>
-              <h1>{product?.totalAmount}</h1>
+              <h1>{product?.quantity}</h1>
               <button
                 onClick={() =>
                   handleUpdateQuantity({

@@ -3,7 +3,7 @@ import { getShopGrid } from "../localStorage";
 
 const initialState = {
   isOpenSideBar: false,
-  isOpenSideCart: true,
+  isOpenSideCart: false,
   shopGrid: getShopGrid(),
 };
 const appSlice = createSlice({

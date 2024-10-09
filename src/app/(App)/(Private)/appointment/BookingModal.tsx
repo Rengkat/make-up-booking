@@ -1,13 +1,13 @@
+"use client";
 import { useState } from "react";
-import { servicesOptions } from "../../../../../utilities/extras";
+import { convertDate, servicesOptions } from "../../../../../utilities/extras";
 import { useBookAppointmentMutation } from "../../../../../redux/services/AppointmentApiSlice";
 import { useGetUserDetailsQuery } from "../../../../../redux/services/UserApiSlice";
 import { useRouter } from "next/navigation";
 
 interface Props {
   closeModal: () => void;
-  displayDate: string;
-  time: string;
+  service: string;
 }
 
 interface Appointment {
@@ -24,20 +24,30 @@ interface Appointment {
   }; // Address for home service
 }
 
-const BookingModal = ({ closeModal, displayDate, time }: Props) => {
+const BookingModal = ({ closeModal, service }: Props) => {
   const [bookAppointment, { isLoading, error }] = useBookAppointmentMutation();
-  const { data } = useGetUserDetailsQuery({});
-  const addresses: any = data?.user?.addresses || [];
+
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
   const [selectedService, setSelectedService] = useState("");
   const [selectedAddress, setSelectedAddress] = useState("");
-  const [service, setService] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const { data } = useGetUserDetailsQuery({});
+  const addresses: any = data?.user?.addresses || [];
   const router = useRouter();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedService(e.target.value);
+  const converted = (inputDate: Date | string) => {
+    const parsedDate = new Date(inputDate);
+    const formattedDate = `${parsedDate.getFullYear()}-${(parsedDate.getMonth() + 1)
+      .toString()
+      .padStart(2, "0")}-${parsedDate.getDate().toString().padStart(2, "0")}`;
+
+    return formattedDate;
   };
+
+  // Format date
+  const displayDate = convertDate(new Date(date));
 
   const handleSubmit = async () => {
     const newAppointment: Appointment = {
@@ -48,7 +58,6 @@ const BookingModal = ({ closeModal, displayDate, time }: Props) => {
     };
 
     if (selectedService === "home service") {
-      // Ensure the user has selected a valid address
       const selectedAddressDetails = addresses.find(
         (address: any) => address.homeAddress === selectedAddress
       );
@@ -69,10 +78,6 @@ const BookingModal = ({ closeModal, displayDate, time }: Props) => {
     try {
       const res = await bookAppointment(newAppointment).unwrap();
       setSuccessMessage(res.message);
-      setSelectedService("");
-      setService("");
-      setSelectedAddress("");
-
       setTimeout(() => {
         setSuccessMessage("");
         closeModal();
@@ -91,86 +96,104 @@ const BookingModal = ({ closeModal, displayDate, time }: Props) => {
   };
 
   return (
-    <div className="w-full h-screen flex justify-center items-center">
-      <div className="w-full md:w-[70%] lg:w-[40%] bg-white">
-        <div className="w-full bg-dark-gold text-white flex justify-between py-3 px-5">
-          <h1>REQUEST AN APPOINTMENT</h1>
-          <button onClick={closeModal}>X</button>
+    <div className="w-full h-screen flex justify-center items-center bg-[#00000094]">
+      <div className="w-full md:w-[70%] lg:w-[40%] bg-white rounded-lg shadow-lg">
+        <div className="w-full bg-dark-gold text-white flex justify-between py-3 px-5 rounded-t-lg">
+          <h1 className="font-semibold">Request an Appointment</h1>
+          <button onClick={closeModal} className="font-bold text-xl">
+            X
+          </button>
         </div>
+
         <section className="p-5 text-[18px]">
-          <p className="text-sm lg:text-base">
-            You are about to request an appointment for Rengkat Alexander. Please review and confirm
-            that you would like to request the following appointment:
+          <p className="text-sm lg:text-base mb-4">
+            You are about to book <strong>{service}</strong> service. Please review your appointment
+            details below before submitting:
           </p>
-          <div className="border-2 p-2 my-5 lg:my-2 text-[17px] md:text-[20px]">
-            {displayDate} at {time}
+
+          {/* Date Input */}
+          <div className="my-4">
+            <label className="block mb-2 font-medium">Select Date:</label>
+            <input
+              onChange={(e) => setDate(converted(e.target.value))}
+              value={date}
+              type="date"
+              name="date"
+              id="date"
+              className="w-full lg:w-[70%] py-2 px-3 border border-gray-300 rounded-md"
+            />
           </div>
-          <div className="flex items-end gap-5 my-4">
-            <label
-              htmlFor="services"
-              className="text-[18px] md:text-[20px] font-semibold text-dark-green">
-              Services:
-            </label>
-            <select
-              onChange={(e) => setService(e.target.value)}
-              name="services"
-              id="services"
-              className="w-full border-[1px]">
-              {servicesOptions.map((service, index) => (
-                <option key={index} value={service}>
-                  {service}
+
+          {/* Time Selection */}
+          {date && (
+            <div className="my-4">
+              {/* <h2 className="mb-2 font-medium">Available Appointment Times on {displayDate}:</h2> */}
+              <select
+                value={time}
+                onChange={(e) => setTime(e.target.value)}
+                className="w-full lg:w-[70%] py-2 px-3 border border-gray-300 rounded-md">
+                <option value="" disabled>
+                  Select a time
                 </option>
-              ))}
-            </select>
-          </div>
-          <div className="flex items-end gap-5 my-4">
-            <label
-              htmlFor="services"
-              className="text-[18px] md:text-[20px] font-semibold text-dark-green">
-              Services Type:
-            </label>
+                <option value="10:00 AM">10:00 AM</option>
+                <option value="11:00 AM">11:00 AM</option>
+                <option value="12:00 PM">12:00 PM</option>
+                <option value="1:00 PM">1:00 PM</option>
+                <option value="2:00 PM">2:00 PM</option>
+                <option value="3:00 PM">3:00 PM</option>
+                <option value="4:00 PM">4:00 PM</option>
+              </select>
+            </div>
+          )}
+
+          {/* Service Type Selection */}
+          <div className="my-4 flex items-center gap-5">
+            <label className="block font-medium">Service Type:</label>
             <div className="flex gap-5">
               <div className="flex items-center gap-3">
-                <label htmlFor="spa">Spa</label>
+                <label htmlFor="spa" className="font-medium">
+                  Spa
+                </label>
                 <input
-                  className="text-yellowish-orange"
                   type="radio"
                   name="service"
                   id="spa"
                   value="spa"
-                  onChange={handleChange}
+                  onChange={(e) => setSelectedService(e.target.value)}
                   checked={selectedService === "spa"}
+                  className="w-4 h-4"
                 />
               </div>
               <div className="flex items-center gap-3">
-                <label htmlFor="home-service">Home Service</label>
+                <label htmlFor="home-service" className="font-medium">
+                  Home Service
+                </label>
                 <input
-                  className="text-yellowish-orange"
                   type="radio"
                   name="service"
                   id="home-service"
                   value="home service"
+                  onChange={(e) => setSelectedService(e.target.value)}
                   checked={selectedService === "home service"}
-                  onChange={handleChange}
+                  className="w-4 h-4"
                 />
               </div>
             </div>
           </div>
 
+          {/* Address for Home Service */}
           {selectedService === "home service" && (
             <div className="my-4">
               {addresses.length > 0 ? (
                 <div>
-                  <label
-                    htmlFor="address"
-                    className="text-[18px] md:text-[20px] font-semibold text-dark-green">
+                  <label htmlFor="address" className="block mb-2 font-medium">
                     Select Address:
                   </label>
                   <select
                     onChange={(e) => setSelectedAddress(e.target.value)}
                     name="address"
                     id="address"
-                    className="w-full border-[1px]">
+                    className="w-full py-2 px-3 border border-gray-300 rounded-md">
                     <option value="">-- Select an Address --</option>
                     {addresses.map((address: any, index: number) => (
                       <option key={index} value={address.homeAddress}>
@@ -184,7 +207,7 @@ const BookingModal = ({ closeModal, displayDate, time }: Props) => {
                   <p className="text-red-500">You have no saved home addresses.</p>
                   <button
                     onClick={handleAddAddress}
-                    className="py-2 text-sm lg:text-base bg-dark-green text-white px-4 shadow">
+                    className="py-2 bg-dark-green text-white px-4 rounded shadow">
                     Add Home Address
                   </button>
                 </div>
@@ -192,20 +215,44 @@ const BookingModal = ({ closeModal, displayDate, time }: Props) => {
             </div>
           )}
 
-          {successMessage && <div className="text-green-500">{successMessage}</div>}
-          {errorMessage && <div className="text-red-500">{errorMessage}</div>}
-          <div className="flex gap-5 my-[2rem]">
+          {/* Summary Section */}
+          {date && time && selectedService && (
+            <div className="my-4 py-2 px-4 bg-gray-100 rounded-md">
+              <h3 className="font-bold mb-2">Appointment Summary:</h3>
+              <p>
+                <strong>Service:</strong> {service}
+              </p>
+              <p>
+                <strong>Date:</strong> {displayDate}
+              </p>
+              <p>
+                <strong>Time:</strong> {time}
+              </p>
+              {selectedService === "home service" && selectedAddress && (
+                <p>
+                  <strong>Location:</strong> {selectedAddress}
+                </p>
+              )}
+            </div>
+          )}
+
+          {/* Buttons */}
+          <div className="flex gap-5 my-4">
             <button
               onClick={handleSubmit}
-              className="py-2 text-sm lg:text-base bg-dark-green text-white px-4 shadow w-full lg:w-[70%]">
+              className="py-2 bg-dark-green text-white px-4 rounded-md w-full lg:w-[70%]">
               {isLoading ? "Booking..." : "Book Appointment"}
             </button>
             <button
               onClick={closeModal}
-              className="py-2 text-sm lg:text-base bg-dark-gold text-white px-4 shadow w-full lg:w-[30%]">
+              className="py-2 bg-gray-500 text-white px-4 rounded-md w-full lg:w-[70%]">
               Cancel
             </button>
           </div>
+
+          {/* Feedback Messages */}
+          {successMessage && <div className="text-center text-green-500">{successMessage}</div>}
+          {errorMessage && <div className="text-center text-red-500">{errorMessage}</div>}
         </section>
       </div>
     </div>
