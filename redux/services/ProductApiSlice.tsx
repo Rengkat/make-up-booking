@@ -7,16 +7,7 @@ export const productApiSlice = createApi({
   tagTypes: ["Product"],
   endpoints: (build) => ({
     getAllProducts: build.query({
-      query: ({
-        name = "",
-        category = "",
-        minPrice = 0,
-        maxPrice = 1000,
-        sort = "",
-        page = 1,
-        featured,
-        bestSelling,
-      }) => {
+      query: ({ name = "", category = "", minPrice = 0, maxPrice = 1000, sort = "", page = 1 }) => {
         const params = new URLSearchParams({
           name,
           category,
@@ -25,10 +16,6 @@ export const productApiSlice = createApi({
           sort,
           page,
         });
-
-        if (typeof featured !== "undefined") params.append("featured", featured ? "true" : "false");
-        if (typeof bestSelling !== "undefined")
-          params.append("bestSelling", bestSelling ? "true" : "false");
 
         return {
           url: `${PRODUCTS_URL}?${params.toString()}`,

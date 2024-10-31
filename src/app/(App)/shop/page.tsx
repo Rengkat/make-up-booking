@@ -21,28 +21,7 @@ const Shop = () => {
   const [sort, setSort] = useState("default");
   const [page, setPage] = useState(1);
   const [debouncedName, setDebouncedName] = useState(name);
-  const [selectedPrice, setSelectedPrice] = useState([0, 23000]);
-  const [maxPrice, setMaxPrice] = useState(23000);
-
-  const { data: initialData } = useGetAllProductsQuery({
-    name: debouncedName,
-    sort,
-    page,
-    minPrice: selectedPrice[0],
-    maxPrice: selectedPrice[1],
-  });
-
-  useEffect(() => {
-    if (initialData) {
-      setMaxPrice(initialData.highestPrice);
-      setSelectedPrice((prev) => [prev[0], initialData.highestPrice]);
-    }
-  }, [initialData]);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setDebouncedName(name), 500);
-    return () => clearTimeout(timer);
-  }, [name]);
+  const [selectedPrice, setSelectedPrice] = useState([0, 10000]);
 
   const { data, isLoading } = useGetAllProductsQuery(
     {
@@ -50,12 +29,17 @@ const Shop = () => {
       sort,
       page,
       minPrice: selectedPrice[0],
-      maxPrice: selectedPrice[1] || maxPrice,
+      maxPrice: selectedPrice[1],
     },
     { pollingInterval: 50000 }
   );
 
   const products = data?.products || [];
+
+  useEffect(() => {
+    const timer = setTimeout(() => setDebouncedName(name), 500);
+    return () => clearTimeout(timer);
+  }, [name]);
 
   return (
     <div>
@@ -71,11 +55,7 @@ const Shop = () => {
               className="w-full border-b-2 border-slate-600 outline-none"
             />
           </div>
-          <PriceFilter
-            onPriceChange={setSelectedPrice}
-            lowestPrice={data?.lowestPrice}
-            highestPrice={maxPrice}
-          />
+          <PriceFilter onPriceChange={setSelectedPrice} />
           <div className="my-[2rem] bg-white px-[2rem] py-[2.5rem]">
             <h1 className="text-2xl text-dark-green mb-4">Product Categories</h1>
             <ul>
