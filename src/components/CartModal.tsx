@@ -32,7 +32,7 @@ const CartModal = () => {
       } transition-all duration-500 ease-linear fixed inset-0 z-[5] bg-transparent flex justify-end`}>
       <div className="w-[30rem] bg-white h-full text-black shadow-md">
         <div className="flex items-center justify-between text-2xl p-7 font-montserrat text-dark-green border-b-2 font-normal">
-          <div> Shopping Cart ({data?.cart?.length})</div>
+          <div> Shopping Cart ({data?.cart?.length ? data?.cart?.length : 0})</div>
           <div onClick={handleOpenSideCart}>
             <IoMdClose className="cursor-pointer" />
           </div>

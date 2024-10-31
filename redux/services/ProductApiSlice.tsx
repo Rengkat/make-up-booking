@@ -26,19 +26,16 @@ export const productApiSlice = createApi({
           page,
         });
 
-        if (typeof featured !== "undefined") {
-          params.append("featured", featured ? "true" : "false");
-        }
-
-        if (typeof bestSelling !== "undefined") {
+        if (typeof featured !== "undefined") params.append("featured", featured ? "true" : "false");
+        if (typeof bestSelling !== "undefined")
           params.append("bestSelling", bestSelling ? "true" : "false");
-        }
 
         return {
           url: `${PRODUCTS_URL}?${params.toString()}`,
         };
       },
     }),
+
     getAllFeaturedOrBestSellingProducts: build.query({
       query: ({
         name = "",
