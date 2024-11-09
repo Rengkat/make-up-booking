@@ -29,9 +29,9 @@ const PriceFilter = ({ onPriceChange }: Props) => {
   };
 
   return (
-    <div className="my-[2rem] bg-white px-[2rem] py-[2.5rem]">
+    <div className="my-[2rem] bg-white px-[2rem] py-[2.5rem] shadow">
       {priceRanges.map((range) => (
-        <div key={range.label} className="flex gap-5 items-center">
+        <div key={range.label} className="flex gap-3 items-center mt-2">
           <input
             type="checkbox"
             checked={selectedRange === range.label}

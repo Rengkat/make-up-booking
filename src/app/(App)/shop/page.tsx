@@ -45,7 +45,7 @@ const Shop = () => {
     <div>
       <HeroComp title="Shop" />
       <main className="flex flex-col lg:flex-row py-[5rem] lg:py-[10rem] xl:px-[5rem]">
-        <aside className="w-[23%] hidden xl:block">
+        <aside className="w-[23%] hidden xl:block shadow">
           <div className="bg-white px-[2rem] py-[2.5rem]">
             <input
               type="text"
