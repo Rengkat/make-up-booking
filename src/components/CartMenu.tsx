@@ -1,8 +1,9 @@
 "use client";
 import { FaShoppingCart } from "react-icons/fa";
-import CartModal from "./CartModal";
 import { useDispatch, useSelector } from "react-redux";
 import { openSideCart } from "../../redux/services/AppSlice";
+import dynamic from "next/dynamic";
+const CartModal = dynamic(() => import("./CartModal"), { ssr: false });
 
 const CartMenu = () => {
   const { isOpenSideCart } = useSelector((store: any) => store);

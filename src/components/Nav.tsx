@@ -1,10 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { FaShoppingCart, FaUserTie } from "react-icons/fa";
 const HoveredNav = dynamic(() => import("./HoveredNav"), { ssr: false });
-import CartModal from "./CartModal";
-import SideBar from "./SideBar";
 import ActiveLink from "./ActiveLink";
 import NavMenu from "./NavMenu";
 import CartMenu from "./CartMenu";

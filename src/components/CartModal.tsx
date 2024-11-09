@@ -8,7 +8,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { openSideCart } from "../../redux/services/AppSlice";
 import { useGetUserCartProductsQuery } from "../../redux/services/CartApiSlice";
 import { ProductType } from "../../utilities/extras";
-const cartItems = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
 interface Product {
   _id: string;
   quantity: number;
@@ -18,7 +17,6 @@ interface Product {
 }
 const CartModal = () => {
   const { data } = useGetUserCartProductsQuery({});
-  // console.log(data?.cart);
   const { isOpenSideCart } = useSelector((store: any) => store.app);
   const dispatch = useDispatch();
   const handleOpenSideCart = () => {
