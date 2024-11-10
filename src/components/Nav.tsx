@@ -13,7 +13,7 @@ const Nav = () => {
       {/* logo */}
       <Link href={"/"}>
         <Image
-          src={"/fullbeauty.svg"}
+          src={"/Fullbeauty.svg"}
           alt="logo"
           priority={true}
           height={500}
