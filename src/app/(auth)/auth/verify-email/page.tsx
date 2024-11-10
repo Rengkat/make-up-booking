@@ -1,14 +1,14 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import {
   useReverifyEmailMutation,
   useVerifyEmailMutation,
 } from "../../../../../redux/services/AuthApiSlice";
 
-const VerifyEmailComp = () => {
+function VerifyEmailContent() {
   const [verifyEmail, { isLoading, isError, isSuccess }] = useVerifyEmailMutation();
   const [reVerifyEmail, reverifyData] = useReverifyEmailMutation();
   const search = useSearchParams();
@@ -109,6 +109,12 @@ const VerifyEmailComp = () => {
       </div>
     </div>
   );
-};
+}
 
-export default VerifyEmailComp;
+export default function VerifyEmailComp() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <VerifyEmailContent />
+    </Suspense>
+  );
+}
