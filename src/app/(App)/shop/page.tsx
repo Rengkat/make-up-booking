@@ -7,7 +7,19 @@ import ShopGrid from "./ShopGrid";
 import PriceFilter from "./PriceFilter";
 import { useGetAllProductsQuery } from "../../../../redux/services/ProductApiSlice";
 
-const productCategories = ["cream", "hair masks", "makeup", "moisturisers"];
+const productCategories = [
+  { label: "Skincare", value: "Skincare" },
+  { label: "Oils & Lotions", value: "Massage Oils and Lotions" },
+  { label: "Wellness Products", value: "Wellness Products" },
+  { label: "Spa Accessories", value: "Spa Accessories" },
+  { label: "Candles & Scents", value: "Candles and Scents" },
+  { label: "Massage Tools", value: "Massage Tools" },
+  { label: "Tools & Brushes", value: "Tools and Brushes" },
+  { label: "Lips", value: "Lips" },
+  { label: "Eyes", value: "Eyes" },
+  { label: "Face", value: "Face" },
+];
+
 const sortingOptions = [
   { value: "popularity", name: "Sort by Popularity" },
   { value: "highToLow", name: "Sort by Price: High to low" },
@@ -61,9 +73,9 @@ const Shop = () => {
             <ul>
               {productCategories.map((cat) => (
                 <li
-                  key={cat}
+                  key={cat.value}
                   className="mt-3 text-[18px] text-dark-green hover:text-dark-gold cursor-pointer">
-                  {cat}(1)
+                  {cat.label}
                 </li>
               ))}
             </ul>
