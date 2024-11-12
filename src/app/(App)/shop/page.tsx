@@ -6,19 +6,7 @@ import Products from "./Products";
 import ShopGrid from "./ShopGrid";
 import PriceFilter from "./PriceFilter";
 import { useGetAllProductsQuery } from "../../../../redux/services/ProductApiSlice";
-
-const productCategories = [
-  { label: "Skincare", value: "Skincare" },
-  { label: "Oils & Lotions", value: "Massage Oils and Lotions" },
-  { label: "Wellness Products", value: "Wellness Products" },
-  { label: "Spa Accessories", value: "Spa Accessories" },
-  { label: "Candles & Scents", value: "Candles and Scents" },
-  { label: "Massage Tools", value: "Massage Tools" },
-  { label: "Tools & Brushes", value: "Tools and Brushes" },
-  { label: "Lips", value: "Lips" },
-  { label: "Eyes", value: "Eyes" },
-  { label: "Face", value: "Face" },
-];
+import CategoryList from "./CategoryList";
 
 const sortingOptions = [
   { value: "popularity", name: "Sort by Popularity" },
@@ -70,15 +58,7 @@ const Shop = () => {
           <PriceFilter onPriceChange={setSelectedPrice} />
           <div className="my-[2rem] bg-white px-[2rem] py-[2.5rem]">
             <h1 className="text-2xl text-dark-green mb-4">Product Categories</h1>
-            <ul>
-              {productCategories.map((cat) => (
-                <li
-                  key={cat.value}
-                  className="mt-3 text-[18px] text-dark-green hover:text-dark-gold cursor-pointer">
-                  {cat.label}
-                </li>
-              ))}
-            </ul>
+            <CategoryList />
           </div>
         </aside>
         <aside className="w-full xl:w-[77%] p-[1rem] xl:pl-10">
