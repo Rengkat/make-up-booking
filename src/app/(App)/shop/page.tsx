@@ -20,9 +20,10 @@ const Shop = () => {
   const [name, setName] = useState("");
   const [sort, setSort] = useState("default");
   const [page, setPage] = useState(1);
+  const [category, setCategory] = useState("");
   const [debouncedName, setDebouncedName] = useState(name);
   const [selectedPrice, setSelectedPrice] = useState([0, 10000]);
-
+  console.log(category);
   const { data, isLoading } = useGetAllProductsQuery(
     {
       name: debouncedName,
@@ -30,6 +31,7 @@ const Shop = () => {
       page,
       minPrice: selectedPrice[0],
       maxPrice: selectedPrice[1],
+      category,
     },
     { pollingInterval: 50000 }
   );
@@ -58,7 +60,7 @@ const Shop = () => {
           <PriceFilter onPriceChange={setSelectedPrice} />
           <div className="my-[2rem] bg-white px-[2rem] py-[2.5rem]">
             <h1 className="text-2xl text-dark-green mb-4">Product Categories</h1>
-            <CategoryList />
+            <CategoryList setCategory={setCategory} />
           </div>
         </aside>
         <aside className="w-full xl:w-[77%] p-[1rem] xl:pl-10">

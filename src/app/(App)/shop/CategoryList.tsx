@@ -8,27 +8,35 @@ type Category = {
   products: string[];
   __v: number;
 };
-const CategoryList = () => {
-  const [categories, setCategories] = useState([]);
+
+interface Props {
+  setCategory: (id: string) => void;
+}
+
+const CategoryList = ({ setCategory }: Props) => {
+  const [categories, setCategories] = useState<Category[]>([]);
+
   const fetchCategories = async () => {
     const res = await fetch("https://make-up-app-backend.onrender.com/api/categories", {
       credentials: "include",
     });
     const data = await res.json();
-    setCategories(data);
+    setCategories(data.categories || []); // Assumes `categories` is the key in the response
   };
+
   useEffect(() => {
     fetchCategories();
   }, []);
+
   return (
     <div>
-      {" "}
       <ul>
-        {categories?.map((cat: Category) => (
+        {categories.map((cat: Category) => (
           <li
+            onClick={() => setCategory(cat._id)}
             key={cat._id}
             className="mt-3 text-[18px] text-dark-green hover:text-dark-gold cursor-pointer">
-            {cat.name} ({cat?.products?.length})
+            {cat.name} ({cat.products.length})
           </li>
         ))}
       </ul>
