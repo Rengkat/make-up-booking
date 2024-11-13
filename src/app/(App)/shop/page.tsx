@@ -23,7 +23,6 @@ const Shop = () => {
   const [category, setCategory] = useState("");
   const [debouncedName, setDebouncedName] = useState(name);
   const [selectedPrice, setSelectedPrice] = useState([0, 10000]);
-  console.log(category);
   const { data, isLoading } = useGetAllProductsQuery(
     {
       name: debouncedName,
