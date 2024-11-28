@@ -1,5 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQuery } from "./ApiSlice";
+import { url } from "inspector";
 const ORDERS_URL = "orders";
 export const orderApiSlice = createApi({
   reducerPath: "orderApi",
@@ -14,6 +15,46 @@ export const orderApiSlice = createApi({
       }),
       invalidatesTags: ["Orders"],
     }),
+    verifyPayment: build.mutation({
+      query: (orderId) => ({
+        method: "POST",
+        url: `${ORDERS_URL}/verify/${orderId}`,
+        body: {},
+      }),
+    }),
+    getAllOrders: build.query({
+      query: () => ({
+        url: `${ORDERS_URL}`,
+      }),
+      providesTags: ["Orders"],
+    }),
+    getAllUserOrders: build.query({
+      query: () => ({
+        url: `${ORDERS_URL}/user-orders`,
+      }),
+      providesTags: ["Orders"],
+    }),
+    getSingleOrder: build.query({
+      query: (id) => ({
+        url: `${ORDERS_URL}/${id}`,
+      }),
+      providesTags: ["Orders"],
+    }),
+    updateOrder: build.mutation({
+      query: ({ id, status }) => ({
+        method: "PATCH",
+        url: `${ORDERS_URL}/${id}`,
+        body: { status },
+      }),
+      invalidatesTags: ["Orders"],
+    }),
   }),
 });
-export const { useCreateOrderMutation } = orderApiSlice;
+export const {
+  useCreateOrderMutation,
+  useVerifyPaymentMutation,
+  useGetAllOrdersQuery,
+  useGetAllUserOrdersQuery,
+  useGetSingleOrderQuery,
+  useUpdateOrderMutation,
+} = orderApiSlice;
