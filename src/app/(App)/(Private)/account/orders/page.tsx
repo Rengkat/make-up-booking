@@ -2,13 +2,13 @@
 import React, { Fragment } from "react";
 import { convertDate, formatter } from "../../../../../../utilities/extras";
 import { useGetAllUserOrdersQuery } from "../../../../../../redux/services/OrderApiSlice";
+import Link from "next/link";
 
 const title = ["order", "date", "status", "total", "action"];
 
 const Orders = () => {
   const { data, isLoading, isError } = useGetAllUserOrdersQuery({});
   const orders = data?.data;
-  console.log(orders);
   if (isLoading) {
     return <div className="text-center py-5">Loading your orders...</div>;
   }
@@ -43,9 +43,11 @@ const Orders = () => {
                 {formatter.format(order?.total)} for {order.orderItems.length} item(s)
               </div>
               <div>
-                <button className="py-2 px-5 bg-dark-green hover:bg-dark-gold text-white">
+                <Link
+                  href={`/account/orders/${order._id}`}
+                  className="py-2 px-5 bg-dark-green hover:bg-dark-gold text-white">
                   View
-                </button>
+                </Link>
               </div>
             </div>
           </Fragment>

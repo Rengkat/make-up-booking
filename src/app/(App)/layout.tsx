@@ -2,7 +2,6 @@ import Image from "next/image";
 import React from "react";
 import Nav from "../../components/Nav";
 import Link from "next/link";
-import SideBar from "@/components/SideBar";
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
   return (

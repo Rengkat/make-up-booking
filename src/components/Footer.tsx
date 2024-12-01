@@ -10,7 +10,7 @@ const Footer = () => {
   return (
     <>
       <nav className="w-full flex items-center justify-between p-[5rem]">
-        <ul className="flex flex-col lg:flex-row gap-6 mr-5">
+        <ul className="hidden lg:flex flex-col lg:flex-row gap-6 mr-5">
           <li className="nav-link">
             <ActiveLink href="/" text="Home" />
           </li>
@@ -26,7 +26,7 @@ const Footer = () => {
           </li>
         </ul>
         {/* logo */}
-        <Link href={"/"}>
+        <Link href={"/"} className=" flex w-full justify-center">
           <Image
             src={"/fullbeauty.svg"}
             alt="logo"
@@ -36,7 +36,7 @@ const Footer = () => {
             className="logo w-[5rem] lg:w-[7rem]"
           />
         </Link>
-        <ul className=" lg:flex gap-6 mr-5">
+        <ul className="hidden lg:flex gap-6 mr-5">
           <li className="nav-link">
             <a href="#">Facebook</a>
           </li>
