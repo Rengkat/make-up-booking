@@ -22,12 +22,7 @@ export const orderApiSlice = createApi({
         body: {},
       }),
     }),
-    getAllOrders: build.query({
-      query: () => ({
-        url: `${ORDERS_URL}`,
-      }),
-      providesTags: ["Orders"],
-    }),
+
     getAllUserOrders: build.query({
       query: () => ({
         url: `${ORDERS_URL}/user-orders`,
@@ -53,7 +48,6 @@ export const orderApiSlice = createApi({
 export const {
   useCreateOrderMutation,
   useVerifyPaymentMutation,
-  useGetAllOrdersQuery,
   useGetAllUserOrdersQuery,
   useGetSingleOrderQuery,
   useUpdateOrderMutation,
