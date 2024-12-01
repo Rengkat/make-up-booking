@@ -28,7 +28,6 @@ export const productApiSlice = createApi({
         name = "",
         category = "",
         minPrice = 0,
-
         sort = "",
         page = 1,
         featured,

@@ -1,9 +1,9 @@
-import { Metadata } from "next";
+"use client";
 import React, { Fragment } from "react";
 import { convertDate } from "../../../../../../utilities/extras";
-export const metadata: Metadata = {
-  title: "My orders",
-};
+// export const metadata: Metadata = {
+//   title: "My orders",
+// };
 const title = ["order", "date", "status", "total", "action"];
 
 const appointments = [

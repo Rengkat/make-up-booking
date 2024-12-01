@@ -1,48 +1,77 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
+import { useVerifyPaymentMutation } from "../../../../../redux/services/OrderApiSlice";
+
 const PaymentComp = () => {
   const query = useSearchParams();
   const orderId = query.get("orderId");
   const transactionRef = query.get("trxref");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-  const [paymentStatus, setPaymentStatus] = useState("");
-  const history = useRouter();
 
-  // Call backend to verify the payment once the component mounts
+  const [paymentStatus, setPaymentStatus] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const router = useRouter();
+  const [verifyPayment, { isLoading, isSuccess, isError }] = useVerifyPaymentMutation();
+
   useEffect(() => {
-    const verifyPayment = async () => {
+    const verify = async () => {
+      if (!orderId || !transactionRef) {
+        setErrorMessage("Invalid payment details provided.");
+        return;
+      }
+
       try {
-        setLoading(true);
-        const response = await fetch(`/api/orders/verify/${orderId}`, {
-          method: "POST",
-        });
-        if (response?.status === "success") {
-          setPaymentStatus("Payment verified successfully");
+        const response = await verifyPayment(orderId).unwrap();
+
+        if (response.status === "success") {
+          setPaymentStatus("Payment Verified Successfully!");
           setTimeout(() => {
-            history.push("/orders"); // Redirect to orders page after successful verification
-          }, 3000); // Redirect after 3 seconds
+            router.push("/account/orders"); // Redirect to orders page after 3 seconds
+          }, 3000);
         } else {
-          setPaymentStatus("Payment verification failed");
+          setErrorMessage(response.message || "Payment verification failed.");
         }
-      } catch (err) {
-        setError("Error verifying payment.");
-      } finally {
-        setLoading(false);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          setErrorMessage(error.message || "An unexpected error occurred.");
+        } else {
+          setErrorMessage("An unknown error occurred.");
+        }
       }
     };
 
-    verifyPayment();
-  }, [orderId, history]);
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
+    verify();
+  }, [orderId, transactionRef, verifyPayment, router]);
 
   return (
-    <div>
-      <h1>{paymentStatus}</h1>
-      {!paymentStatus && <p>Please wait while we verify your payment...</p>}
+    <div className="w-full flex flex-col justify-center items-center h-[70vh] bg-gray-50 p-6">
+      <div className="max-w-md w-full bg-white shadow-md rounded-lg p-8 text-center">
+        {isLoading ? (
+          <div className="flex flex-col items-center">
+            <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+            <p className="text-lg font-semibold text-gray-700">Verifying your payment...</p>
+          </div>
+        ) : isError ? (
+          <div className="flex flex-col items-center">
+            <p className="text-2xl text-red-500 font-semibold mb-2">Payment Failed</p>
+            <p className="text-gray-700">{errorMessage}</p>
+            <button
+              className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600"
+              onClick={() => router.push("/retry")}>
+              Try Again
+            </button>
+          </div>
+        ) : isSuccess ? (
+          <div className="flex flex-col items-center">
+            <p className="text-2xl text-green-500 font-semibold mb-2">{paymentStatus}</p>
+            <p className="text-gray-700">It was nice doing business with you!</p>
+            <div className="w-12 h-12 border-4 border-green-500 border-t-transparent rounded-full animate-spin mt-4"></div>
+          </div>
+        ) : (
+          <p className="text-gray-700">Initializing payment verification...</p>
+        )}
+      </div>
     </div>
   );
 };

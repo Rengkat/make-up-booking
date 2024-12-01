@@ -1,5 +1,6 @@
 import React from "react";
-import PaymentComp from "../paymentComp";
+import dynamic from "next/dynamic";
+const PaymentComp = dynamic(() => import("../PaymentComp"), { ssr: false });
 
 const payment = () => {
   return (
