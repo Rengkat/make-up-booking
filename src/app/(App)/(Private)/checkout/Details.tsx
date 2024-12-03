@@ -1,17 +1,26 @@
 "use client";
 import { useGetUserDetailsQuery } from "../../../../../redux/services/UserApiSlice";
 
-const Details = () => {
+const Details = ({ onAddressChange, onAdditionalInfoChange }) => {
   const { data, error, isSuccess } = useGetUserDetailsQuery({});
   // console.log(data);
   return (
     <div>
       <div className="checkout-input">{data?.user.firstName}</div>
       <div className="checkout-input">{data?.user.surname}</div>
-      <select className="checkout-input" name="address" id="">
+      <select
+        onChange={(e) => {
+          onAddressChange(e.target.value);
+        }}
+        className="checkout-input"
+        name="address"
+        id="">
+        <option value="" disabled selected>
+          Select an address
+        </option>
         {data?.user?.addresses?.map((address: any) => (
-          <option value={address._id}>
-            {address.homeAddress} {address.state}, {address.country}
+          <option key={address._id} value={address._id}>
+            {address.homeAddress}, {address.town}, {address.state}, {address.country}
           </option>
         ))}
       </select>
@@ -21,6 +30,7 @@ const Details = () => {
         Additional Information
       </h2>
       <textarea
+        onChange={(e) => onAdditionalInfoChange(e.target.value)}
         className="checkout-input h-[20vh]"
         name="moreDetail"
         id=""

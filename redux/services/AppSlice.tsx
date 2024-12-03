@@ -5,7 +5,7 @@ const initialState = {
   isOpenSideBar: false,
   isOpenSideCart: false,
   shopGrid: getShopGrid(),
-  shippingFee: 2000,
+  shippingFee: 1500,
   fromCart: false,
 };
 const appSlice = createSlice({
