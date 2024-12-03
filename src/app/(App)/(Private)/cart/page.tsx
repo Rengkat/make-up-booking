@@ -11,13 +11,17 @@ import {
 import { formatter, ProductType } from "../../../../../utilities/extras";
 import { handleRemoveFromToCart } from "./HandleRemoveFromCart";
 import { handleUpdateQuantityFun } from "./HandleUpdateQuantity";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { proceedFromCart } from "../../../../../redux/services/AppSlice";
+import { useRouter } from "next/navigation";
 const title = ["product", "price", "quantity", "subtotal", ""];
 // interface Cart {
 //   products: ProductType[];
 // }
 const Cart = () => {
-  const { shippingFee, tax } = useSelector((state: any) => state.app);
+  const { fromCart } = useSelector((state: any) => state.app);
+  const dispatch = useDispatch();
+  const router = useRouter();
   // console.log(shippingFee, tax);
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -50,7 +54,10 @@ const Cart = () => {
     const newTotal = total + product.subTotalAmount;
     return newTotal;
   }, 0);
-
+  const onHandleProceedToCheckout = () => {
+    dispatch(proceedFromCart(true));
+    router.push("/checkout");
+  };
   return (
     <>
       <HeroComp title="Cart" />
@@ -142,18 +149,13 @@ const Cart = () => {
                       </div>
                       <div className="flex flex-col gap-y-5 p-5 text-xl">
                         <div className="flex justify-between ">
-                          <h1>Subtotal</h1>
+                          <h1>Total Amount</h1>
                           <h1>{formatter.format(totalAmount)}</h1>
                         </div>
-                        <div className="flex justify-between ">
-                          <h1>Shipping Fee</h1>
-                          <h1>{formatter.format(shippingFee)}</h1>
-                        </div>
-                        <div className="flex justify-between">
-                          <h1>Total</h1>
-                          <h1>{formatter.format(totalAmount + shippingFee)}</h1>
-                        </div>
-                        <button className="py-4 px-8 bg-dark-green text-white">
+
+                        <button
+                          onClick={onHandleProceedToCheckout}
+                          className="py-4 px-8 bg-dark-green text-white">
                           Proceed to checkout
                         </button>
                       </div>

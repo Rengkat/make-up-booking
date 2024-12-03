@@ -7,7 +7,7 @@ import SideBarCartList from "../app/(App)/(Private)/cart/SideBarCartList";
 import { useSelector, useDispatch } from "react-redux";
 import { openSideCart } from "../../redux/services/AppSlice";
 import { useGetUserCartProductsQuery } from "../../redux/services/CartApiSlice";
-import { ProductType } from "../../utilities/extras";
+import { formatter, ProductType } from "../../utilities/extras";
 interface Product {
   _id: string;
   quantity: number;
@@ -22,7 +22,10 @@ const CartModal = () => {
   const handleOpenSideCart = () => {
     dispatch(openSideCart());
   };
-
+  const totalAmount = data?.cart.reduce((total: number, product: any) => {
+    const newTotal = total + product.subTotalAmount;
+    return newTotal;
+  }, 0);
   return (
     <div
       className={`${
@@ -73,7 +76,7 @@ const CartModal = () => {
               <div className=" border-t-[1px] border-slate-300 mx-[1rem] py-5">
                 <aside className="flex justify-between font-bold text-xl text-dark-green">
                   <h1>Subtotal:</h1>
-                  <h1>$1300</h1>
+                  <h1>{formatter.format(totalAmount)}</h1>
                 </aside>
                 <div className="flex justify-between gap-5 my-[2rem]">
                   <button className="py-4 px-10 bg-dark-green text-white hover:bg-dark-gold">

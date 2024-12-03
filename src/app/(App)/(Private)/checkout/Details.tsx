@@ -1,26 +1,28 @@
-import React from "react";
+"use client";
+import { useGetUserDetailsQuery } from "../../../../../redux/services/UserApiSlice";
 
 const Details = () => {
+  const { data, error, isSuccess } = useGetUserDetailsQuery({});
+  // console.log(data);
   return (
     <div>
-      <input className="checkout-input" type="text" value={"Alexander"} />
-      <input className="checkout-input" type="text" value={"Rengkat"} />
-      <input
-        className="checkout-input"
-        type="text"
-        value={"2, COCIN Church Sabon Barki, Gindiri"}
-      />
-      <input className="checkout-input" type="text" value={"Nigeria"} />
-      <input className="checkout-input" type="text" value={"Plateau"} />
-      <input className="checkout-input" type="text" value={"Mangu"} />
-      <input className="checkout-input" type="text" value={"+2348067581175"} />
-      <input className="checkout-input" type="email" value={"rengkatalexander@gmail.com"} />
+      <div className="checkout-input">{data?.user.firstName}</div>
+      <div className="checkout-input">{data?.user.surname}</div>
+      <select className="checkout-input" name="address" id="">
+        {data?.user?.addresses?.map((address: any) => (
+          <option value={address._id}>
+            {address.homeAddress} {address.state}, {address.country}
+          </option>
+        ))}
+      </select>
+      <div className="checkout-input">{data?.user.email}</div>
+
       <h2 className="text-dark-green font-normal text-xl lg:text-2xl py-5">
         Additional Information
       </h2>
       <textarea
         className="checkout-input h-[20vh]"
-        name=""
+        name="moreDetail"
         id=""
         placeholder="Please add any information for your delivery"></textarea>
     </div>

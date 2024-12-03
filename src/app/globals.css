@@ -37,7 +37,7 @@
     @apply w-full h-[90dvh] lg:h-[130vh];
   }
   .checkout-input {
-    @apply w-full bg-transparent py-2 border-0 border-b-[1px] border-gray-300 my-5;
+    @apply w-full py-2 border-0 border-b-[1px] border-gray-300 my-5;
   }
 }
 html {

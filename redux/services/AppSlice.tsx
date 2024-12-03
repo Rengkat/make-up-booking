@@ -6,7 +6,7 @@ const initialState = {
   isOpenSideCart: false,
   shopGrid: getShopGrid(),
   shippingFee: 2000,
-  tax: 0,
+  fromCart: false,
 };
 const appSlice = createSlice({
   name: "AppState",
@@ -21,10 +21,13 @@ const appSlice = createSlice({
     changeGrid(state, action) {
       state.shopGrid = action.payload;
     },
+    proceedFromCart(state, action) {
+      state.fromCart = action.payload;
+    },
   },
 
   extraReducers: {},
 });
 
 export default appSlice.reducer;
-export const { openSideBar, openSideCart, changeGrid } = appSlice.actions;
+export const { openSideBar, openSideCart, changeGrid, proceedFromCart } = appSlice.actions;
