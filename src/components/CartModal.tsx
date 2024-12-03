@@ -75,7 +75,7 @@ const CartModal = () => {
                   <h1>Subtotal:</h1>
                   <h1>$1300</h1>
                 </aside>
-                <div className="flex justify-center gap-5 my-[2rem]">
+                <div className="flex justify-between gap-5 my-[2rem]">
                   <button className="py-4 px-10 bg-dark-green text-white hover:bg-dark-gold">
                     <Link href={"/cart"}>Open cart</Link>
                   </button>

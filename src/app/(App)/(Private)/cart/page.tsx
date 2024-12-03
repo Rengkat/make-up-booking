@@ -8,17 +8,24 @@ import {
   useRemoveFromCartMutation,
   useUpdateCartProductMutation,
 } from "../../../../../redux/services/CartApiSlice";
-import { formatter } from "../../../../../utilities/extras";
+import { formatter, ProductType } from "../../../../../utilities/extras";
 import { handleRemoveFromToCart } from "./HandleRemoveFromCart";
 import { handleUpdateQuantityFun } from "./HandleUpdateQuantity";
+import { useSelector } from "react-redux";
 const title = ["product", "price", "quantity", "subtotal", ""];
-
+// interface Cart {
+//   products: ProductType[];
+// }
 const Cart = () => {
+  const { shippingFee, tax } = useSelector((state: any) => state.app);
+  // console.log(shippingFee, tax);
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const { data, isLoading } = useGetUserCartProductsQuery({});
   const [removeProductFromCart, { isLoading: removing }] = useRemoveFromCartMutation();
   const [updateQuantity, {}] = useUpdateCartProductMutation();
+  // console.log(data);
+
   const handleRemove = async (productId: string) => {
     // const res = await removeProductFromCart(productId);
     handleRemoveFromToCart({
@@ -27,7 +34,6 @@ const Cart = () => {
       setErrorMessage,
       setSuccessMessage,
     });
-    // console.log(res.data.message);
   };
   const handleUpdateQuantity = async ({
     id,
@@ -40,6 +46,11 @@ const Cart = () => {
   }) => {
     handleUpdateQuantityFun({ id, action, updateQuantity, quantity });
   };
+  const totalAmount = data?.cart.reduce((total: number, product: any) => {
+    const newTotal = total + product.subTotalAmount;
+    return newTotal;
+  }, 0);
+
   return (
     <>
       <HeroComp title="Cart" />
@@ -112,7 +123,7 @@ const Cart = () => {
                                   </button>
                                 </div>
                               </div>
-                              <div>{formatter.format(item?.totalAmount)}</div>
+                              <div>{formatter.format(item?.subTotalAmount)}</div>
                               <div
                                 onClick={() => handleRemove(item?._id)}
                                 className=" text-gray-500 text-xl cursor-pointer">
@@ -132,11 +143,15 @@ const Cart = () => {
                       <div className="flex flex-col gap-y-5 p-5 text-xl">
                         <div className="flex justify-between ">
                           <h1>Subtotal</h1>
-                          <h1>$2300</h1>
+                          <h1>{formatter.format(totalAmount)}</h1>
+                        </div>
+                        <div className="flex justify-between ">
+                          <h1>Shipping Fee</h1>
+                          <h1>{formatter.format(shippingFee)}</h1>
                         </div>
                         <div className="flex justify-between">
                           <h1>Total</h1>
-                          <h1>$2300</h1>
+                          <h1>{formatter.format(totalAmount + shippingFee)}</h1>
                         </div>
                         <button className="py-4 px-8 bg-dark-green text-white">
                           Proceed to checkout

@@ -14,15 +14,12 @@ interface Props {
 const DetailOrder = ({ params }: Props) => {
   const orderId = params.orderId;
 
-  // Queries and Mutations
   const { data, isLoading, isError } = useGetSingleOrderQuery(orderId);
   const [updateOrder, { isLoading: isUpdating }] = useUpdateOrderMutation();
 
-  // Local State for Messages
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  // Cancel Order Handler
   const handleCancel = async () => {
     setSuccessMessage(null);
     setErrorMessage(null);
