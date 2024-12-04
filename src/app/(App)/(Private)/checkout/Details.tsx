@@ -1,7 +1,11 @@
 "use client";
 import { useGetUserDetailsQuery } from "../../../../../redux/services/UserApiSlice";
+interface Props {
+  onAddressChange: (address: string) => void;
+  onAdditionalInfoChange: (info: string) => void;
+}
 
-const Details = ({ onAddressChange, onAdditionalInfoChange }) => {
+const Details = ({ onAddressChange, onAdditionalInfoChange }: Props) => {
   const { data, error, isSuccess } = useGetUserDetailsQuery({});
   // console.log(data);
   return (
