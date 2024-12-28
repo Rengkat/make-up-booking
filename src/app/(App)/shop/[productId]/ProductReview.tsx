@@ -1,4 +1,7 @@
 import React from "react";
+interface Props {
+  review: any;
+}
 import { Rating } from "react-simple-star-rating";
 const getInitials = (name: string) => {
   return name
@@ -6,8 +9,7 @@ const getInitials = (name: string) => {
     .map((word) => word[0].toUpperCase())
     .join("");
 };
-const ProductReview = ({ review }) => {
-  console.log(review);
+const ProductReview = ({ review }: Props) => {
   return (
     <div className="border-b pb-4 mb-4">
       <div className="flex gap-3">
