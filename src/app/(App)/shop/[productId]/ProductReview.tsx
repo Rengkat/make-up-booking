@@ -1,7 +1,14 @@
 import React from "react";
-interface Props {
-  review: any;
-}
+type Review = {
+  _id: string;
+  user: { fullName: string };
+  comment: string;
+  rating: number;
+};
+
+type Props = {
+  review: Review;
+};
 import { Rating } from "react-simple-star-rating";
 const getInitials = (name: string) => {
   return name
