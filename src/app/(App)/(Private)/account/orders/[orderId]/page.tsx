@@ -6,6 +6,7 @@ import {
   useUpdateOrderMutation,
 } from "../../../../../../../redux/services/OrderApiSlice";
 import { formatter } from "../../../../../../../utilities/extras";
+import Review from "./Review";
 
 interface Props {
   params: { orderId: string };
@@ -19,6 +20,7 @@ const DetailOrder = ({ params }: Props) => {
 
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isReviewing, setIsReviewing] = useState(false);
 
   const handleCancel = async () => {
     setSuccessMessage(null);
@@ -30,7 +32,7 @@ const DetailOrder = ({ params }: Props) => {
       setErrorMessage("Failed to cancel the order. Please try again.");
     }
   };
-
+  // console.log(data);
   // Loading State
   if (isLoading) {
     return <div className="text-center mt-5">Loading order details...</div>;
@@ -73,21 +75,34 @@ const DetailOrder = ({ params }: Props) => {
                   <div>
                     <button
                       onClick={handleCancel}
-                      disabled={data?.data?.status !== "paid" || isUpdating}
+                      disabled={data?.data?.deliveryStatus === "delivered" || isUpdating}
                       className={`${
-                        data?.data?.status !== "paid" || isUpdating
+                        data?.data?.deliveryStatus === "delivered" || isUpdating
                           ? "bg-gray-400 cursor-not-allowed"
                           : "bg-dark-gold cursor-pointer hover:bg-dark-green"
                       } text-white p-2 shadow`}>
                       {isUpdating
                         ? "Cancelling..."
-                        : data?.data?.status === "paid"
+                        : data?.data?.deliveryStatus === "delivered"
                         ? "Cancel Order"
-                        : data?.data?.status.charAt(0).toUpperCase() + data?.data?.status.slice(1)}
+                        : data?.data?.status.charAt(0).toUpperCase() +
+                          data?.data?.deliveryStatus.slice(1)}
                     </button>
                   </div>
+                  {data?.data?.deliveryStatus === "delivered" && (
+                    <div>
+                      <button
+                        onClick={() => setIsReviewing((prev) => !prev)}
+                        className="bg-dark-gold text-white py-2 px-6 rounded-md shadow-lg hover:bg-dark-green active:bg-dark-green transition duration-300">
+                        Add Review
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
+              {isReviewing && (
+                <Review setIsReviewing={setIsReviewing} productId={product?.product?._id} />
+              )}
             </Fragment>
           ))
         )}

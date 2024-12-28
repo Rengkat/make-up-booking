@@ -8,6 +8,7 @@ import { productApiSlice } from "../services/ProductApiSlice";
 import { cartApiSlice } from "../services/CartApiSlice";
 import { wishlistApiSlice } from "../services/WishlistApiSlice";
 import { orderApiSlice } from "../services/OrderApiSlice";
+import { reviewApiSlice } from "../services/ReviewApiSlice";
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ export const store = configureStore({
     [cartApiSlice.reducerPath]: cartApiSlice.reducer,
     [wishlistApiSlice.reducerPath]: wishlistApiSlice.reducer,
     [orderApiSlice.reducerPath]: orderApiSlice.reducer,
+    [reviewApiSlice.reducerPath]: reviewApiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
@@ -29,7 +31,8 @@ export const store = configureStore({
       .concat(productApiSlice.middleware)
       .concat(cartApiSlice.middleware)
       .concat(wishlistApiSlice.middleware)
-      .concat(orderApiSlice.middleware),
+      .concat(orderApiSlice.middleware)
+      .concat(reviewApiSlice.middleware),
   devTools: true,
 });
 

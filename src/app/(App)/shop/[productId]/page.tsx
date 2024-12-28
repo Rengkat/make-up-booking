@@ -1,7 +1,7 @@
 "use client";
 import { BsCheck2Circle } from "react-icons/bs";
 import { CiHeart } from "react-icons/ci";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { useGetSingleProductsQuery } from "../../../../../redux/services/ProductApiSlice";
 import { formatter } from "../../../../../utilities/extras";
 import { useAddToCartMutation } from "../../../../../redux/services/CartApiSlice";
@@ -9,6 +9,7 @@ import { handleAddToCart } from "../HandleAddToCart";
 import Image from "next/image";
 import { handleAddToWishlist } from "../HandleAddToWhislist";
 import { useAddToWishlistMutation } from "../../../../../redux/services/WishlistApiSlice";
+import ProductReview from "./ProductReview";
 
 interface Props {
   params: { productId: string };
@@ -20,6 +21,7 @@ const Product = ({ params }: Props) => {
   const [addToWishlist, { isLoading: adding }] = useAddToWishlistMutation();
 
   const product = data?.product;
+  console.log(product);
   const [addToCart] = useAddToCartMutation();
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -115,55 +117,14 @@ const Product = ({ params }: Props) => {
       {/* Review Section */}
       <div className="mt-10 p-5 bg-light-gray rounded-lg shadow-md">
         <h2 className="text-3xl font-semibold mb-5">User Reviews</h2>
-
-        {/* Hardcoded Reviews */}
-        <div className="border-b pb-4 mb-4">
-          <div className="flex items-center mb-2">
-            <div className="bg-dark-green text-white w-10 h-10 rounded-full flex items-center justify-center font-semibold">
-              JD
-            </div>
-            <div className="flex items-center ml-3">
-              {[...Array(5)].map((_, index) => (
-                <span key={index} className="text-yellow-500">
-                  &#9733;
-                </span>
-              ))}
-            </div>
-          </div>
-          <p className="text-gray-700">Great product! Really satisfied with the quality.</p>
-        </div>
-
-        <div className="border-b pb-4 mb-4">
-          <div className="flex items-center mb-2">
-            <div className="bg-dark-green text-white w-10 h-10 rounded-full flex items-center justify-center font-semibold">
-              AB
-            </div>
-            <div className="flex items-center ml-3">
-              {[...Array(4)].map((_, index) => (
-                <span key={index} className="text-yellow-500">
-                  &#9733;
-                </span>
-              ))}
-            </div>
-          </div>
-          <p className="text-gray-700">Good value for the price. Would recommend!</p>
-        </div>
-
-        <div className="border-b pb-4 mb-4">
-          <div className="flex items-center mb-2">
-            <div className="bg-dark-green text-white w-10 h-10 rounded-full flex items-center justify-center font-semibold">
-              LM
-            </div>
-            <div className="flex items-center ml-3">
-              {[...Array(3)].map((_, index) => (
-                <span key={index} className="text-yellow-500">
-                  &#9733;
-                </span>
-              ))}
-              <span className="text-gray-300">&#9733;</span> {/* empty star */}
-            </div>
-          </div>
-          <p className="text-gray-700">Average experience. Not what I expected.</p>
+        <div>
+          {product?.reviews?.map((review: any) => {
+            return (
+              <Fragment key={review._id}>
+                <ProductReview review={review} />
+              </Fragment>
+            );
+          })}
         </div>
       </div>
     </>

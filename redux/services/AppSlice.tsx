@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getShopGrid } from "../localStorage";
 
-const initialState = {
+const initialState: any = {
   isOpenSideBar: false,
   isOpenSideCart: false,
   shopGrid: getShopGrid(),
